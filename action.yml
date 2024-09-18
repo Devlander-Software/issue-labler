@@ -15,3 +15,6 @@ runs:
       shell: bash
     - run: echo "Action completed!"
       shell: bash
+branding:
+  icon: 'check-square'  # Use the "check-square" icon
+  color: 'blue'         # Choose a valid color from the list
