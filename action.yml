@@ -1,7 +1,17 @@
-name: 'Auto-Label Issues'
-description: 'Automatically creates issue templates and labels for issues'
+name: 'Devlander Auto-Label Issues'
+description: 'Automatically creates issue templates and labels for issues.'
+inputs:
+  github_token:
+    description: 'GitHub token for authentication.'
+    required: true
 runs:
   using: 'composite'
   steps:
-    - run: echo "Running action"
-      shell: bash  # You can specify the shell here (bash, sh, etc.)
+    - run: mkdir -p .github/ISSUE_TEMPLATE
+      shell: bash
+    - run: |
+        echo "## Feature Request Template" > .github/ISSUE_TEMPLATE/feature_request.md
+        echo "## General Bug Report" > .github/ISSUE_TEMPLATE/general_bug_report.md
+      shell: bash
+    - run: echo "Action completed!"
+      shell: bash
