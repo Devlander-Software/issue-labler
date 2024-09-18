@@ -1,0 +1,7 @@
+name: 'Auto-Label Issues'
+description: 'Automatically creates issue templates and labels for issues'
+runs:
+  using: 'composite'
+  steps:
+    - run: echo "Running action"
+      shell: bash  # You can specify the shell here (bash, sh, etc.)

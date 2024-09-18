@@ -1,0 +1,16 @@
+name: Test Auto-Label Action
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run Action
+        uses: ./  # This runs your action in the same repo
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

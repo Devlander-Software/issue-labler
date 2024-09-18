@@ -1,0 +1,242 @@
+name: Setup Issue Templates and Labels
+
+on:
+  # Trigger on issue creation or editing
+  issues:
+    types: [opened, edited]
+  # Trigger the action when a repository dispatch event occurs (e.g., manual trigger for creating labels and templates)
+  repository_dispatch:
+    types: [create_labels]
+
+jobs:
+  # Job to create issue templates in the repository
+  create_issue_templates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Issue Templates Directory
+        run: |
+          mkdir -p .github/ISSUE_TEMPLATE
+          
+      - name: Create feature_request.md template
+        run: |
+          echo "## Feature Request Template" > .github/ISSUE_TEMPLATE/feature_request.md
+          echo "Please describe the feature you're requesting." >> .github/ISSUE_TEMPLATE/feature_request.md
+          
+      - name: Create general_bug_report.md template
+        run: |
+          echo "## General Bug Report" > .github/ISSUE_TEMPLATE/general_bug_report.md
+          echo "Please describe the bug you found." >> .github/ISSUE_TEMPLATE/general_bug_report.md
+
+      - name: Create performance_bug.md template
+        run: |
+          echo "## Performance Bug Report" > .github/ISSUE_TEMPLATE/performance_bug.md
+          echo "Please describe the performance issue." >> .github/ISSUE_TEMPLATE/performance_bug.md
+
+      - name: Commit Issue Templates
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Action"
+          git add .github/ISSUE_TEMPLATE/*.md
+          git commit -m "Add issue templates"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Job for creating labels in the repository
+  create_labels:
+    runs-on: ubuntu-latest
+    needs: create_issue_templates
+    steps:
+      - name: Create GitHub labels
+        uses: juliangruber/create-github-labels-action@v2
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            - name: '1️⃣ Prelease'
+              color: '006b75'
+              description: 'Tasks for the pre-MVP release with only the bare minimum to launch, without customer validation.'
+            - name: '2️⃣ MVP'
+              color: '0075ca'
+              description: 'Tasks for the initial MVP release, focusing on core features and validation.'
+            - name: '3️⃣ Post Release'
+              color: '28a745'
+              description: 'Tasks for improving the product after MVP launch, based on feedback from signed-up users.'
+            - name: '⏳ Story Points: 1'
+              color: '6f42c1'
+              description: 'Estimated effort: 1-2 hours.'
+            - name: '⏳ Story Points: 2-3'
+              color: 'ffdf5d'
+              description: 'Estimated effort: 2-4 hours.'
+            - name: '⏳ Story Points: 5'
+              color: 'ff7800'
+              description: 'Estimated effort: 5-8 hours.'
+            - name: '⏳ Story Points: 8'
+              color: 'd73a4a'
+              description: 'Estimated effort: 10-16 hours.'
+            - name: '⏳ Story Points: 13'
+              color: 'a29bfe'
+              description: 'Estimated effort: 16+ hours.'
+            - name: '⏳ Story Points: 20+'
+              color: '000000'
+              description: 'Estimated effort: 40+ hours.'
+            - name: '☁️ Cloud Infrastructure'
+              color: 'ffd33d'
+              description: 'Tasks involving AWS services such as EC2, S3, RDS, Lambda, and other cloud-based infrastructure.'
+            - name: '⚙️ DevOps'
+              color: '6f42c1'
+              description: 'Tasks associated with development operations, including automation, CI/CD, and infrastructure management.'
+            - name: '⚫ Difficulty: Epic'
+              color: '000000'
+              description: 'Large, multi-phase tasks or projects requiring significant effort.'
+            - name: '✨ Feature'
+              color: '663399'
+              description: 'Tasks focused on developing new features or adding functionality.'
+            - name: '🌐 Testing: End-to-End'
+              color: 'a2eeef'
+              description: 'Tasks involving tests that validate the entire application flow from start to finish.'
+            - name: '🌱 Difficulty: Simple'
+              color: '0e8a16'
+              description: 'Basic tasks with minimal complexity.'
+            - name: '🍎 Platform-Specific: iOS'
+              color: '2ea44f'
+              description: 'Tasks specific to iOS development, including iPhone/iPad features and compatibility.'
+            - name: '🤖 Platform-Specific: Android'
+              color: '4c1a95'
+              description: 'Tasks related to Android-specific development and compatibility.'
+            - name: '🎨 Client Side'
+              color: '1b6b91'
+              description: 'Tasks related to frontend development, such as UI/UX or component design.'
+            - name: '🏬 Deployment: App Store Release'
+              color: 'ffdf5d'
+              description: 'Tasks related to preparing and submitting updates to the App Store.'
+            - name: '👍 Difficulty: Easy'
+              color: 'f9d0c4'
+              description: 'Low-complexity tasks, typically straightforward.'
+            - name: '👩‍💻 Component/UI'
+              color: 'c5def5'
+              description: 'Tasks for developing or designing individual UI components, focusing on reusable elements.'
+            - name: '📉 Technical Debt'
+              color: 'f9d0c4'
+              description: 'Tasks related to addressing shortcuts or temporary fixes that need improvement.'
+            - name: '📚 Documentation: Updates'
+              color: '6c757d'
+              description: 'Tasks involving updates or improvements to existing documentation.'
+            - name: '📝 Documentation: New'
+              color: '0052cc'
+              description: 'Tasks focused on creating entirely new documentation.'
+            - name: '📱 App Store / Google Play Store'
+              color: '5319e7'
+              description: 'Things related to App Store and Google Play Store.'
+            - name: '📱 Deployment: Google Play Release'
+              color: 'a4f9e0'
+              description: 'Tasks related to submitting updates to Google Play for Android users.'
+            - name: '📱 Validation: Platform-Specific'
+              color: 'e7e7e7'
+              description: 'Tasks for platform-specific validation, such as for iOS or Android environments.'
+            - name: '🔄 Maintenance: Dependency Update'
+              color: '0366d6'
+              description: 'Tasks related to updating project dependencies like libraries or frameworks.'
+            - name: '🔥 Difficulty: Hard'
+              color: 'd73a4a'
+              description: 'High-complexity tasks involving significant changes.'
+            - name: '🔬 QA/Automation'
+              color: '2db1eb'
+              description: 'Tasks involving writing, updating, or automating tests to ensure code quality.'
+            - name: '🔬 Testing: Unit'
+              color: 'e7e7e7'
+              description: 'Tasks focused on writing or running unit tests for individual components.'
+            - name: '🖥️ Backend'
+              color: '6e5494'
+              description: 'Tasks related to backend development, such as APIs, databases, or server logic.'
+            - name: '🚀 Deployment: TestFlight Release'
+              color: '0366d6'
+              description: 'Tasks related to preparing and rolling updates to TestFlight for beta testing.'
+            - name: '🚨 Priority: Critical'
+              color: 'e11d21'
+              description: 'Urgent tasks that must be handled immediately to avoid major problems or system failure.'
+            - name: '🚨 Priority: High'
+              color: 'fbca04'
+              description: 'Requires timely attention. May cause larger issues if not addressed soon.'
+            - name: '🚨 Priority: Medium'
+              color: 'fef2c0'
+              description: 'Important tasks, but not urgent. Should be addressed after high-priority items.'
+            - name: '🚨 Priority: Low'
+              color: 'c2e0c6'
+              description: 'Tasks with minimal impact. Can be handled when there’s free time.'
+            - name: '🛠️ Difficulty: Moderate'
+              color: 'ffdf5d'
+              description: 'Tasks of medium complexity affecting multiple components.'
+            - name: '🧠 Difficulty: Very Hard'
+              color: '5319e7'
+              description: 'Advanced tasks requiring deep expertise or extensive work.'
+            - name: '🧠 Logic/Functions'
+              color: '6e5494'
+              description: 'Tasks for implementing behind-the-scenes business logic and functions, not related to visuals.'
+            - name: '🧩 Testing: Integration'
+              color: 'f9d0c4'
+              description: 'Tasks for ensuring that different parts of the system work together as expected.'
+            - name: '🧪 Validation: TestFlight'
+              color: 'fbca04'
+              description: 'Tasks related to validating features and collecting feedback from TestFlight users.'
+            - name: '🧹 Maintenance: Chore'
+              color: 'e4e669'
+              description: 'Routine maintenance tasks that are required for upkeep but don’t add features.'
+            - name: '🪲 Bug'
+              color: 'd73a4a'
+              description: 'Something isn’t working.'
+
+  # Job for automatically applying labels to issues based on their content
+  label-issue:
+    runs-on: ubuntu-latest
+    needs: create_labels
+    steps:
+      - name: Parse and apply labels based on issue content
+        run: |
+          labels_to_add=()
+          issue_body="${{ github.event.issue.body }}"
+
+          # Story Points
+          if [[ "$issue_body" == *"Story Points: 1"* ]]; then
+            labels_to_add+=("⏳ Story Points: 1")
+          elif [[ "$issue_body" == *"Story Points: 2-3"* ]]; then
+            labels_to_add+=("⏳ Story Points: 2-3")
+          elif [[ "$issue_body" == *"Story Points: 5"* ]]; then
+            labels_to_add+=("⏳ Story Points: 5")
+          elif [[ "$issue_body" == *"Story Points: 8"* ]]; then
+            labels_to_add+=("⏳ Story Points: 8")
+          elif [[ "$issue_body" == *"Story Points: 13"* ]]; then
+            labels_to_add+=("⏳ Story Points: 13")
+          elif [[ "$issue_body" == *"Story Points: 20+"* ]]; then
+            labels_to_add+=("⏳ Story Points: 20+")
+          fi
+
+          # Difficulty
+          if [[ "$issue_body" == *"Difficulty: Simple"* ]]; then
+            labels_to_add+=("🌱 Difficulty: Simple")
+          elif [[ "$issue_body" == *"Difficulty: Easy"* ]]; then
+            labels_to_add+=("👍 Difficulty: Easy")
+          elif [[ "$issue_body" == *"Difficulty: Moderate"* ]]; then
+            labels_to_add+=("🛠️ Difficulty: Moderate")
+          elif [[ "$issue_body" == *"Difficulty: Hard"* ]]; then
+            labels_to_add+=("🔥 Difficulty: Hard")
+          elif [[ "$issue_body" == *"Difficulty: Very Hard"* ]]; then
+            labels_to_add+=("🧠 Difficulty: Very Hard")
+          elif [[ "$issue_body" == *"Difficulty: Epic"* ]]; then
+            labels_to_add+=("⚫ Difficulty: Epic")
+          fi
+
+          # Priority
+          if [[ "$issue_body" == *"Priority: Critical"* ]]; then
+            labels_to_add+=("🚨 Priority: Critical")
+          elif [[ "$issue_body" == *"Priority: High"* ]]; then
+            labels_to_add+=("🚨 Priority: High")
+          elif [[ "$issue_body" == *"Priority: Medium"* ]]; then
+            labels_to_add+=("🚨 Priority: Medium")
+          elif [[ "$issue_body" == *"Priority: Low"* ]]; then
+            labels_to_add+=("🚨 Priority: Low")
+          fi
+
+          # Apply the labels
+          if [[ ${#labels_to_add[@]} -gt 0 ]]; then
+            gh issue edit ${{ github.event.issue.number }} --add-label "${labels_to_add[@]}"
+          fi
