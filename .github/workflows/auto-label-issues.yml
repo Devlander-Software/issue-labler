@@ -4,14 +4,26 @@ on:
   # Trigger on issue creation or editing
   issues:
     types: [opened, edited]
+  # Trigger on pull request creation or editing
+  pull_request:
+    types: [opened, edited, synchronize]
   # Trigger the action when a repository dispatch event occurs (e.g., manual trigger for creating labels and templates)
   repository_dispatch:
-    types: [create_labels]
+    types: [create_labels, cleanup, update]
+
+# Input parameters for customization
+env:
+  CREATE_TEMPLATES: ${{ vars.CREATE_TEMPLATES || 'true' }}
+  CREATE_LABELS: ${{ vars.CREATE_LABELS || 'true' }}
+  AUTO_LABEL_ISSUES: ${{ vars.AUTO_LABEL_ISSUES || 'true' }}
+  RATE_LIMIT_DELAY: ${{ vars.RATE_LIMIT_DELAY || '0.5' }}
+  MAX_RETRIES: ${{ vars.MAX_RETRIES || '3' }}
 
 jobs:
   # Job to create issue templates in the repository
   create_issue_templates:
     runs-on: ubuntu-latest
+    if: ${{ vars.CREATE_TEMPLATES != 'false' }}
     steps:
       - name: Create Issue Templates Directory
         run: |
@@ -19,18 +31,214 @@ jobs:
           
       - name: Create feature_request.md template
         run: |
-          echo "## Feature Request Template" > .github/ISSUE_TEMPLATE/feature_request.md
-          echo "Please describe the feature you're requesting." >> .github/ISSUE_TEMPLATE/feature_request.md
+          cat > .github/ISSUE_TEMPLATE/feature_request.md << 'EOF'
+          ---
+          name: ✨ Feature Request
+          about: Suggest a new feature for this project
+          title: "[FEATURE] "
+          labels: ["✨ Feature"]
+          assignees: ""
+          ---
+
+          ## 🎯 Feature Description
+          **What feature would you like to see implemented?**
+
+          A clear and concise description of what the feature should do.
+
+          ## 🔍 Problem Statement
+          **What problem does this feature solve?**
+
+          A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+
+          ## 💡 Proposed Solution
+          **How would you like this feature to work?**
+
+          A clear and concise description of what you want to happen.
+
+          ## 🎨 Alternative Solutions
+          **Have you considered any alternative solutions?**
+
+          A clear and concise description of any alternative solutions or features you've considered.
+
+          ## 📋 Additional Context
+          **Add any other context or screenshots about the feature request here.**
+
+          ## 🏷️ Labels (Optional)
+          **Select the appropriate labels for this feature:**
+
+          - [ ] **Story Points: 1** (1-2 hours)
+          - [ ] **Story Points: 2-3** (2-4 hours)
+          - [ ] **Story Points: 5** (5-8 hours)
+          - [ ] **Story Points: 8** (10-16 hours)
+          - [ ] **Story Points: 13** (16+ hours)
+          - [ ] **Story Points: 20+** (40+ hours)
+
+          - [ ] **Difficulty: Simple**
+          - [ ] **Difficulty: Easy**
+          - [ ] **Difficulty: Moderate**
+          - [ ] **Difficulty: Hard**
+          - [ ] **Difficulty: Very Hard**
+          - [ ] **Difficulty: Epic**
+
+          - [ ] **Priority: Critical**
+          - [ ] **Priority: High**
+          - [ ] **Priority: Medium**
+          - [ ] **Priority: Low**
+
+          - [ ] **🎨 Client Side**
+          - [ ] **🖥️ Backend**
+          - [ ] **☁️ Cloud Infrastructure**
+          - [ ] **⚙️ DevOps**
+          - [ ] **👩‍💻 Component/UI**
+          - [ ] **🧠 Logic/Functions**
+          EOF
           
       - name: Create general_bug_report.md template
         run: |
-          echo "## General Bug Report" > .github/ISSUE_TEMPLATE/general_bug_report.md
-          echo "Please describe the bug you found." >> .github/ISSUE_TEMPLATE/general_bug_report.md
+          cat > .github/ISSUE_TEMPLATE/general_bug_report.md << 'EOF'
+          ---
+          name: 🪲 Bug Report
+          about: Create a report to help us improve
+          title: "[BUG] "
+          labels: ["🪲 Bug"]
+          assignees: ""
+          ---
+
+          ## 🐛 Bug Description
+          **A clear and concise description of what the bug is.**
+
+          ## 🔄 Steps to Reproduce
+          **Steps to reproduce the behavior:**
+          1. Go to '...'
+          2. Click on '....'
+          3. Scroll down to '....'
+          4. See error
+
+          ## ✅ Expected Behavior
+          **A clear and concise description of what you expected to happen.**
+
+          ## 📱 Current Behavior
+          **A clear and concise description of what actually happened.**
+
+          ## 🖼️ Screenshots
+          **If applicable, add screenshots to help explain your problem.**
+
+          ## 💻 Environment
+          - **OS:** [e.g. iOS, Android, Windows, macOS]
+          - **Browser:** [e.g. Chrome, Safari, Firefox]
+          - **Version:** [e.g. 22]
+          - **Device:** [e.g. iPhone 6, Samsung Galaxy S21]
+
+          ## 📋 Additional Context
+          **Add any other context about the problem here.**
+
+          ## 🏷️ Labels (Optional)
+          **Select the appropriate labels for this bug:**
+
+          - [ ] **Story Points: 1** (1-2 hours)
+          - [ ] **Story Points: 2-3** (2-4 hours)
+          - [ ] **Story Points: 5** (5-8 hours)
+          - [ ] **Story Points: 8** (10-16 hours)
+          - [ ] **Story Points: 13** (16+ hours)
+          - [ ] **Story Points: 20+** (40+ hours)
+
+          - [ ] **Difficulty: Simple**
+          - [ ] **Difficulty: Easy**
+          - [ ] **Difficulty: Moderate**
+          - [ ] **Difficulty: Hard**
+          - [ ] **Difficulty: Very Hard**
+          - [ ] **Difficulty: Epic**
+
+          - [ ] **Priority: Critical**
+          - [ ] **Priority: High**
+          - [ ] **Priority: Medium**
+          - [ ] **Priority: Low**
+
+          - [ ] **🎨 Client Side**
+          - [ ] **🖥️ Backend**
+          - [ ] **🍎 Platform-Specific: iOS**
+          - [ ] **🤖 Platform-Specific: Android**
+          - [ ] **🔬 Testing: Unit**
+          - [ ] **🔬 Testing: Integration**
+          - [ ] **🔬 Testing: End-to-End**
+          EOF
 
       - name: Create performance_bug.md template
         run: |
-          echo "## Performance Bug Report" > .github/ISSUE_TEMPLATE/performance_bug.md
-          echo "Please describe the performance issue." >> .github/ISSUE_TEMPLATE/performance_bug.md
+          cat > .github/ISSUE_TEMPLATE/performance_bug.md << 'EOF'
+          ---
+          name: 🚀 Performance Issue
+          about: Report a performance problem
+          title: "[PERFORMANCE] "
+          labels: ["🪲 Bug"]
+          assignees: ""
+          ---
+
+          ## 🐌 Performance Issue Description
+          **A clear and concise description of the performance problem.**
+
+          ## 📊 Current Performance Metrics
+          **What are the current performance metrics?**
+          - **Load Time:** [e.g. 5 seconds]
+          - **Response Time:** [e.g. 2 seconds]
+          - **Memory Usage:** [e.g. 150MB]
+          - **CPU Usage:** [e.g. 80%]
+
+          ## 🎯 Expected Performance
+          **What should the performance metrics be?**
+          - **Load Time:** [e.g. 1 second]
+          - **Response Time:** [e.g. 200ms]
+          - **Memory Usage:** [e.g. 50MB]
+          - **CPU Usage:** [e.g. 20%]
+
+          ## 🔄 Steps to Reproduce
+          **Steps to reproduce the performance issue:**
+          1. Go to '...'
+          2. Click on '....'
+          3. Wait for '....'
+          4. Observe slow performance
+
+          ## 📱 Environment
+          - **OS:** [e.g. iOS, Android, Windows, macOS]
+          - **Browser:** [e.g. Chrome, Safari, Firefox]
+          - **Version:** [e.g. 22]
+          - **Device:** [e.g. iPhone 6, Samsung Galaxy S21]
+          - **Network:** [e.g. WiFi, 4G, 3G]
+
+          ## 📈 Performance Profiling
+          **If available, include performance profiling data:**
+          - Screenshots of performance tools (Chrome DevTools, Xcode Instruments, etc.)
+          - Stack traces or error logs
+          - Network waterfall charts
+
+          ## 🏷️ Labels (Optional)
+          **Select the appropriate labels for this performance issue:**
+
+          - [ ] **Story Points: 1** (1-2 hours)
+          - [ ] **Story Points: 2-3** (2-4 hours)
+          - [ ] **Story Points: 5** (5-8 hours)
+          - [ ] **Story Points: 8** (10-16 hours)
+          - [ ] **Story Points: 13** (16+ hours)
+          - [ ] **Story Points: 20+** (40+ hours)
+
+          - [ ] **Difficulty: Simple**
+          - [ ] **Difficulty: Easy**
+          - [ ] **Difficulty: Moderate**
+          - [ ] **Difficulty: Hard**
+          - [ ] **Difficulty: Very Hard**
+          - [ ] **Difficulty: Epic**
+
+          - [ ] **Priority: Critical**
+          - [ ] **Priority: High**
+          - [ ] **Priority: Medium**
+          - [ ] **Priority: Low**
+
+          - [ ] **🎨 Client Side**
+          - [ ] **🖥️ Backend**
+          - [ ] **☁️ Cloud Infrastructure**
+          - [ ] **🍎 Platform-Specific: iOS**
+          - [ ] **🤖 Platform-Specific: Android**
+          EOF
 
       - name: Commit Issue Templates
         run: |
@@ -46,197 +254,703 @@ jobs:
   create_labels:
     runs-on: ubuntu-latest
     needs: create_issue_templates
+    if: ${{ vars.CREATE_LABELS != 'false' }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
       - name: Create GitHub labels
-        uses: juliangruber/create-github-labels-action@v2
+        run: |
+          set -e  # Exit on any error
+          
+          echo "🚀 Starting label creation process..."
+          
+          # Check if config file exists, otherwise use defaults
+          if [ -f "config.yml" ]; then
+            echo "📋 Using configuration from config.yml"
+            # Parse config file and create labels
+            # This would require a more sophisticated parser
+            source_labels="config"
+          else
+            echo "📋 Using default label configuration"
+            source_labels="default"
+          fi
+          
+          # Define all labels with their properties
+          if [ "$source_labels" = "default" ]; then
+            declare -A labels=(
+              ["1️⃣ Prelease"]="006b75:Tasks for the pre-MVP release with only the bare minimum to launch, without customer validation."
+              ["2️⃣ MVP"]="0075ca:Tasks for the initial MVP release, focusing on core features and validation."
+              ["3️⃣ Post Release"]="28a745:Tasks for improving the product after MVP launch, based on feedback from signed-up users."
+              ["⏳ Story Points: 1"]="6f42c1:Estimated effort: 1-2 hours."
+              ["⏳ Story Points: 2-3"]="ffdf5d:Estimated effort: 2-4 hours."
+              ["⏳ Story Points: 5"]="ff7800:Estimated effort: 5-8 hours."
+              ["⏳ Story Points: 8"]="d73a4a:Estimated effort: 10-16 hours."
+              ["⏳ Story Points: 13"]="a29bfe:Estimated effort: 16+ hours."
+              ["⏳ Story Points: 20+"]="000000:Estimated effort: 40+ hours."
+              # Programming Languages
+              ["JavaScript"]="f1e05a:JavaScript and TypeScript related changes."
+              ["Python"]="3572A5:Python related changes."
+              ["Java"]="b07219:Java related changes."
+              ["Swift"]="ffac45:Swift related changes."
+              ["Kotlin"]="F18E33:Kotlin related changes."
+              ["Go"]="00ADD8:Go related changes."
+              ["Rust"]="dea584:Rust related changes."
+              ["PHP"]="4F5D95:PHP related changes."
+              ["Ruby"]="701516:Ruby related changes."
+              ["C#"]="178600:C# related changes."
+              ["☁️ Cloud Infrastructure"]="ffd33d:Tasks involving AWS services such as EC2, S3, RDS, Lambda, and other cloud-based infrastructure."
+              ["⚙️ DevOps"]="6f42c1:Tasks associated with development operations, including automation, CI/CD, and infrastructure management."
+              ["⚫ Difficulty: Epic"]="000000:Large, multi-phase tasks or projects requiring significant effort."
+              ["✨ Feature"]="663399:Tasks focused on developing new features or adding functionality."
+              ["🌐 Testing: End-to-End"]="a2eeef:Tasks involving tests that validate the entire application flow from start to finish."
+              ["🌱 Difficulty: Simple"]="0e8a16:Basic tasks with minimal complexity."
+              ["🍎 Platform-Specific: iOS"]="2ea44f:Tasks specific to iOS development, including iPhone/iPad features and compatibility."
+              ["🤖 Platform-Specific: Android"]="4c1a95:Tasks related to Android-specific development and compatibility."
+              ["🎨 Client Side"]="1b6b91:Tasks related to frontend development, such as UI/UX or component design."
+              ["🏬 Deployment: App Store Release"]="ffdf5d:Tasks related to preparing and submitting updates to the App Store."
+              ["👍 Difficulty: Easy"]="f9d0c4:Low-complexity tasks, typically straightforward."
+              ["👩‍💻 Component/UI"]="c5def5:Tasks for developing or designing individual UI components, focusing on reusable elements."
+              ["📉 Technical Debt"]="f9d0c4:Tasks related to addressing shortcuts or temporary fixes that need improvement."
+              ["📚 Documentation: Updates"]="6c757d:Tasks involving updates or improvements to existing documentation."
+              ["📝 Documentation: New"]="0052cc:Tasks focused on creating entirely new documentation."
+              ["📱 App Store / Google Play Store"]="5319e7:Things related to App Store and Google Play Store."
+              ["📱 Deployment: Google Play Release"]="a4f9e0:Tasks related to submitting updates to Google Play for Android users."
+              ["📱 Validation: Platform-Specific"]="e7e7e7:Tasks for platform-specific validation, such as for iOS or Android environments."
+              ["🔄 Maintenance: Dependency Update"]="0366d6:Tasks related to updating project dependencies like libraries or frameworks."
+              ["🔥 Difficulty: Hard"]="d73a4a:High-complexity tasks involving significant changes."
+              ["🔬 QA/Automation"]="2db1eb:Tasks involving writing, updating, or automating tests to ensure code quality."
+              ["🔬 Testing: Unit"]="e7e7e7:Tasks focused on writing or running unit tests for individual components."
+              ["🖥️ Backend"]="6e5494:Tasks related to backend development, such as APIs, databases, or server logic."
+              ["🚀 Deployment: TestFlight Release"]="0366d6:Tasks related to preparing and rolling updates to TestFlight for beta testing."
+              ["🚨 Priority: Critical"]="e11d21:Urgent tasks that must be handled immediately to avoid major problems or system failure."
+              ["🚨 Priority: High"]="fbca04:Requires timely attention. May cause larger issues if not addressed soon."
+              ["🚨 Priority: Medium"]="fef2c0:Important tasks, but not urgent. Should be addressed after high-priority items."
+              ["🚨 Priority: Low"]="c2e0c6:Tasks with minimal impact. Can be handled when there's free time."
+              ["🛠️ Difficulty: Moderate"]="ffdf5d:Tasks of medium complexity affecting multiple components."
+              ["🧠 Difficulty: Very Hard"]="5319e7:Advanced tasks requiring deep expertise or extensive work."
+              ["🧠 Logic/Functions"]="6e5494:Tasks for implementing behind-the-scenes business logic and functions, not related to visuals."
+              ["🧩 Testing: Integration"]="f9d0c4:Tasks for ensuring that different parts of the system work together as expected."
+              ["🧪 Validation: TestFlight"]="fbca04:Tasks related to validating features and collecting feedback from TestFlight users."
+              ["🧹 Maintenance: Chore"]="e4e669:Routine maintenance tasks that are required for upkeep but don't add features."
+              ["🪲 Bug"]="d73a4a:Something isn't working."
+            )
+          fi
+
+          created_count=0
+          skipped_count=0
+          error_count=0
+
+          echo "📋 Total labels to process: ${#labels[@]}"
+
+          # Rate limiting function
+          check_rate_limit() {
+            local remaining
+            remaining=$(gh api rate_limit --jq '.resources.core.remaining' 2>/dev/null || echo "5000")
+            if [ "$remaining" -lt 50 ]; then
+              echo "⚠️ Rate limit low ($remaining remaining). Waiting 60 seconds..."
+              sleep 60
+            fi
+          }
+
+          # Retry function with exponential backoff
+          retry_with_backoff() {
+            local max_attempts=3
+            local attempt=1
+            local delay=1
+            local command="$@"
+            
+            while [ $attempt -le $max_attempts ]; do
+              if eval "$command"; then
+                return 0
+              else
+                echo "❌ Attempt $attempt failed. Retrying in $delay seconds..."
+                sleep $delay
+                attempt=$((attempt + 1))
+                delay=$((delay * 2))
+              fi
+            done
+            
+            echo "❌ All attempts failed for command: $command"
+            return 1
+          }
+
+          # Validate label data
+          validate_label() {
+            local name="$1"
+            local color="$2"
+            local description="$3"
+            
+            # Check if name is not empty
+            if [ -z "$name" ]; then
+              echo "❌ Label name cannot be empty"
+              return 1
+            fi
+            
+            # Check if color is valid hex
+            if ! [[ "$color" =~ ^[0-9a-fA-F]{6}$ ]]; then
+              echo "❌ Invalid color format: $color (should be 6-digit hex)"
+              return 1
+            fi
+            
+            # Check if description is not too long (GitHub limit is 100 characters)
+            if [ ${#description} -gt 100 ]; then
+              echo "❌ Description too long: ${#description} characters (max 100)"
+              return 1
+            fi
+            
+            return 0
+          }
+
+          # Create each label with rate limiting, validation, and retry
+          for label_name in "${!labels[@]}"; do
+            IFS=':' read -r color description <<< "${labels[$label_name]}"
+            
+            # Validate label data before processing
+            if ! validate_label "$label_name" "$color" "$description"; then
+              echo "❌ Skipping invalid label: $label_name"
+              ((error_count++))
+              continue
+            fi
+            
+            # Check rate limit before each operation
+            check_rate_limit
+            
+            # URL encode the label name for API calls
+            encoded_name=$(echo "$label_name" | sed 's/ /%20/g')
+            
+            # Check if label already exists
+            if ! gh api repos/:owner/:repo/labels/"$encoded_name" >/dev/null 2>&1; then
+              echo "🔄 Creating label: $label_name"
+              
+              # Create the label with retry logic
+              if retry_with_backoff "gh api repos/:owner/:repo/labels -f name=\"$label_name\" -f color=\"$color\" -f description=\"$description\" >/dev/null 2>&1"; then
+                echo "✅ Successfully created: $label_name"
+                ((created_count++))
+              else
+                echo "❌ Failed to create: $label_name after retries"
+                ((error_count++))
+              fi
+              
+              # Add delay between creations to avoid rate limits
+              sleep 0.5
+            else
+              echo "⏭️ Label already exists: $label_name"
+              ((skipped_count++))
+            fi
+          done
+
+          echo ""
+          echo "📊 Label Creation Summary:"
+          echo "   ✅ Created: $created_count"
+          echo "   ⏭️ Skipped: $skipped_count"
+          echo "   ❌ Errors: $error_count"
+          echo "   📋 Total: ${#labels[@]}"
+          
+          # Create a summary comment on the repository
+          if [ "$created_count" -gt 0 ] || [ "$error_count" -gt 0 ]; then
+            summary="## 🏷️ Label Setup Summary
+            
+            - ✅ **Created**: $created_count labels
+            - ⏭️ **Skipped**: $skipped_count labels (already existed)
+            - ❌ **Errors**: $error_count labels
+            
+            **Total Processed**: ${#labels[@]} labels
+            
+            $(date '+%Y-%m-%d %H:%M:%S UTC')"
+            
+            # Create a comment on the latest issue or PR for visibility
+            latest_issue=$(gh api repos/:owner/:repo/issues --jq '.[0].number' 2>/dev/null || echo "")
+            if [ -n "$latest_issue" ]; then
+              echo "$summary" | gh issue comment "$latest_issue" --body-file -
+            fi
+          fi
+          
+          if [ $error_count -gt 0 ]; then
+            echo "⚠️ Some labels failed to create. Check the logs above for details."
+            exit 1
+          else
+            echo "🎉 All labels processed successfully!"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Job for file-based labeling of pull requests
+  label-by-files:
+    runs-on: ubuntu-latest
+    needs: create_labels
+    if: ${{ vars.AUTO_LABEL_ISSUES != 'false' && github.event_name == 'pull_request' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          access-token: ${{ secrets.GITHUB_TOKEN }}
-          labels: |
-            - name: '1️⃣ Prelease'
-              color: '006b75'
-              description: 'Tasks for the pre-MVP release with only the bare minimum to launch, without customer validation.'
-            - name: '2️⃣ MVP'
-              color: '0075ca'
-              description: 'Tasks for the initial MVP release, focusing on core features and validation.'
-            - name: '3️⃣ Post Release'
-              color: '28a745'
-              description: 'Tasks for improving the product after MVP launch, based on feedback from signed-up users.'
-            - name: '⏳ Story Points: 1'
-              color: '6f42c1'
-              description: 'Estimated effort: 1-2 hours.'
-            - name: '⏳ Story Points: 2-3'
-              color: 'ffdf5d'
-              description: 'Estimated effort: 2-4 hours.'
-            - name: '⏳ Story Points: 5'
-              color: 'ff7800'
-              description: 'Estimated effort: 5-8 hours.'
-            - name: '⏳ Story Points: 8'
-              color: 'd73a4a'
-              description: 'Estimated effort: 10-16 hours.'
-            - name: '⏳ Story Points: 13'
-              color: 'a29bfe'
-              description: 'Estimated effort: 16+ hours.'
-            - name: '⏳ Story Points: 20+'
-              color: '000000'
-              description: 'Estimated effort: 40+ hours.'
-            - name: '☁️ Cloud Infrastructure'
-              color: 'ffd33d'
-              description: 'Tasks involving AWS services such as EC2, S3, RDS, Lambda, and other cloud-based infrastructure.'
-            - name: '⚙️ DevOps'
-              color: '6f42c1'
-              description: 'Tasks associated with development operations, including automation, CI/CD, and infrastructure management.'
-            - name: '⚫ Difficulty: Epic'
-              color: '000000'
-              description: 'Large, multi-phase tasks or projects requiring significant effort.'
-            - name: '✨ Feature'
-              color: '663399'
-              description: 'Tasks focused on developing new features or adding functionality.'
-            - name: '🌐 Testing: End-to-End'
-              color: 'a2eeef'
-              description: 'Tasks involving tests that validate the entire application flow from start to finish.'
-            - name: '🌱 Difficulty: Simple'
-              color: '0e8a16'
-              description: 'Basic tasks with minimal complexity.'
-            - name: '🍎 Platform-Specific: iOS'
-              color: '2ea44f'
-              description: 'Tasks specific to iOS development, including iPhone/iPad features and compatibility.'
-            - name: '🤖 Platform-Specific: Android'
-              color: '4c1a95'
-              description: 'Tasks related to Android-specific development and compatibility.'
-            - name: '🎨 Client Side'
-              color: '1b6b91'
-              description: 'Tasks related to frontend development, such as UI/UX or component design.'
-            - name: '🏬 Deployment: App Store Release'
-              color: 'ffdf5d'
-              description: 'Tasks related to preparing and submitting updates to the App Store.'
-            - name: '👍 Difficulty: Easy'
-              color: 'f9d0c4'
-              description: 'Low-complexity tasks, typically straightforward.'
-            - name: '👩‍💻 Component/UI'
-              color: 'c5def5'
-              description: 'Tasks for developing or designing individual UI components, focusing on reusable elements.'
-            - name: '📉 Technical Debt'
-              color: 'f9d0c4'
-              description: 'Tasks related to addressing shortcuts or temporary fixes that need improvement.'
-            - name: '📚 Documentation: Updates'
-              color: '6c757d'
-              description: 'Tasks involving updates or improvements to existing documentation.'
-            - name: '📝 Documentation: New'
-              color: '0052cc'
-              description: 'Tasks focused on creating entirely new documentation.'
-            - name: '📱 App Store / Google Play Store'
-              color: '5319e7'
-              description: 'Things related to App Store and Google Play Store.'
-            - name: '📱 Deployment: Google Play Release'
-              color: 'a4f9e0'
-              description: 'Tasks related to submitting updates to Google Play for Android users.'
-            - name: '📱 Validation: Platform-Specific'
-              color: 'e7e7e7'
-              description: 'Tasks for platform-specific validation, such as for iOS or Android environments.'
-            - name: '🔄 Maintenance: Dependency Update'
-              color: '0366d6'
-              description: 'Tasks related to updating project dependencies like libraries or frameworks.'
-            - name: '🔥 Difficulty: Hard'
-              color: 'd73a4a'
-              description: 'High-complexity tasks involving significant changes.'
-            - name: '🔬 QA/Automation'
-              color: '2db1eb'
-              description: 'Tasks involving writing, updating, or automating tests to ensure code quality.'
-            - name: '🔬 Testing: Unit'
-              color: 'e7e7e7'
-              description: 'Tasks focused on writing or running unit tests for individual components.'
-            - name: '🖥️ Backend'
-              color: '6e5494'
-              description: 'Tasks related to backend development, such as APIs, databases, or server logic.'
-            - name: '🚀 Deployment: TestFlight Release'
-              color: '0366d6'
-              description: 'Tasks related to preparing and rolling updates to TestFlight for beta testing.'
-            - name: '🚨 Priority: Critical'
-              color: 'e11d21'
-              description: 'Urgent tasks that must be handled immediately to avoid major problems or system failure.'
-            - name: '🚨 Priority: High'
-              color: 'fbca04'
-              description: 'Requires timely attention. May cause larger issues if not addressed soon.'
-            - name: '🚨 Priority: Medium'
-              color: 'fef2c0'
-              description: 'Important tasks, but not urgent. Should be addressed after high-priority items.'
-            - name: '🚨 Priority: Low'
-              color: 'c2e0c6'
-              description: 'Tasks with minimal impact. Can be handled when there’s free time.'
-            - name: '🛠️ Difficulty: Moderate'
-              color: 'ffdf5d'
-              description: 'Tasks of medium complexity affecting multiple components.'
-            - name: '🧠 Difficulty: Very Hard'
-              color: '5319e7'
-              description: 'Advanced tasks requiring deep expertise or extensive work.'
-            - name: '🧠 Logic/Functions'
-              color: '6e5494'
-              description: 'Tasks for implementing behind-the-scenes business logic and functions, not related to visuals.'
-            - name: '🧩 Testing: Integration'
-              color: 'f9d0c4'
-              description: 'Tasks for ensuring that different parts of the system work together as expected.'
-            - name: '🧪 Validation: TestFlight'
-              color: 'fbca04'
-              description: 'Tasks related to validating features and collecting feedback from TestFlight users.'
-            - name: '🧹 Maintenance: Chore'
-              color: 'e4e669'
-              description: 'Routine maintenance tasks that are required for upkeep but don’t add features.'
-            - name: '🪲 Bug'
-              color: 'd73a4a'
-              description: 'Something isn’t working.'
+          fetch-depth: 0  # Fetch full history for better diff
+
+      - name: Label by file changes
+        run: |
+          echo "🔍 Analyzing file changes for PR #${{ github.event.pull_request.number }}"
+          
+          # Get the list of changed files
+          changed_files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          
+          echo "📁 Changed files:"
+          echo "$changed_files"
+          
+          labels_to_add=()
+          
+          # Programming Languages
+          if echo "$changed_files" | grep -q "\.js$\|\.jsx$\|\.ts$\|\.tsx$"; then
+            labels_to_add+=("JavaScript")
+            echo "✅ Detected JavaScript/TypeScript files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.py$"; then
+            labels_to_add+=("Python")
+            echo "✅ Detected Python files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.java$"; then
+            labels_to_add+=("Java")
+            echo "✅ Detected Java files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.swift$"; then
+            labels_to_add+=("Swift")
+            echo "✅ Detected Swift files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.kt$\|\.kts$"; then
+            labels_to_add+=("Kotlin")
+            echo "✅ Detected Kotlin files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.go$"; then
+            labels_to_add+=("Go")
+            echo "✅ Detected Go files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.rs$"; then
+            labels_to_add+=("Rust")
+            echo "✅ Detected Rust files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.php$"; then
+            labels_to_add+=("PHP")
+            echo "✅ Detected PHP files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.rb$"; then
+            labels_to_add+=("Ruby")
+            echo "✅ Detected Ruby files"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.cs$"; then
+            labels_to_add+=("C#")
+            echo "✅ Detected C# files"
+          fi
+          
+          # Frontend/Backend Detection
+          if echo "$changed_files" | grep -q "frontend\|client\|src/components\|src/pages\|public/"; then
+            labels_to_add+=("🎨 Client Side")
+            echo "✅ Detected frontend changes"
+          fi
+          
+          if echo "$changed_files" | grep -q "backend\|server\|api\|controllers\|models\|services"; then
+            labels_to_add+=("🖥️ Backend")
+            echo "✅ Detected backend changes"
+          fi
+          
+          # Platform Specific
+          if echo "$changed_files" | grep -q "ios\|iPhone\|iPad\|\.ipa$"; then
+            labels_to_add+=("🍎 Platform-Specific: iOS")
+            echo "✅ Detected iOS-specific changes"
+          fi
+          
+          if echo "$changed_files" | grep -q "android\|\.apk$\|\.aab$"; then
+            labels_to_add+=("🤖 Platform-Specific: Android")
+            echo "✅ Detected Android-specific changes"
+          fi
+          
+          # Infrastructure & DevOps
+          if echo "$changed_files" | grep -q "docker\|Dockerfile\|\.dockerignore"; then
+            labels_to_add+=("⚙️ DevOps")
+            echo "✅ Detected Docker changes"
+          fi
+          
+          if echo "$changed_files" | grep -q "terraform\|\.tf$"; then
+            labels_to_add+=("☁️ Cloud Infrastructure")
+            echo "✅ Detected Terraform changes"
+          fi
+          
+          if echo "$changed_files" | grep -q "kubernetes\|k8s\|\.yaml\|\.yml"; then
+            labels_to_add+=("⚙️ DevOps")
+            echo "✅ Detected Kubernetes changes"
+          fi
+          
+          if echo "$changed_files" | grep -q "\.github/workflows\|\.github/actions"; then
+            labels_to_add+=("⚙️ DevOps")
+            echo "✅ Detected GitHub Actions changes"
+          fi
+          
+          # Testing
+          if echo "$changed_files" | grep -q "test\|spec\|__tests__\|\.test\.\|\.spec\.\|cypress\|jest"; then
+            labels_to_add+=("🔬 Testing: Unit")
+            echo "✅ Detected test files"
+          fi
+          
+          if echo "$changed_files" | grep -q "e2e\|integration\|\.e2e\.\|\.integration\."; then
+            labels_to_add+=("🌐 Testing: End-to-End")
+            echo "✅ Detected E2E test files"
+          fi
+          
+          # Documentation
+          if echo "$changed_files" | grep -q "docs\|documentation\|README\|\.md$"; then
+            labels_to_add+=("📚 Documentation: Updates")
+            echo "✅ Detected documentation changes"
+          fi
+          
+          # Configuration
+          if echo "$changed_files" | grep -q "config\|\.config\.\|\.env\|\.json$"; then
+            labels_to_add+=("⚙️ DevOps")
+            echo "✅ Detected configuration changes"
+          fi
+          
+          # Database
+          if echo "$changed_files" | grep -q "migration\|schema\|\.sql$"; then
+            labels_to_add+=("🖥️ Backend")
+            echo "✅ Detected database changes"
+          fi
+          
+          # Security
+          if echo "$changed_files" | grep -q "security\|auth\|authentication\|\.pem$\|\.key$"; then
+            labels_to_add+=("🖥️ Backend")
+            echo "✅ Detected security-related changes"
+          fi
+          
+          # Performance
+          if echo "$changed_files" | grep -q "performance\|optimization\|cache\|\.cache"; then
+            labels_to_add+=("🚀 Performance")
+            echo "✅ Detected performance-related changes"
+          fi
+          
+          # Remove duplicates
+          labels_to_add=($(printf "%s\n" "${labels_to_add[@]}" | sort -u))
+          
+          echo "🏷️ Labels to add: ${labels_to_add[*]}"
+          
+          # Apply the labels
+          if [[ ${#labels_to_add[@]} -gt 0 ]]; then
+            gh pr edit ${{ github.event.pull_request.number }} --add-label "${labels_to_add[@]}"
+            echo "✅ Successfully applied labels: ${labels_to_add[*]}"
+          else
+            echo "ℹ️ No file-based labels to apply"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Job for cleaning up orphaned labels (optional)
+  cleanup_labels:
+    runs-on: ubuntu-latest
+    needs: create_labels
+    if: github.event_name == 'repository_dispatch' && github.event.client_payload.action == 'cleanup'
+    steps:
+      - name: Cleanup orphaned labels
+        run: |
+          echo "🧹 Starting label cleanup process..."
+          
+          # Get all current labels
+          current_labels=$(gh api repos/:owner/:repo/labels --jq '.[].name' | tr '\n' ' ')
+          
+          # Define expected labels (same as in create_labels job)
+          declare -A expected_labels=(
+            ["1️⃣ Prelease"]="1"
+            ["2️⃣ MVP"]="1"
+            ["3️⃣ Post Release"]="1"
+            ["⏳ Story Points: 1"]="1"
+            ["⏳ Story Points: 2-3"]="1"
+            ["⏳ Story Points: 5"]="1"
+            ["⏳ Story Points: 8"]="1"
+            ["⏳ Story Points: 13"]="1"
+            ["⏳ Story Points: 20+"]="1"
+            # Add all other expected labels here
+          )
+          
+          # Find orphaned labels (labels that exist but aren't expected)
+          for label in $current_labels; do
+            if [[ ! -v expected_labels["$label"] ]]; then
+              echo "🗑️ Found orphaned label: $label"
+              # Note: We don't delete by default for safety
+              # Uncomment the next line to actually delete
+              # gh api repos/:owner/:repo/labels/"$(echo "$label" | sed 's/ /%20/g')" -X DELETE
+            fi
+          done
+          
+          echo "✅ Cleanup process completed"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Job for automatically applying labels to issues based on their content
   label-issue:
     runs-on: ubuntu-latest
     needs: create_labels
+    if: ${{ vars.AUTO_LABEL_ISSUES != 'false' && github.event_name == 'issues' }}
     steps:
       - name: Parse and apply labels based on issue content
         run: |
           labels_to_add=()
           issue_body="${{ github.event.issue.body }}"
+          issue_title="${{ github.event.issue.title }}"
+          combined_text="$issue_title $issue_body"
 
-          # Story Points
-          if [[ "$issue_body" == *"Story Points: 1"* ]]; then
+          echo "Analyzing issue: ${{ github.event.issue.number }}"
+          echo "Title: $issue_title"
+
+          # First, check for checked checkboxes in the issue body
+          echo "🔍 Checking for checked checkboxes..."
+          
+          # Story Points from checkboxes
+          if [[ "$issue_body" =~ "- \[x\] \*\*Story Points: 1\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Story Points: 1\*\*" ]]; then
             labels_to_add+=("⏳ Story Points: 1")
-          elif [[ "$issue_body" == *"Story Points: 2-3"* ]]; then
+            echo "✅ Found checked checkbox: ⏳ Story Points: 1"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Story Points: 2-3\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Story Points: 2-3\*\*" ]]; then
             labels_to_add+=("⏳ Story Points: 2-3")
-          elif [[ "$issue_body" == *"Story Points: 5"* ]]; then
+            echo "✅ Found checked checkbox: ⏳ Story Points: 2-3"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Story Points: 5\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Story Points: 5\*\*" ]]; then
             labels_to_add+=("⏳ Story Points: 5")
-          elif [[ "$issue_body" == *"Story Points: 8"* ]]; then
+            echo "✅ Found checked checkbox: ⏳ Story Points: 5"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Story Points: 8\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Story Points: 8\*\*" ]]; then
             labels_to_add+=("⏳ Story Points: 8")
-          elif [[ "$issue_body" == *"Story Points: 13"* ]]; then
+            echo "✅ Found checked checkbox: ⏳ Story Points: 8"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Story Points: 13\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Story Points: 13\*\*" ]]; then
             labels_to_add+=("⏳ Story Points: 13")
-          elif [[ "$issue_body" == *"Story Points: 20+"* ]]; then
+            echo "✅ Found checked checkbox: ⏳ Story Points: 13"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Story Points: 20\+\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Story Points: 20\+\*\*" ]]; then
             labels_to_add+=("⏳ Story Points: 20+")
+            echo "✅ Found checked checkbox: ⏳ Story Points: 20+"
           fi
 
-          # Difficulty
-          if [[ "$issue_body" == *"Difficulty: Simple"* ]]; then
+          # Difficulty from checkboxes
+          if [[ "$issue_body" =~ "- \[x\] \*\*Difficulty: Simple\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Difficulty: Simple\*\*" ]]; then
             labels_to_add+=("🌱 Difficulty: Simple")
-          elif [[ "$issue_body" == *"Difficulty: Easy"* ]]; then
+            echo "✅ Found checked checkbox: 🌱 Difficulty: Simple"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Difficulty: Easy\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Difficulty: Easy\*\*" ]]; then
             labels_to_add+=("👍 Difficulty: Easy")
-          elif [[ "$issue_body" == *"Difficulty: Moderate"* ]]; then
+            echo "✅ Found checked checkbox: 👍 Difficulty: Easy"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Difficulty: Moderate\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Difficulty: Moderate\*\*" ]]; then
             labels_to_add+=("🛠️ Difficulty: Moderate")
-          elif [[ "$issue_body" == *"Difficulty: Hard"* ]]; then
+            echo "✅ Found checked checkbox: 🛠️ Difficulty: Moderate"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Difficulty: Hard\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Difficulty: Hard\*\*" ]]; then
             labels_to_add+=("🔥 Difficulty: Hard")
-          elif [[ "$issue_body" == *"Difficulty: Very Hard"* ]]; then
+            echo "✅ Found checked checkbox: 🔥 Difficulty: Hard"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Difficulty: Very Hard\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Difficulty: Very Hard\*\*" ]]; then
             labels_to_add+=("🧠 Difficulty: Very Hard")
-          elif [[ "$issue_body" == *"Difficulty: Epic"* ]]; then
+            echo "✅ Found checked checkbox: 🧠 Difficulty: Very Hard"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Difficulty: Epic\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Difficulty: Epic\*\*" ]]; then
             labels_to_add+=("⚫ Difficulty: Epic")
+            echo "✅ Found checked checkbox: ⚫ Difficulty: Epic"
           fi
 
-          # Priority
-          if [[ "$issue_body" == *"Priority: Critical"* ]]; then
+          # Priority from checkboxes
+          if [[ "$issue_body" =~ "- \[x\] \*\*Priority: Critical\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Priority: Critical\*\*" ]]; then
             labels_to_add+=("🚨 Priority: Critical")
-          elif [[ "$issue_body" == *"Priority: High"* ]]; then
+            echo "✅ Found checked checkbox: 🚨 Priority: Critical"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Priority: High\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Priority: High\*\*" ]]; then
             labels_to_add+=("🚨 Priority: High")
-          elif [[ "$issue_body" == *"Priority: Medium"* ]]; then
+            echo "✅ Found checked checkbox: 🚨 Priority: High"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Priority: Medium\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Priority: Medium\*\*" ]]; then
             labels_to_add+=("🚨 Priority: Medium")
-          elif [[ "$issue_body" == *"Priority: Low"* ]]; then
+            echo "✅ Found checked checkbox: 🚨 Priority: Medium"
+          elif [[ "$issue_body" =~ "- \[x\] \*\*Priority: Low\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*Priority: Low\*\*" ]]; then
             labels_to_add+=("🚨 Priority: Low")
+            echo "✅ Found checked checkbox: 🚨 Priority: Low"
           fi
+
+          # Development area checkboxes
+          if [[ "$issue_body" =~ "- \[x\] \*\*🎨 Client Side\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*🎨 Client Side\*\*" ]]; then
+            labels_to_add+=("🎨 Client Side")
+            echo "✅ Found checked checkbox: 🎨 Client Side"
+          fi
+          if [[ "$issue_body" =~ "- \[x\] \*\*🖥️ Backend\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*🖥️ Backend\*\*" ]]; then
+            labels_to_add+=("🖥️ Backend")
+            echo "✅ Found checked checkbox: 🖥️ Backend"
+          fi
+          if [[ "$issue_body" =~ "- \[x\] \*\*☁️ Cloud Infrastructure\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*☁️ Cloud Infrastructure\*\*" ]]; then
+            labels_to_add+=("☁️ Cloud Infrastructure")
+            echo "✅ Found checked checkbox: ☁️ Cloud Infrastructure"
+          fi
+          if [[ "$issue_body" =~ "- \[x\] \*\*⚙️ DevOps\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*⚙️ DevOps\*\*" ]]; then
+            labels_to_add+=("⚙️ DevOps")
+            echo "✅ Found checked checkbox: ⚙️ DevOps"
+          fi
+          if [[ "$issue_body" =~ "- \[x\] \*\*👩‍💻 Component/UI\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*👩‍💻 Component/UI\*\*" ]]; then
+            labels_to_add+=("👩‍💻 Component/UI")
+            echo "✅ Found checked checkbox: 👩‍💻 Component/UI"
+          fi
+          if [[ "$issue_body" =~ "- \[x\] \*\*🧠 Logic/Functions\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*🧠 Logic/Functions\*\*" ]]; then
+            labels_to_add+=("🧠 Logic/Functions")
+            echo "✅ Found checked checkbox: 🧠 Logic/Functions"
+          fi
+
+          # Testing checkboxes
+          if [[ "$issue_body" =~ "- \[x\] \*\*🔬 Testing: Unit\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*🔬 Testing: Unit\*\*" ]]; then
+            labels_to_add+=("🔬 Testing: Unit")
+            echo "✅ Found checked checkbox: 🔬 Testing: Unit"
+          fi
+          if [[ "$issue_body" =~ "- \[x\] \*\*🧩 Testing: Integration\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*🧩 Testing: Integration\*\*" ]]; then
+            labels_to_add+=("🧩 Testing: Integration")
+            echo "✅ Found checked checkbox: 🧩 Testing: Integration"
+          fi
+          if [[ "$issue_body" =~ "- \[x\] \*\*🌐 Testing: End-to-End\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*🌐 Testing: End-to-End\*\*" ]]; then
+            labels_to_add+=("🌐 Testing: End-to-End")
+            echo "✅ Found checked checkbox: 🌐 Testing: End-to-End"
+          fi
+
+          # Platform specific checkboxes
+          if [[ "$issue_body" =~ "- \[x\] \*\*🍎 Platform-Specific: iOS\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*🍎 Platform-Specific: iOS\*\*" ]]; then
+            labels_to_add+=("🍎 Platform-Specific: iOS")
+            echo "✅ Found checked checkbox: 🍎 Platform-Specific: iOS"
+          fi
+          if [[ "$issue_body" =~ "- \[x\] \*\*🤖 Platform-Specific: Android\*\*" ]] || [[ "$issue_body" =~ "- \[X\] \*\*🤖 Platform-Specific: Android\*\*" ]]; then
+            labels_to_add+=("🤖 Platform-Specific: Android")
+            echo "✅ Found checked checkbox: 🤖 Platform-Specific: Android"
+          fi
+
+          # If no checkboxes were checked, fall back to keyword detection
+          if [[ ${#labels_to_add[@]} -eq 0 ]]; then
+            echo "🔍 No checkboxes found, falling back to keyword detection..."
+            
+            # Story Points (check both title and body)
+            if [[ "$combined_text" =~ [Ss]tory\s*[Pp]oints?\s*:\s*1 ]]; then
+              labels_to_add+=("⏳ Story Points: 1")
+            elif [[ "$combined_text" =~ [Ss]tory\s*[Pp]oints?\s*:\s*2-3 ]]; then
+              labels_to_add+=("⏳ Story Points: 2-3")
+            elif [[ "$combined_text" =~ [Ss]tory\s*[Pp]oints?\s*:\s*5 ]]; then
+              labels_to_add+=("⏳ Story Points: 5")
+            elif [[ "$combined_text" =~ [Ss]tory\s*[Pp]oints?\s*:\s*8 ]]; then
+              labels_to_add+=("⏳ Story Points: 8")
+            elif [[ "$combined_text" =~ [Ss]tory\s*[Pp]oints?\s*:\s*13 ]]; then
+              labels_to_add+=("⏳ Story Points: 13")
+            elif [[ "$combined_text" =~ [Ss]tory\s*[Pp]oints?\s*:\s*20\+ ]]; then
+              labels_to_add+=("⏳ Story Points: 20+")
+            fi
+
+            # Difficulty (check both title and body)
+            if [[ "$combined_text" =~ [Dd]ifficulty\s*:\s*[Ss]imple ]]; then
+              labels_to_add+=("🌱 Difficulty: Simple")
+            elif [[ "$combined_text" =~ [Dd]ifficulty\s*:\s*[Ee]asy ]]; then
+              labels_to_add+=("👍 Difficulty: Easy")
+            elif [[ "$combined_text" =~ [Dd]ifficulty\s*:\s*[Mm]oderate ]]; then
+              labels_to_add+=("🛠️ Difficulty: Moderate")
+            elif [[ "$combined_text" =~ [Dd]ifficulty\s*:\s*[Hh]ard ]]; then
+              labels_to_add+=("🔥 Difficulty: Hard")
+            elif [[ "$combined_text" =~ [Dd]ifficulty\s*:\s*[Vv]ery\s*[Hh]ard ]]; then
+              labels_to_add+=("🧠 Difficulty: Very Hard")
+            elif [[ "$combined_text" =~ [Dd]ifficulty\s*:\s*[Ee]pic ]]; then
+              labels_to_add+=("⚫ Difficulty: Epic")
+            fi
+
+            # Priority (check both title and body)
+            if [[ "$combined_text" =~ [Pp]riority\s*:\s*[Cc]ritical ]]; then
+              labels_to_add+=("🚨 Priority: Critical")
+            elif [[ "$combined_text" =~ [Pp]riority\s*:\s*[Hh]igh ]]; then
+              labels_to_add+=("🚨 Priority: High")
+            elif [[ "$combined_text" =~ [Pp]riority\s*:\s*[Mm]edium ]]; then
+              labels_to_add+=("🚨 Priority: Medium")
+            elif [[ "$combined_text" =~ [Pp]riority\s*:\s*[Ll]ow ]]; then
+              labels_to_add+=("🚨 Priority: Low")
+            fi
+
+            # Auto-detect based on keywords
+            # Frontend/Client Side
+            if [[ "$combined_text" =~ (UI|UX|frontend|front-end|client\s*side|react|vue|angular|component|button|form|layout|design|styling|css|html|javascript|js) ]]; then
+              labels_to_add+=("🎨 Client Side")
+            fi
+
+            # Backend
+            if [[ "$combined_text" =~ (API|backend|back-end|server|database|db|sql|nosql|authentication|auth|middleware|controller|service|model) ]]; then
+              labels_to_add+=("🖥️ Backend")
+            fi
+
+            # Cloud Infrastructure
+            if [[ "$combined_text" =~ (AWS|EC2|S3|RDS|Lambda|cloud|infrastructure|deployment|terraform|kubernetes|docker|container) ]]; then
+              labels_to_add+=("☁️ Cloud Infrastructure")
+            fi
+
+            # DevOps
+            if [[ "$combined_text" =~ (CI|CD|pipeline|automation|deploy|devops|jenkins|github\s*actions|docker|kubernetes|monitoring|logging) ]]; then
+              labels_to_add+=("⚙️ DevOps")
+            fi
+
+            # Testing
+            if [[ "$combined_text" =~ (test|testing|unit\s*test|integration\s*test|e2e|end\s*to\s*end|qa|quality|automation) ]]; then
+              if [[ "$combined_text" =~ (unit\s*test|unit) ]]; then
+                labels_to_add+=("🔬 Testing: Unit")
+              elif [[ "$combined_text" =~ (integration\s*test|integration) ]]; then
+                labels_to_add+=("🧩 Testing: Integration")
+              elif [[ "$combined_text" =~ (e2e|end\s*to\s*end|end-to-end) ]]; then
+                labels_to_add+=("🌐 Testing: End-to-End")
+              else
+                labels_to_add+=("🔬 QA/Automation")
+              fi
+            fi
+
+            # Platform specific
+            if [[ "$combined_text" =~ (iOS|iphone|ipad|swift|objective-c|app\s*store|testflight) ]]; then
+              labels_to_add+=("🍎 Platform-Specific: iOS")
+            fi
+
+            if [[ "$combined_text" =~ (android|kotlin|java|google\s*play|play\s*store) ]]; then
+              labels_to_add+=("🤖 Platform-Specific: Android")
+            fi
+
+            # Documentation
+            if [[ "$combined_text" =~ (documentation|docs|readme|wiki|guide|tutorial|manual) ]]; then
+              if [[ "$combined_text" =~ (new|create|add|write) ]]; then
+                labels_to_add+=("📝 Documentation: New")
+              else
+                labels_to_add+=("📚 Documentation: Updates")
+              fi
+            fi
+
+            # Bug detection
+            if [[ "$combined_text" =~ (bug|error|crash|broken|fix|issue|problem|fails|doesn\'t\s*work) ]]; then
+              labels_to_add+=("🪲 Bug")
+            fi
+
+            # Feature detection
+            if [[ "$combined_text" =~ (feature|enhancement|improvement|new|add|implement) ]]; then
+              labels_to_add+=("✨ Feature")
+            fi
+
+            # Performance
+            if [[ "$combined_text" =~ (performance|slow|speed|optimization|optimize|fast|latency|response\s*time) ]]; then
+              labels_to_add+=("🚀 Performance")
+            fi
+
+            # Technical debt
+            if [[ "$combined_text" =~ (technical\s*debt|refactor|cleanup|legacy|old\s*code|deprecated) ]]; then
+              labels_to_add+=("📉 Technical Debt")
+            fi
+
+            # Maintenance
+            if [[ "$combined_text" =~ (maintenance|update|upgrade|dependency|chore|housekeeping) ]]; then
+              if [[ "$combined_text" =~ (dependency|package|npm|yarn|pip|gem) ]]; then
+                labels_to_add+=("🔄 Maintenance: Dependency Update")
+              else
+                labels_to_add+=("🧹 Maintenance: Chore")
+              fi
+            fi
+          fi
+
+          # Remove duplicates
+          labels_to_add=($(printf "%s\n" "${labels_to_add[@]}" | sort -u))
+
+          echo "Labels to add: ${labels_to_add[*]}"
 
           # Apply the labels
           if [[ ${#labels_to_add[@]} -gt 0 ]]; then
             gh issue edit ${{ github.event.issue.number }} --add-label "${labels_to_add[@]}"
+            echo "✅ Successfully applied labels: ${labels_to_add[*]}"
+          else
+            echo "ℹ️ No labels to apply"
           fi

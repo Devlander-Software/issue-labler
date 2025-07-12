@@ -1,11 +1,35 @@
 
-# GitHub Action: Auto-Label Issues & Create Issue Templates
+# 🏷️ GitHub Auto-Label Issues & Templates Action
 
-## Overview
+> **The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates**
 
-This GitHub Action is designed to ensure consistency across repositories by automatically creating **issue templates** and **GitHub labels**. It helps teams maintain uniformity when working with **clients**, **customers**, or **product teams** by providing standard templates for **feature requests**, **general bug reports**, and **performance bug reports**.
+[![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-blue?logo=github)](https://github.com/features/actions)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/Devlander-Software/issue-labler?style=social)](https://github.com/Devlander-Software/issue-labler)
+[![Downloads](https://img.shields.io/github/downloads/Devlander-Software/issue-labler/total)](https://github.com/Devlander-Software/issue-labler/releases)
 
-In addition to creating issue templates, this action also sets up a set of predefined, **emoji-based labels** that make it easy to distinguish tasks in a list. The labels come with simple, clear descriptions that are easy for anyone to understand, including non-technical stakeholders like product managers.
+## 🎯 Overview
+
+**The Ultimate GitHub Issue Management Solution** - Automatically create professional issue templates, detect story points, and apply intelligent labels based on content and file changes. Perfect for **mobile development teams**, **agile projects**, and **organizations** that need consistent issue management across multiple repositories.
+
+### 🚀 Key Features
+- **🎯 Smart Story Point Detection**: Automatically detects and labels story points (1, 2-3, 5, 8, 13, 20+)
+- **📁 File-Based Labeling**: Labels PRs based on changed files (JavaScript, Python, iOS, Android, etc.)
+- **📱 Mobile Development Focus**: iOS/Android specific labels and templates
+- **🏷️ 50+ Professional Labels**: Comprehensive label set for all development areas
+- **📝 Professional Templates**: Structured templates for features, bugs, and performance issues
+- **🔧 No External Dependencies**: Self-contained and reliable
+- **⚙️ Organization Ready**: Perfect for enterprise and multi-repo setups
+
+## ✨ Key Features
+
+- **🎯 Smart Auto-Labeling**: Automatically detects and applies labels based on issue content and keywords
+- **📝 Professional Templates**: Comprehensive, structured issue templates with guided sections
+- **🏷️ 40+ Predefined Labels**: Categorized labels for story points, difficulty, priority, and development areas
+- **🔧 No External Dependencies**: Self-contained implementation using GitHub CLI
+- **📊 Detailed Logging**: Comprehensive error handling and progress reporting
+- **⚙️ Configurable**: Easy to customize via configuration file
+- **🔄 Intelligent Detection**: Analyzes both issue title and body for better accuracy
 
 ---
 

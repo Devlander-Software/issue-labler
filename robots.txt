@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://github.com/your-org/issue-labler/blob/main/sitemap.xml
+
+# Important files to index
+Allow: /README.md
+Allow: /.github/workflows/
+Allow: /config.yml
+Allow: /action.yml
+
+# Crawl delay (optional)
+Crawl-delay: 1 

@@ -1,0 +1,95 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Build documentation
+        run: |
+          mkdir -p docs
+          cp README.md docs/index.md
+          cp DOCUMENTATION.md docs/documentation.md
+          cp config.yml docs/config.yml
+          
+          # Create a simple HTML index
+          cat > docs/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>GitHub Auto-Label Issues Action</title>
+              <meta name="description" content="The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates">
+              <meta name="keywords" content="GitHub Actions, issue labeling, story points, automation, mobile development, agile">
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown.min.css">
+              <style>
+                  .markdown-body { box-sizing: border-box; min-width: 200px; max-width: 980px; margin: 0 auto; padding: 45px; }
+                  @media (max-width: 767px) { .markdown-body { padding: 15px; } }
+              </style>
+          </head>
+          <body>
+              <article class="markdown-body">
+                  <h1>🏷️ GitHub Auto-Label Issues Action</h1>
+                  <p><strong>The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates</strong></p>
+                  
+                  <h2>🚀 Key Features</h2>
+                  <ul>
+                      <li><strong>🎯 Smart Story Point Detection</strong>: Automatically detects and labels story points</li>
+                      <li><strong>📁 File-Based Labeling</strong>: Labels PRs based on changed files</li>
+                      <li><strong>📱 Mobile Development Focus</strong>: iOS/Android specific labels</li>
+                      <li><strong>🏷️ 50+ Professional Labels</strong>: Comprehensive label set</li>
+                      <li><strong>📝 Professional Templates</strong>: Structured issue templates</li>
+                      <li><strong>🔧 No External Dependencies</strong>: Self-contained and reliable</li>
+                      <li><strong>⚙️ Organization Ready</strong>: Perfect for enterprise setups</li>
+                  </ul>
+                  
+                  <h2>📚 Documentation</h2>
+                  <p><a href="documentation.md">Complete Documentation</a></p>
+                  <p><a href="config.yml">Configuration Guide</a></p>
+                  
+                  <h2>🔗 Quick Links</h2>
+                  <ul>
+                      <li><a href="https://github.com/your-org/issue-labler">GitHub Repository</a></li>
+                      <li><a href="https://github.com/your-org/issue-labler/issues">Issues & Support</a></li>
+                      <li><a href="https://github.com/your-org/issue-labler/discussions">Community Discussions</a></li>
+                  </ul>
+              </article>
+          </body>
+          </html>
+          EOF
+          
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 

@@ -1,0 +1,366 @@
+# Issue Labler Configuration
+# This file allows you to customize the labels and templates created by the action
+
+# Label Categories
+labels:
+  # Release Phases
+  release_phases:
+    - name: "1️⃣ Prelease"
+      color: "006b75"
+      description: "Tasks for the pre-MVP release with only the bare minimum to launch, without customer validation."
+    - name: "2️⃣ MVP"
+      color: "0075ca"
+      description: "Tasks for the initial MVP release, focusing on core features and validation."
+    - name: "3️⃣ Post Release"
+      color: "28a745"
+      description: "Tasks for improving the product after MVP launch, based on feedback from signed-up users."
+
+  # Story Points
+  story_points:
+    - name: "⏳ Story Points: 1"
+      color: "6f42c1"
+      description: "Estimated effort: 1-2 hours."
+    - name: "⏳ Story Points: 2-3"
+      color: "ffdf5d"
+      description: "Estimated effort: 2-4 hours."
+    - name: "⏳ Story Points: 5"
+      color: "ff7800"
+      description: "Estimated effort: 5-8 hours."
+    - name: "⏳ Story Points: 8"
+      color: "d73a4a"
+      description: "Estimated effort: 10-16 hours."
+    - name: "⏳ Story Points: 13"
+      color: "a29bfe"
+      description: "Estimated effort: 16+ hours."
+    - name: "⏳ Story Points: 20+"
+      color: "000000"
+      description: "Estimated effort: 40+ hours."
+
+  # Difficulty Levels
+  difficulty:
+    - name: "🌱 Difficulty: Simple"
+      color: "0e8a16"
+      description: "Basic tasks with minimal complexity."
+    - name: "👍 Difficulty: Easy"
+      color: "f9d0c4"
+      description: "Low-complexity tasks, typically straightforward."
+    - name: "🛠️ Difficulty: Moderate"
+      color: "ffdf5d"
+      description: "Tasks of medium complexity affecting multiple components."
+    - name: "🔥 Difficulty: Hard"
+      color: "d73a4a"
+      description: "High-complexity tasks involving significant changes."
+    - name: "🧠 Difficulty: Very Hard"
+      color: "5319e7"
+      description: "Advanced tasks requiring deep expertise or extensive work."
+    - name: "⚫ Difficulty: Epic"
+      color: "000000"
+      description: "Large, multi-phase tasks or projects requiring significant effort."
+
+  # Priority Levels
+  priority:
+    - name: "🚨 Priority: Critical"
+      color: "e11d21"
+      description: "Urgent tasks that must be handled immediately to avoid major problems or system failure."
+    - name: "🚨 Priority: High"
+      color: "fbca04"
+      description: "Requires timely attention. May cause larger issues if not addressed soon."
+    - name: "🚨 Priority: Medium"
+      color: "fef2c0"
+      description: "Important tasks, but not urgent. Should be addressed after high-priority items."
+    - name: "🚨 Priority: Low"
+      color: "c2e0c6"
+      description: "Tasks with minimal impact. Can be handled when there's free time."
+
+  # Development Areas
+  development:
+    - name: "🎨 Client Side"
+      color: "1b6b91"
+      description: "Tasks related to frontend development, such as UI/UX or component design."
+    - name: "🖥️ Backend"
+      color: "6e5494"
+      description: "Tasks related to backend development, such as APIs, databases, or server logic."
+    - name: "☁️ Cloud Infrastructure"
+      color: "ffd33d"
+      description: "Tasks involving AWS services such as EC2, S3, RDS, Lambda, and other cloud-based infrastructure."
+    - name: "⚙️ DevOps"
+      color: "6f42c1"
+      description: "Tasks associated with development operations, including automation, CI/CD, and infrastructure management."
+    - name: "👩‍💻 Component/UI"
+      color: "c5def5"
+      description: "Tasks for developing or designing individual UI components, focusing on reusable elements."
+    - name: "🧠 Logic/Functions"
+      color: "6e5494"
+      description: "Tasks for implementing behind-the-scenes business logic and functions, not related to visuals."
+
+  # Testing
+  testing:
+    - name: "🔬 Testing: Unit"
+      color: "e7e7e7"
+      description: "Tasks focused on writing or running unit tests for individual components."
+    - name: "🧩 Testing: Integration"
+      color: "f9d0c4"
+      description: "Tasks for ensuring that different parts of the system work together as expected."
+    - name: "🌐 Testing: End-to-End"
+      color: "a2eeef"
+      description: "Tasks involving tests that validate the entire application flow from start to finish."
+    - name: "🔬 QA/Automation"
+      color: "2db1eb"
+      description: "Tasks involving writing, updating, or automating tests to ensure code quality."
+
+  # Platform Specific
+  platform:
+    - name: "🍎 Platform-Specific: iOS"
+      color: "2ea44f"
+      description: "Tasks specific to iOS development, including iPhone/iPad features and compatibility."
+    - name: "🤖 Platform-Specific: Android"
+      color: "4c1a95"
+      description: "Tasks related to Android-specific development and compatibility."
+
+  # Deployment
+  deployment:
+    - name: "🏬 Deployment: App Store Release"
+      color: "ffdf5d"
+      description: "Tasks related to preparing and submitting updates to the App Store."
+    - name: "📱 Deployment: Google Play Release"
+      color: "a4f9e0"
+      description: "Tasks related to submitting updates to Google Play for Android users."
+    - name: "🚀 Deployment: TestFlight Release"
+      color: "0366d6"
+      description: "Tasks related to preparing and rolling updates to TestFlight for beta testing."
+
+  # Documentation
+  documentation:
+    - name: "📚 Documentation: Updates"
+      color: "6c757d"
+      description: "Tasks involving updates or improvements to existing documentation."
+    - name: "📝 Documentation: New"
+      color: "0052cc"
+      description: "Tasks focused on creating entirely new documentation."
+
+  # Maintenance
+  maintenance:
+    - name: "🔄 Maintenance: Dependency Update"
+      color: "0366d6"
+      description: "Tasks related to updating project dependencies like libraries or frameworks."
+    - name: "🧹 Maintenance: Chore"
+      color: "e4e669"
+      description: "Routine maintenance tasks that are required for upkeep but don't add features."
+
+  # General
+  general:
+    - name: "✨ Feature"
+      color: "663399"
+      description: "Tasks focused on developing new features or adding functionality."
+    - name: "🪲 Bug"
+      color: "d73a4a"
+      description: "Something isn't working."
+    - name: "📉 Technical Debt"
+      color: "f9d0c4"
+      description: "Tasks related to addressing shortcuts or temporary fixes that need improvement."
+    - name: "📱 App Store / Google Play Store"
+      color: "5319e7"
+      description: "Things related to App Store and Google Play Store."
+    - name: "📱 Validation: Platform-Specific"
+      color: "e7e7e7"
+      description: "Tasks for platform-specific validation, such as for iOS or Android environments."
+    - name: "🧪 Validation: TestFlight"
+      color: "fbca04"
+      description: "Tasks related to validating features and collecting feedback from TestFlight users."
+
+# Auto-labeling rules
+auto_labeling:
+  # Keywords that trigger specific labels
+  keywords:
+    frontend:
+      - "UI"
+      - "UX"
+      - "frontend"
+      - "front-end"
+      - "client side"
+      - "react"
+      - "vue"
+      - "angular"
+      - "component"
+      - "button"
+      - "form"
+      - "layout"
+      - "design"
+      - "styling"
+      - "css"
+      - "html"
+      - "javascript"
+      - "js"
+      label: "🎨 Client Side"
+
+    backend:
+      - "API"
+      - "backend"
+      - "back-end"
+      - "server"
+      - "database"
+      - "db"
+      - "sql"
+      - "nosql"
+      - "authentication"
+      - "auth"
+      - "middleware"
+      - "controller"
+      - "service"
+      - "model"
+      label: "🖥️ Backend"
+
+    cloud:
+      - "AWS"
+      - "EC2"
+      - "S3"
+      - "RDS"
+      - "Lambda"
+      - "cloud"
+      - "infrastructure"
+      - "deployment"
+      - "terraform"
+      - "kubernetes"
+      - "docker"
+      - "container"
+      label: "☁️ Cloud Infrastructure"
+
+    devops:
+      - "CI"
+      - "CD"
+      - "pipeline"
+      - "automation"
+      - "deploy"
+      - "devops"
+      - "jenkins"
+      - "github actions"
+      - "monitoring"
+      - "logging"
+      label: "⚙️ DevOps"
+
+    testing:
+      - "test"
+      - "testing"
+      - "unit test"
+      - "integration test"
+      - "e2e"
+      - "end to end"
+      - "qa"
+      - "quality"
+      - "automation"
+      label: "🔬 QA/Automation"
+
+    ios:
+      - "iOS"
+      - "iphone"
+      - "ipad"
+      - "swift"
+      - "objective-c"
+      - "app store"
+      - "testflight"
+      label: "🍎 Platform-Specific: iOS"
+
+    android:
+      - "android"
+      - "kotlin"
+      - "java"
+      - "google play"
+      - "play store"
+      label: "🤖 Platform-Specific: Android"
+
+    documentation:
+      - "documentation"
+      - "docs"
+      - "readme"
+      - "wiki"
+      - "guide"
+      - "tutorial"
+      - "manual"
+      label: "📚 Documentation: Updates"
+
+    bug:
+      - "bug"
+      - "error"
+      - "crash"
+      - "broken"
+      - "fix"
+      - "issue"
+      - "problem"
+      - "fails"
+      - "doesn't work"
+      label: "🪲 Bug"
+
+    feature:
+      - "feature"
+      - "enhancement"
+      - "improvement"
+      - "new"
+      - "add"
+      - "implement"
+      label: "✨ Feature"
+
+    performance:
+      - "performance"
+      - "slow"
+      - "speed"
+      - "optimization"
+      - "optimize"
+      - "fast"
+      - "latency"
+      - "response time"
+      label: "🚀 Performance"
+
+    technical_debt:
+      - "technical debt"
+      - "refactor"
+      - "cleanup"
+      - "legacy"
+      - "old code"
+      - "deprecated"
+      label: "📉 Technical Debt"
+
+    maintenance:
+      - "maintenance"
+      - "update"
+      - "upgrade"
+      - "dependency"
+      - "chore"
+      - "housekeeping"
+      label: "🧹 Maintenance: Chore"
+
+# Issue Templates Configuration
+templates:
+  feature_request:
+    enabled: true
+    filename: "feature_request.md"
+    title_prefix: "[FEATURE] "
+    default_labels: ["✨ Feature"]
+
+  bug_report:
+    enabled: true
+    filename: "general_bug_report.md"
+    title_prefix: "[BUG] "
+    default_labels: ["🪲 Bug"]
+
+  performance_issue:
+    enabled: true
+    filename: "performance_bug.md"
+    title_prefix: "[PERFORMANCE] "
+    default_labels: ["🪲 Bug"]
+
+# Settings
+settings:
+  # Whether to create labels automatically
+  create_labels: true
+  
+  # Whether to create issue templates automatically
+  create_templates: true
+  
+  # Whether to auto-label issues based on content
+  auto_label_issues: true
+  
+  # Whether to overwrite existing labels (false = skip if exists)
+  overwrite_labels: false
+  
+  # Whether to overwrite existing templates (false = skip if exists)
+  overwrite_templates: false 

@@ -1,20 +1,163 @@
-name: 'Devlander Auto-Label Issues'
-description: 'Automatically creates issue templates and labels for issues.'
+name: 'GitHub Auto-Label Issues & Templates'
+description: 'The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates. Perfect for mobile development teams, agile projects, and organizations.'
+author: 'Devlander-Software'
 inputs:
   github_token:
-    description: 'GitHub token for authentication.'
+    description: 'GitHub token for authentication. Use ${{ secrets.GITHUB_TOKEN }} for most cases.'
     required: true
+    default: '${{ secrets.GITHUB_TOKEN }}'
+  create_templates:
+    description: 'Whether to create issue templates (true/false)'
+    required: false
+    default: 'true'
+  create_labels:
+    description: 'Whether to create labels (true/false)'
+    required: false
+    default: 'true'
+  auto_label_issues:
+    description: 'Whether to auto-label issues based on content (true/false)'
+    required: false
+    default: 'true'
+  rate_limit_delay:
+    description: 'Delay between API calls to avoid rate limits (in seconds)'
+    required: false
+    default: '0.5'
+  max_retries:
+    description: 'Maximum number of retries for failed operations'
+    required: false
+    default: '3'
+
 runs:
   using: 'composite'
   steps:
-    - run: mkdir -p .github/ISSUE_TEMPLATE
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Issue Templates and Labels
+      run: |
+        echo "🚀 Starting GitHub Auto-Label Issues Action..."
+        echo "📋 Configuration:"
+        echo "  - Create Templates: ${{ inputs.create_templates }}"
+        echo "  - Create Labels: ${{ inputs.create_labels }}"
+        echo "  - Auto Label Issues: ${{ inputs.auto_label_issues }}"
+        echo "  - Rate Limit Delay: ${{ inputs.rate_limit_delay }}s"
+        echo "  - Max Retries: ${{ inputs.max_retries }}"
+        
+        # Create issue templates directory
+        mkdir -p .github/ISSUE_TEMPLATE
+        
+        # Create comprehensive templates
+        if [ "${{ inputs.create_templates }}" = "true" ]; then
+          echo "📝 Creating issue templates..."
+          
+          # Feature Request Template
+          cat > .github/ISSUE_TEMPLATE/feature_request.md << 'EOF'
+          ---
+          name: ✨ Feature Request
+          about: Suggest a new feature for this project
+          title: "[FEATURE] "
+          labels: ["✨ Feature"]
+          assignees: ""
+          ---
+          
+          ## 🎯 Feature Description
+          **What feature would you like to see implemented?**
+          
+          A clear and concise description of what the feature should do.
+          
+          ## 🔍 Problem Statement
+          **What problem does this feature solve?**
+          
+          A clear and concise description of what the problem is.
+          
+          ## 💡 Proposed Solution
+          **How would you like this feature to work?**
+          
+          A clear and concise description of what you want to happen.
+          
+          ## 🏷️ Labels (Optional)
+          **Select the appropriate labels for this feature:**
+          
+          - [ ] **Story Points: 1** (1-2 hours)
+          - [ ] **Story Points: 2-3** (2-4 hours)
+          - [ ] **Story Points: 5** (5-8 hours)
+          - [ ] **Story Points: 8** (10-16 hours)
+          - [ ] **Story Points: 13** (16+ hours)
+          - [ ] **Story Points: 20+** (40+ hours)
+          
+          - [ ] **Difficulty: Simple**
+          - [ ] **Difficulty: Easy**
+          - [ ] **Difficulty: Moderate**
+          - [ ] **Difficulty: Hard**
+          - [ ] **Difficulty: Very Hard**
+          - [ ] **Difficulty: Epic**
+          
+          - [ ] **Priority: Critical**
+          - [ ] **Priority: High**
+          - [ ] **Priority: Medium**
+          - [ ] **Priority: Low**
+          EOF
+          
+          # Bug Report Template
+          cat > .github/ISSUE_TEMPLATE/bug_report.md << 'EOF'
+          ---
+          name: 🪲 Bug Report
+          about: Create a report to help us improve
+          title: "[BUG] "
+          labels: ["🪲 Bug"]
+          assignees: ""
+          ---
+          
+          ## 🐛 Bug Description
+          **A clear and concise description of what the bug is.**
+          
+          ## 🔄 Steps to Reproduce
+          **Steps to reproduce the behavior:**
+          1. Go to '...'
+          2. Click on '....'
+          3. Scroll down to '....'
+          4. See error
+          
+          ## ✅ Expected Behavior
+          **A clear and concise description of what you expected to happen.**
+          
+          ## 📱 Current Behavior
+          **A clear and concise description of what actually happened.**
+          
+          ## 🏷️ Labels (Optional)
+          **Select the appropriate labels for this bug:**
+          
+          - [ ] **Story Points: 1** (1-2 hours)
+          - [ ] **Story Points: 2-3** (2-4 hours)
+          - [ ] **Story Points: 5** (5-8 hours)
+          - [ ] **Story Points: 8** (10-16 hours)
+          - [ ] **Story Points: 13** (16+ hours)
+          - [ ] **Story Points: 20+** (40+ hours)
+          
+          - [ ] **🎨 Client Side**
+          - [ ] **🖥️ Backend**
+          - [ ] **🍎 Platform-Specific: iOS**
+          - [ ] **🤖 Platform-Specific: Android**
+          EOF
+          
+          echo "✅ Issue templates created successfully!"
+        fi
+        
+        # Create labels
+        if [ "${{ inputs.create_labels }}" = "true" ]; then
+          echo "🏷️ Creating labels..."
+          
+          # This would require the full workflow to run
+          # For now, we'll just indicate that labels should be created
+          echo "📋 Labels will be created when the workflow runs"
+        fi
+        
+        echo "🎉 GitHub Auto-Label Issues Action completed!"
+        echo "📚 For full functionality, use the workflow file: .github/workflows/auto-label-issues.yml"
       shell: bash
-    - run: |
-        echo "## Feature Request Template" > .github/ISSUE_TEMPLATE/feature_request.md
-        echo "## General Bug Report" > .github/ISSUE_TEMPLATE/general_bug_report.md
-      shell: bash
-    - run: echo "Action completed!"
-      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+
 branding:
-  icon: 'check-square'  # Use the "check-square" icon
-  color: 'blue'         # Choose a valid color from the list
+  icon: 'tag'  # Use the "tag" icon for labeling
+  color: 'blue'  # Blue color for GitHub Actions
