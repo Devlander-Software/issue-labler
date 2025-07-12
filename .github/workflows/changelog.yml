@@ -23,6 +23,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
+      - name: Update version in package.json
+        run: |
+          # Extract version from tag (remove 'v' prefix)
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "Updating package.json to version $VERSION"
+          
+          # Update package.json version
+          npm version $VERSION --no-git-tag-version
+          
+          # Show the updated version
+          echo "Updated package.json version:"
+          cat package.json | grep '"version"'
+        
       - name: Generate changelog
         id: changelog
         run: |
@@ -60,10 +73,10 @@ jobs:
               });
             }
             
-      - name: Commit changelog
+      - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add CHANGELOG.md
-          git commit -m "docs: update changelog for ${{ github.ref_name }}" || exit 0
+          git add CHANGELOG.md package.json
+          git commit -m "chore(release): update version to ${{ github.ref_name }} and changelog" || exit 0
           git push 
