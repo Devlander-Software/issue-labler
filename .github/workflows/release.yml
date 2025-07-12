@@ -1,0 +1,99 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            🚀 **GitHub Auto-Label Issues & Templates Action v${{ github.ref_name }}**
+            
+            ## ✨ What's New
+            
+            ### 🎯 Smart Story Point Detection
+            - Automatically detects and labels story points (1, 2-3, 5, 8, 13, 20+)
+            - Intelligent analysis of issue content and checkboxes
+            
+            ### 📁 File-Based Labeling
+            - Labels PRs based on changed files (JavaScript, Python, iOS, Android, etc.)
+            - Supports 50+ file types and platforms
+            
+            ### 📱 Mobile Development Focus
+            - iOS/Android specific labels and templates
+            - Platform-specific issue categorization
+            
+            ### 🏷️ 50+ Professional Labels
+            - Comprehensive label set for all development areas
+            - Emoji-enhanced for visual clarity
+            
+            ### 📝 Professional Templates
+            - Structured templates for features, bugs, and performance issues
+            - Guided sections for better issue reporting
+            
+            ### 🔧 No External Dependencies
+            - Self-contained implementation using GitHub CLI
+            - Reliable and fast execution
+            
+            ### ⚙️ Organization Ready
+            - Perfect for enterprise and multi-repo setups
+            - Configurable via config.yml
+            
+            ## 🚀 Installation
+            
+            ```yaml
+            name: Setup Issue Templates and Labels
+            on:
+              issues:
+                types: [opened, edited]
+              repository_dispatch:
+                types: [create_labels]
+            
+            jobs:
+              setup_issue_templates_and_labels:
+                runs-on: ubuntu-latest
+                steps:
+                  - name: Use Auto-Label Issues Action
+                    uses: Devlander-Software/issue-labler@v${{ github.ref_name }}
+                    with:
+                      github_token: ${{ secrets.GITHUB_TOKEN }}
+            ```
+            
+            ## 📚 Documentation
+            
+            - [Full Documentation](https://github.com/Devlander-Software/issue-labler/blob/main/DOCUMENTATION.md)
+            - [Configuration Guide](https://github.com/Devlander-Software/issue-labler/blob/main/config.yml)
+            - [SEO Strategy](https://github.com/Devlander-Software/issue-labler/blob/main/SEO_STRATEGY.md)
+            
+            ## 🎯 Perfect For
+            
+            - **Mobile Development Teams** (iOS/Android)
+            - **Agile Projects** with story point estimation
+            - **Organizations** needing consistent issue management
+            - **Multi-repository setups**
+            - **Client collaboration projects**
+            
+            ## 🔗 Links
+            
+            - [Repository](https://github.com/Devlander-Software/issue-labler)
+            - [Issues](https://github.com/Devlander-Software/issue-labler/issues)
+            - [Discussions](https://github.com/Devlander-Software/issue-labler/discussions)
+            
+            ---
+            
+            **Made with ❤️ by Devlander-Software**
+          draft: false
+          prerelease: false 
