@@ -1,0 +1,69 @@
+name: Generate Changelog
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  generate-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Install conventional-changelog-cli
+          npm install -g conventional-changelog-cli
+          
+          # Generate changelog
+          conventional-changelog -p angular -i CHANGELOG.md -s -r 0
+          
+          # Get the generated changelog content
+          CHANGELOG_CONTENT=$(cat CHANGELOG.md)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+      - name: Update release with changelog
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: releases } = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            
+            const tagName = context.ref.replace('refs/tags/', '');
+            const release = releases.find(r => r.tag_name === tagName);
+            
+            if (release) {
+              await github.rest.repos.updateRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: release.id,
+                body: `${{ steps.changelog.outputs.changelog }}\n\n## 📦 Installation\n\n\`\`\`bash\nnpm install @devlander-software/issue-labler\n\`\`\`\n\n## 🚀 Usage\n\n\`\`\`yaml\n- name: Use Auto-Label Issues Action\n  uses: Devlander-Software/issue-labler@${tagName}\n  with:\n    github_token: \${{ secrets.GITHUB_TOKEN }}\n\`\`\`\n\n## 📚 Documentation\n\n- [Full Documentation](https://github.com/Devlander-Software/issue-labler/blob/main/DOCUMENTATION.md)\n- [TypeScript Types](https://github.com/Devlander-Software/issue-labler/blob/main/types/README.md)\n- [Configuration Guide](https://github.com/Devlander-Software/issue-labler/blob/main/config.yml)`
+              });
+            }
+            
+      - name: Commit changelog
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add CHANGELOG.md
+          git commit -m "docs: update changelog for ${{ github.ref_name }}" || exit 0
+          git push 

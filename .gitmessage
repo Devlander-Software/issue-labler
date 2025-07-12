@@ -1,0 +1,41 @@
+# <type>(<scope>): <subject>
+#
+# <body>
+#
+# <footer>
+
+# Types:
+# feat:     A new feature
+# fix:      A bug fix
+# docs:     Documentation only changes
+# style:    Changes that do not affect the meaning of the code
+# refactor: A code change that neither fixes a bug nor adds a feature
+# perf:     A code change that improves performance
+# test:     Adding missing tests or correcting existing tests
+# chore:    Changes to the build process or auxiliary tools
+# ci:       Changes to CI configuration files and scripts
+# build:    Changes that affect the build system or external dependencies
+# revert:   Reverts a previous commit
+
+# Scopes:
+# action:   GitHub Action related changes
+# types:    TypeScript type definitions
+# docs:     Documentation changes
+# config:   Configuration files
+# workflow: GitHub workflows
+# templates: Issue templates
+# labels:   Label definitions
+# seo:      SEO related changes
+
+# Examples:
+# feat(action): add story point detection
+# fix(types): correct ActionInputs interface
+# docs(readme): update installation instructions
+# style(workflow): format YAML files
+# refactor(action): improve label creation logic
+# perf(action): optimize API calls with rate limiting
+# test(action): add unit tests for auto-labeling
+# chore(deps): update dependencies
+# ci(changelog): add automated changelog generation
+# build(npm): add TypeScript compilation
+# revert(action): revert breaking change in v1.0.0 
