@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevLander Auto Label Issues - GitHub Action</title>
+    <meta name="description" content="The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates">
+    <meta name="keywords" content="github action, issue labeling, story points, automation, templates, mobile development">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+        }
+        
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .main-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+            line-height: 1.1;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            margin: 15px 0 30px 0;
+            color: #a0a0a0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .github-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .floating-labels {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .floating-label {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-label:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-label:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+        
+        .floating-label:nth-child(3) {
+            bottom: 25%;
+            left: 8%;
+            animation-delay: 2s;
+        }
+        
+        .floating-label:nth-child(4) {
+            bottom: 15%;
+            right: 12%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        /* Navigation */
+        .nav {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 60px 40px;
+        }
+        
+        .section {
+            margin-bottom: 80px;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #1a1a2e;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+        
+        .feature-desc {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Code Blocks */
+        .code-block {
+            background: #1a1a2e;
+            color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .code-block pre {
+            margin: 0;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+        
+        /* Installation Section */
+        .installation {
+            background: #f8f9fa;
+            padding: 60px 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .step {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 32px;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .header, .main-content {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="background-pattern"></div>
+            <div class="grid-pattern"></div>
+            
+            <div class="floating-labels">
+                <div class="floating-label">🏷️ bug</div>
+                <div class="floating-label">📱 mobile</div>
+                <div class="floating-label">⚡ enhancement</div>
+                <div class="floating-label">🔥 priority-high</div>
+            </div>
+            
+            <div class="github-badge">
+                <span>⭐</span>
+                <span>GitHub Action</span>
+            </div>
+            
+            <div class="header-content">
+                <div class="logo-area">
+                    <div class="logo-icon">🏷️</div>
+                    <h1 class="main-title">DevLander<br>Auto Label Issues</h1>
+                </div>
+                
+                <p class="subtitle">
+                    The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates
+                </p>
+                
+                <div style="margin-top: 30px;">
+                    <a href="#installation" class="btn">Get Started</a>
+                    <a href="https://github.com/Devlander-Software/issue-labler" class="btn btn-secondary" style="margin-left: 15px;">View on GitHub</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#installation">Installation</a>
+                    <a href="#usage">Usage</a>
+                    <a href="#templates">Templates</a>
+                    <a href="#analysis">Analysis</a>
+                    <a href="https://github.com/Devlander-Software/issue-labler">GitHub</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Features Section -->
+            <section id="features" class="section">
+                <h2 class="section-title">✨ Key Features</h2>
+                <p class="section-subtitle">
+                    Everything you need for professional issue management and team collaboration
+                </p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Smart Story Point Detection</div>
+                        <div class="feature-desc">
+                            Automatically detects and labels story points (1, 2-3, 5, 8, 13, 20+) from issue content and checkboxes
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📁</div>
+                        <div class="feature-title">File-Based Labeling</div>
+                        <div class="feature-desc">
+                            Labels pull requests based on changed files (JavaScript, Python, iOS, Android, etc.)
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-title">Mobile Development Focus</div>
+                        <div class="feature-desc">
+                            iOS/Android specific labels and templates for mobile development teams
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🏷️</div>
+                        <div class="feature-title">50+ Professional Labels</div>
+                        <div class="feature-desc">
+                            Comprehensive label set covering story points, difficulty, priority, and development areas
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Data Analysis & Insights</div>
+                        <div class="feature-desc">
+                            Team capacity analysis, sprint planning insights, and export capabilities
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">⚙️</div>
+                        <div class="feature-title">No External Dependencies</div>
+                        <div class="feature-desc">
+                            Self-contained action that works reliably without external API calls or services
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Installation Section -->
+            <section id="installation" class="section">
+                <h2 class="section-title">🚀 Quick Installation</h2>
+                <p class="section-subtitle">
+                    Get started in minutes with automatic issue labeling and templates
+                </p>
+                
+                <div class="installation">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>Create Workflow File</strong>
+                        <p>Create <code>.github/workflows/issue-labeling.yml</code> in your repository:</p>
+                        <div class="code-block">
+<pre>name: Issue Labeling & Templates
+
+on:
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited, synchronize]
+  repository_dispatch:
+    types: [setup]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: Devlander-Software/issue-labler@v1
+        with:
+          create_templates: 'true'
+          create_labels: 'true'
+          auto_label_issues: 'true'</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>Commit and Push</strong>
+                        <p>Commit the workflow file and push to trigger the action:</p>
+                        <div class="code-block">
+<pre>git add .github/workflows/issue-labeling.yml
+git commit -m "Add issue labeling workflow"
+git push origin main</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>Create Your First Issue</strong>
+                        <p>Create an issue with keywords like "bug", "iOS", "frontend" to see automatic labeling in action!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Usage Section -->
+            <section id="usage" class="section">
+                <h2 class="section-title">📖 Usage Guide</h2>
+                <p class="section-subtitle">
+                    Learn how to use the action effectively for your team
+                </p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Automatic Labeling</div>
+                        <div class="feature-desc">
+                            The action automatically detects and applies labels based on issue content, checkboxes, and file changes
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📝</div>
+                        <div class="feature-title">Professional Templates</div>
+                        <div class="feature-desc">
+                            Use the generated templates for feature requests, bug reports, and specialized issue types
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-title">Advanced Filtering</div>
+                        <div class="feature-desc">
+                            Filter issues by story points, difficulty, priority, team, and platform using GitHub search
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 40px; color: #1a1a2e;">Example Issue Content</h3>
+                <div class="code-block">
+<pre>Title: Login button crashes on iOS
+
+Body: 
+The login button crashes the app when tapped on iPhone 14 Pro.
+
+- [x] **Story Points: 5**
+- [X] **Difficulty: Moderate**
+- [x] **Priority: High**
+
+This affects the user authentication flow and needs immediate attention.</pre>
+                </div>
+                
+                <p style="margin-top: 20px; color: #666;">
+                    <strong>Expected Labels:</strong> 🪲 Bug, ⏳ Story Points: 5, 🛠️ Difficulty: Moderate, 🚨 Priority: High, 🍎 Platform-Specific: iOS, 🎨 Client Side
+                </p>
+            </section>
+
+            <!-- Templates Section -->
+            <section id="templates" class="section">
+                <h2 class="section-title">📋 Issue Templates</h2>
+                <p class="section-subtitle">
+                    Professional templates for different types of issues
+                </p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✨</div>
+                        <div class="feature-title">Feature Request</div>
+                        <div class="feature-desc">
+                            Structured template for new feature requests with problem statement and proposed solution
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🪲</div>
+                        <div class="feature-title">Bug Report</div>
+                        <div class="feature-desc">
+                            Comprehensive bug reporting with steps to reproduce and expected behavior
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🚀</div>
+                        <div class="feature-title">Performance Bug</div>
+                        <div class="feature-desc">
+                            Specialized template for performance issues with metrics and optimization suggestions
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📚</div>
+                        <div class="feature-title">Documentation Request</div>
+                        <div class="feature-desc">
+                            Template for requesting new documentation or updates to existing docs
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📉</div>
+                        <div class="feature-title">Technical Debt</div>
+                        <div class="feature-desc">
+                            Template for reporting technical debt with impact assessment and proposed solutions
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🔧</div>
+                        <div class="feature-title">Maintenance Task</div>
+                        <div class="feature-desc">
+                            Template for routine maintenance, updates, and housekeeping tasks
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analysis Section -->
+            <section id="analysis" class="section">
+                <h2 class="section-title">📊 Data Analysis & Insights</h2>
+                <p class="section-subtitle">
+                    Advanced analytics and team insights for better project management
+                </p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-title">Team Capacity Analysis</div>
+                        <div class="feature-desc">
+                            Analyze team workload, skill requirements, and capacity planning with detailed insights
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📈</div>
+                        <div class="feature-title">Sprint Planning</div>
+                        <div class="feature-desc">
+                            Story point distribution and velocity tracking for effective sprint planning
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📤</div>
+                        <div class="feature-title">Export Capabilities</div>
+                        <div class="feature-desc">
+                            Export data to JSON/CSV for integration with external tools and dashboards
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://github.com/Devlander-Software/issue-labler/blob/main/DATA_ANALYSIS.md" class="btn">View Full Analysis Guide</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="https://github.com/Devlander-Software/issue-labler">GitHub Repository</a>
+                <a href="https://github.com/Devlander-Software/issue-labler/issues">Issues</a>
+                <a href="https://github.com/Devlander-Software/issue-labler/blob/main/README.md">Documentation</a>
+                <a href="https://github.com/Devlander-Software/issue-labler/blob/main/DATA_ANALYSIS.md">Data Analysis</a>
+            </div>
+            <p style="color: #a0a0a0; margin-top: 20px;">
+                Made with ❤️ by <a href="https://github.com/Devlander-Software" style="color: #667eea;">DevLander Software</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html> 

@@ -1,25 +1,25 @@
 name: 'GitHub Auto-Label Issues & Templates'
-description: 'The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates. Perfect for mobile development teams, agile projects, and organizations.'
-author: 'Devlander-Software'
+description: 'Automatically create issue templates and apply intelligent labels based on content and file changes'
+author: 'Devlander Software'
+branding:
+  icon: 'tag'
+  color: 'blue'
+
 inputs:
-  github_token:
-    description: 'GitHub token for authentication. Use ${{ secrets.GITHUB_TOKEN }} for most cases.'
-    required: true
-    default: '${{ secrets.GITHUB_TOKEN }}'
   create_templates:
-    description: 'Whether to create issue templates (true/false)'
+    description: 'Whether to create issue templates'
     required: false
     default: 'true'
   create_labels:
-    description: 'Whether to create labels (true/false)'
+    description: 'Whether to create labels'
     required: false
     default: 'true'
   auto_label_issues:
-    description: 'Whether to auto-label issues based on content (true/false)'
+    description: 'Whether to automatically label issues'
     required: false
     default: 'true'
   rate_limit_delay:
-    description: 'Delay between API calls to avoid rate limits (in seconds)'
+    description: 'Delay between API calls to avoid rate limits'
     required: false
     default: '0.5'
   max_retries:
@@ -31,133 +31,28 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
       
-    - name: Setup Issue Templates and Labels
-      run: |
-        echo "🚀 Starting GitHub Auto-Label Issues Action..."
-        echo "📋 Configuration:"
-        echo "  - Create Templates: ${{ inputs.create_templates }}"
-        echo "  - Create Labels: ${{ inputs.create_labels }}"
-        echo "  - Auto Label Issues: ${{ inputs.auto_label_issues }}"
-        echo "  - Rate Limit Delay: ${{ inputs.rate_limit_delay }}s"
-        echo "  - Max Retries: ${{ inputs.max_retries }}"
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
         
-        # Create issue templates directory
-        mkdir -p .github/ISSUE_TEMPLATE
-        
-        # Create comprehensive templates
-        if [ "${{ inputs.create_templates }}" = "true" ]; then
-          echo "📝 Creating issue templates..."
-          
-          # Feature Request Template
-          cat > .github/ISSUE_TEMPLATE/feature_request.md << 'EOF'
-          ---
-          name: ✨ Feature Request
-          about: Suggest a new feature for this project
-          title: "[FEATURE] "
-          labels: ["✨ Feature"]
-          assignees: ""
-          ---
-          
-          ## 🎯 Feature Description
-          **What feature would you like to see implemented?**
-          
-          A clear and concise description of what the feature should do.
-          
-          ## 🔍 Problem Statement
-          **What problem does this feature solve?**
-          
-          A clear and concise description of what the problem is.
-          
-          ## 💡 Proposed Solution
-          **How would you like this feature to work?**
-          
-          A clear and concise description of what you want to happen.
-          
-          ## 🏷️ Labels (Optional)
-          **Select the appropriate labels for this feature:**
-          
-          - [ ] **Story Points: 1** (1-2 hours)
-          - [ ] **Story Points: 2-3** (2-4 hours)
-          - [ ] **Story Points: 5** (5-8 hours)
-          - [ ] **Story Points: 8** (10-16 hours)
-          - [ ] **Story Points: 13** (16+ hours)
-          - [ ] **Story Points: 20+** (40+ hours)
-          
-          - [ ] **Difficulty: Simple**
-          - [ ] **Difficulty: Easy**
-          - [ ] **Difficulty: Moderate**
-          - [ ] **Difficulty: Hard**
-          - [ ] **Difficulty: Very Hard**
-          - [ ] **Difficulty: Epic**
-          
-          - [ ] **Priority: Critical**
-          - [ ] **Priority: High**
-          - [ ] **Priority: Medium**
-          - [ ] **Priority: Low**
-          EOF
-          
-          # Bug Report Template
-          cat > .github/ISSUE_TEMPLATE/bug_report.md << 'EOF'
-          ---
-          name: 🪲 Bug Report
-          about: Create a report to help us improve
-          title: "[BUG] "
-          labels: ["🪲 Bug"]
-          assignees: ""
-          ---
-          
-          ## 🐛 Bug Description
-          **A clear and concise description of what the bug is.**
-          
-          ## 🔄 Steps to Reproduce
-          **Steps to reproduce the behavior:**
-          1. Go to '...'
-          2. Click on '....'
-          3. Scroll down to '....'
-          4. See error
-          
-          ## ✅ Expected Behavior
-          **A clear and concise description of what you expected to happen.**
-          
-          ## 📱 Current Behavior
-          **A clear and concise description of what actually happened.**
-          
-          ## 🏷️ Labels (Optional)
-          **Select the appropriate labels for this bug:**
-          
-          - [ ] **Story Points: 1** (1-2 hours)
-          - [ ] **Story Points: 2-3** (2-4 hours)
-          - [ ] **Story Points: 5** (5-8 hours)
-          - [ ] **Story Points: 8** (10-16 hours)
-          - [ ] **Story Points: 13** (16+ hours)
-          - [ ] **Story Points: 20+** (40+ hours)
-          
-          - [ ] **🎨 Client Side**
-          - [ ] **🖥️ Backend**
-          - [ ] **🍎 Platform-Specific: iOS**
-          - [ ] **🤖 Platform-Specific: Android**
-          EOF
-          
-          echo "✅ Issue templates created successfully!"
-        fi
-        
-        # Create labels
-        if [ "${{ inputs.create_labels }}" = "true" ]; then
-          echo "🏷️ Creating labels..."
-          
-          # This would require the full workflow to run
-          # For now, we'll just indicate that labels should be created
-          echo "📋 Labels will be created when the workflow runs"
-        fi
-        
-        echo "🎉 GitHub Auto-Label Issues Action completed!"
-        echo "📚 For full functionality, use the workflow file: .github/workflows/auto-label-issues.yml"
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ inputs.github_token }}
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Generate Issue Templates
+      run: npm run generate:templates
+      
+    - name: Create Labels
+      run: npm run create:labels
+      
+    - name: Auto-label Issues
+      run: npm run auto:label
+      if: ${{ inputs.auto_label_issues == 'true' }}
 
-branding:
-  icon: 'tag'  # Use the "tag" icon for labeling
-  color: 'blue'  # Blue color for GitHub Actions
+# Marketplace-specific metadata
+# These fields help with marketplace discovery and categorization
+# Note: These are not standard action.yml fields but are used by GitHub's marketplace
+# The actual marketplace metadata is typically managed through GitHub's web interface

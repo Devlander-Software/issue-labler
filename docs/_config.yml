@@ -1,0 +1,39 @@
+# GitHub Pages Configuration
+title: DevLander Auto Label Issues
+description: The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates
+url: "https://devlander-software.github.io"
+baseurl: "/issue-labler"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "default"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/ 

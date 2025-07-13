@@ -1,0 +1,575 @@
+{
+  "metadata": {
+    "generated_at": "2025-07-13T20:15:01.672Z",
+    "version": "1.0.0",
+    "total_labels": 55
+  },
+  "categories": {
+    "release_phases": [
+      {
+        "name": "1️⃣ Prelease",
+        "category": "release_phase",
+        "value": "prelease",
+        "color": "006b75",
+        "description": "Tasks for the pre-MVP release with only the bare minimum to launch, without customer validation."
+      },
+      {
+        "name": "2️⃣ MVP",
+        "category": "release_phase",
+        "value": "mvp",
+        "color": "0075ca",
+        "description": "Tasks for the initial MVP release, focusing on core features and validation."
+      },
+      {
+        "name": "3️⃣ Post Release",
+        "category": "release_phase",
+        "value": "post_release",
+        "color": "28a745",
+        "description": "Tasks for improving the product after MVP launch, based on feedback from signed-up users."
+      }
+    ],
+    "story_points": [
+      {
+        "name": "⏳ Story Points: 1",
+        "category": "story_points",
+        "value": 1,
+        "color": "6f42c1",
+        "description": "Estimated effort: 1-2 hours.",
+        "hours_min": 1,
+        "hours_max": 2
+      },
+      {
+        "name": "⏳ Story Points: 2-3",
+        "category": "story_points",
+        "value": 2.5,
+        "color": "ffdf5d",
+        "description": "Estimated effort: 2-4 hours.",
+        "hours_min": 2,
+        "hours_max": 4
+      },
+      {
+        "name": "⏳ Story Points: 5",
+        "category": "story_points",
+        "value": 5,
+        "color": "ff7800",
+        "description": "Estimated effort: 5-8 hours.",
+        "hours_min": 5,
+        "hours_max": 8
+      },
+      {
+        "name": "⏳ Story Points: 8",
+        "category": "story_points",
+        "value": 8,
+        "color": "d73a4a",
+        "description": "Estimated effort: 10-16 hours.",
+        "hours_min": 10,
+        "hours_max": 16
+      },
+      {
+        "name": "⏳ Story Points: 13",
+        "category": "story_points",
+        "value": 13,
+        "color": "a29bfe",
+        "description": "Estimated effort: 16+ hours.",
+        "hours_min": 16,
+        "hours_max": 40
+      },
+      {
+        "name": "⏳ Story Points: 20+",
+        "category": "story_points",
+        "value": 20,
+        "color": "000000",
+        "description": "Estimated effort: 40+ hours.",
+        "hours_min": 40,
+        "hours_max": 999
+      }
+    ],
+    "difficulty": [
+      {
+        "name": "🌱 Difficulty: Simple",
+        "category": "difficulty",
+        "value": "simple",
+        "color": "0e8a16",
+        "description": "Basic tasks with minimal complexity.",
+        "skill_level": "junior",
+        "complexity_score": 1
+      },
+      {
+        "name": "👍 Difficulty: Easy",
+        "category": "difficulty",
+        "value": "easy",
+        "color": "f9d0c4",
+        "description": "Low-complexity tasks, typically straightforward.",
+        "skill_level": "junior",
+        "complexity_score": 2
+      },
+      {
+        "name": "🛠️ Difficulty: Moderate",
+        "category": "difficulty",
+        "value": "moderate",
+        "color": "ffdf5d",
+        "description": "Tasks of medium complexity affecting multiple components.",
+        "skill_level": "mid",
+        "complexity_score": 3
+      },
+      {
+        "name": "🔥 Difficulty: Hard",
+        "category": "difficulty",
+        "value": "hard",
+        "color": "d73a4a",
+        "description": "High-complexity tasks involving significant changes.",
+        "skill_level": "senior",
+        "complexity_score": 4
+      },
+      {
+        "name": "🧠 Difficulty: Very Hard",
+        "category": "difficulty",
+        "value": "very_hard",
+        "color": "5319e7",
+        "description": "Advanced tasks requiring deep expertise or extensive work.",
+        "skill_level": "senior",
+        "complexity_score": 5
+      },
+      {
+        "name": "⚫ Difficulty: Epic",
+        "category": "difficulty",
+        "value": "epic",
+        "color": "000000",
+        "description": "Large, multi-phase tasks or projects requiring significant effort.",
+        "skill_level": "architect",
+        "complexity_score": 6
+      }
+    ],
+    "priority": [
+      {
+        "name": "🚨 Priority: Critical",
+        "category": "priority",
+        "value": "critical",
+        "color": "e11d21",
+        "description": "Urgent tasks that must be handled immediately to avoid major problems or system failure.",
+        "urgency_score": 4,
+        "business_impact": "high"
+      },
+      {
+        "name": "🚨 Priority: High",
+        "category": "priority",
+        "value": "high",
+        "color": "fbca04",
+        "description": "Requires timely attention. May cause larger issues if not addressed soon.",
+        "urgency_score": 3,
+        "business_impact": "high"
+      },
+      {
+        "name": "🚨 Priority: Medium",
+        "category": "priority",
+        "value": "medium",
+        "color": "fef2c0",
+        "description": "Important tasks, but not urgent. Should be addressed after high-priority items.",
+        "urgency_score": 2,
+        "business_impact": "medium"
+      },
+      {
+        "name": "🚨 Priority: Low",
+        "category": "priority",
+        "value": "low",
+        "color": "c2e0c6",
+        "description": "Tasks with minimal impact. Can be handled when there's free time.",
+        "urgency_score": 1,
+        "business_impact": "low"
+      }
+    ],
+    "development_areas": [
+      {
+        "name": "🎨 Client Side",
+        "category": "development_area",
+        "value": "frontend",
+        "color": "1b6b91",
+        "description": "Tasks related to frontend development, such as UI/UX or component design.",
+        "team": "frontend",
+        "skills": [
+          "react",
+          "vue",
+          "angular",
+          "css",
+          "html",
+          "javascript"
+        ]
+      },
+      {
+        "name": "🖥️ Backend",
+        "category": "development_area",
+        "value": "backend",
+        "color": "6e5494",
+        "description": "Tasks related to backend development, such as APIs, databases, or server logic.",
+        "team": "backend",
+        "skills": [
+          "nodejs",
+          "python",
+          "java",
+          "sql",
+          "api",
+          "database"
+        ]
+      },
+      {
+        "name": "☁️ Cloud Infrastructure",
+        "category": "development_area",
+        "value": "infrastructure",
+        "color": "ffd33d",
+        "description": "Tasks involving AWS services such as EC2, S3, RDS, Lambda, and other cloud-based infrastructure.",
+        "team": "devops",
+        "skills": [
+          "aws",
+          "docker",
+          "kubernetes",
+          "terraform",
+          "ci/cd"
+        ]
+      },
+      {
+        "name": "⚙️ DevOps",
+        "category": "development_area",
+        "value": "devops",
+        "color": "6f42c1",
+        "description": "Tasks associated with development operations, including automation, CI/CD, and infrastructure management.",
+        "team": "devops",
+        "skills": [
+          "jenkins",
+          "github-actions",
+          "docker",
+          "monitoring",
+          "deployment"
+        ]
+      },
+      {
+        "name": "👩‍💻 Component/UI",
+        "category": "development_area",
+        "value": "ui_components",
+        "color": "c5def5",
+        "description": "Tasks for developing or designing individual UI components, focusing on reusable elements.",
+        "team": "frontend",
+        "skills": [
+          "react",
+          "vue",
+          "angular",
+          "design-systems",
+          "accessibility"
+        ]
+      },
+      {
+        "name": "🧠 Logic/Functions",
+        "category": "development_area",
+        "value": "business_logic",
+        "color": "6e5494",
+        "description": "Tasks for implementing behind-the-scenes business logic and functions, not related to visuals.",
+        "team": "backend",
+        "skills": [
+          "algorithms",
+          "data-structures",
+          "business-logic",
+          "api-design"
+        ]
+      }
+    ],
+    "platforms": [
+      {
+        "name": "🍎 Platform-Specific: iOS",
+        "category": "platform",
+        "value": "ios",
+        "color": "2ea44f",
+        "description": "Tasks specific to iOS development, including iPhone/iPad features and compatibility.",
+        "team": "mobile",
+        "skills": [
+          "swift",
+          "objective-c",
+          "ios",
+          "xcode",
+          "app-store"
+        ]
+      },
+      {
+        "name": "🤖 Platform-Specific: Android",
+        "category": "platform",
+        "value": "android",
+        "color": "4c1a95",
+        "description": "Tasks related to Android-specific development and compatibility.",
+        "team": "mobile",
+        "skills": [
+          "kotlin",
+          "java",
+          "android",
+          "android-studio",
+          "google-play"
+        ]
+      },
+      {
+        "name": "📱 App Store / Google Play Store",
+        "category": "platform",
+        "value": "app_stores",
+        "color": "5319e7",
+        "description": "Things related to App Store and Google Play Store.",
+        "team": "mobile",
+        "skills": [
+          "app-store",
+          "google-play",
+          "deployment",
+          "store-optimization"
+        ]
+      }
+    ],
+    "testing": [
+      {
+        "name": "🔬 Testing: Unit",
+        "category": "testing",
+        "value": "unit",
+        "color": "e7e7e7",
+        "description": "Tasks focused on writing or running unit tests for individual components.",
+        "team": "qa"
+      },
+      {
+        "name": "🧩 Testing: Integration",
+        "category": "testing",
+        "value": "integration",
+        "color": "f9d0c4",
+        "description": "Tasks for ensuring that different parts of the system work together as expected.",
+        "team": "qa"
+      },
+      {
+        "name": "🌐 Testing: End-to-End",
+        "category": "testing",
+        "value": "e2e",
+        "color": "a2eeef",
+        "description": "Tasks involving tests that validate the entire application flow from start to finish.",
+        "team": "qa"
+      },
+      {
+        "name": "🔬 QA/Automation",
+        "category": "testing",
+        "value": "automation",
+        "color": "2db1eb",
+        "description": "Tasks involving writing, updating, or automating tests to ensure code quality.",
+        "team": "qa"
+      }
+    ],
+    "documentation": [
+      {
+        "name": "📚 Documentation: Updates",
+        "category": "documentation",
+        "value": "updates",
+        "color": "6c757d",
+        "description": "Tasks involving updates or improvements to existing documentation.",
+        "team": "content"
+      },
+      {
+        "name": "📝 Documentation: New",
+        "category": "documentation",
+        "value": "new",
+        "color": "0052cc",
+        "description": "Tasks focused on creating entirely new documentation.",
+        "team": "content"
+      }
+    ],
+    "issue_types": [
+      {
+        "name": "✨ Feature",
+        "category": "issue_type",
+        "value": "feature",
+        "color": "663399",
+        "description": "Tasks focused on developing new features or adding functionality."
+      },
+      {
+        "name": "🪲 Bug",
+        "category": "issue_type",
+        "value": "bug",
+        "color": "d73a4a",
+        "description": "Something isn't working."
+      },
+      {
+        "name": "📉 Technical Debt",
+        "category": "issue_type",
+        "value": "technical_debt",
+        "color": "f9d0c4",
+        "description": "Tasks related to addressing shortcuts or temporary fixes that need improvement."
+      },
+      {
+        "name": "🚀 Performance",
+        "category": "issue_type",
+        "value": "performance",
+        "color": "ffd33d",
+        "description": "Performance-related improvements and optimizations."
+      }
+    ],
+    "maintenance": [
+      {
+        "name": "🔄 Maintenance: Dependency Update",
+        "category": "maintenance",
+        "value": "dependency_update",
+        "color": "0366d6",
+        "description": "Tasks related to updating project dependencies like libraries or frameworks.",
+        "team": "devops"
+      },
+      {
+        "name": "🧹 Maintenance: Chore",
+        "category": "maintenance",
+        "value": "chore",
+        "color": "e4e669",
+        "description": "Routine maintenance tasks that are required for upkeep but don't add features.",
+        "team": "general"
+      }
+    ],
+    "deployment": [
+      {
+        "name": "🏬 Deployment: App Store Release",
+        "category": "deployment",
+        "value": "app_store",
+        "color": "ffdf5d",
+        "description": "Tasks related to preparing and submitting updates to the App Store.",
+        "team": "mobile"
+      },
+      {
+        "name": "📱 Deployment: Google Play Release",
+        "category": "deployment",
+        "value": "google_play",
+        "color": "a4f9e0",
+        "description": "Tasks related to submitting updates to Google Play for Android users.",
+        "team": "mobile"
+      },
+      {
+        "name": "🚀 Deployment: TestFlight Release",
+        "category": "deployment",
+        "value": "testflight",
+        "color": "0366d6",
+        "description": "Tasks related to preparing and rolling updates to TestFlight for beta testing.",
+        "team": "mobile"
+      }
+    ],
+    "validation": [
+      {
+        "name": "🧪 Validation: TestFlight",
+        "category": "validation",
+        "value": "testflight",
+        "color": "fbca04",
+        "description": "Tasks related to validating features and collecting feedback from TestFlight users.",
+        "team": "qa"
+      },
+      {
+        "name": "📱 Validation: Platform-Specific",
+        "category": "validation",
+        "value": "platform_specific",
+        "color": "e7e7e7",
+        "description": "Tasks for platform-specific validation, such as for iOS or Android environments.",
+        "team": "qa"
+      }
+    ],
+    "languages": [
+      {
+        "name": "JavaScript",
+        "category": "language",
+        "value": "javascript",
+        "color": "f1e05a",
+        "description": "JavaScript and TypeScript related changes.",
+        "file_extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      },
+      {
+        "name": "Python",
+        "category": "language",
+        "value": "python",
+        "color": "3572A5",
+        "description": "Python related changes.",
+        "file_extensions": [
+          ".py",
+          ".pyc",
+          ".pyo"
+        ]
+      },
+      {
+        "name": "Java",
+        "category": "language",
+        "value": "java",
+        "color": "b07219",
+        "description": "Java related changes.",
+        "file_extensions": [
+          ".java",
+          ".class",
+          ".jar"
+        ]
+      },
+      {
+        "name": "Swift",
+        "category": "language",
+        "value": "swift",
+        "color": "ffac45",
+        "description": "Swift related changes.",
+        "file_extensions": [
+          ".swift"
+        ]
+      },
+      {
+        "name": "Kotlin",
+        "category": "language",
+        "value": "kotlin",
+        "color": "F18E33",
+        "description": "Kotlin related changes.",
+        "file_extensions": [
+          ".kt",
+          ".kts"
+        ]
+      },
+      {
+        "name": "Go",
+        "category": "language",
+        "value": "go",
+        "color": "00ADD8",
+        "description": "Go related changes.",
+        "file_extensions": [
+          ".go"
+        ]
+      },
+      {
+        "name": "Rust",
+        "category": "language",
+        "value": "rust",
+        "color": "dea584",
+        "description": "Rust related changes.",
+        "file_extensions": [
+          ".rs"
+        ]
+      },
+      {
+        "name": "PHP",
+        "category": "language",
+        "value": "php",
+        "color": "4F5D95",
+        "description": "PHP related changes.",
+        "file_extensions": [
+          ".php"
+        ]
+      },
+      {
+        "name": "Ruby",
+        "category": "language",
+        "value": "ruby",
+        "color": "701516",
+        "description": "Ruby related changes.",
+        "file_extensions": [
+          ".rb"
+        ]
+      },
+      {
+        "name": "C#",
+        "category": "language",
+        "value": "csharp",
+        "color": "178600",
+        "description": "C# related changes.",
+        "file_extensions": [
+          ".cs"
+        ]
+      }
+    ]
+  }
+}

@@ -75,7 +75,7 @@ print_success "Version bumped to: $NEW_VERSION"
 
 # Update CHANGELOG.md
 print_status "Updating changelog..."
-npm run changelog
+npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0
 
 # Commit changes
 print_status "Committing changes..."

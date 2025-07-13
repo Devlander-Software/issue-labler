@@ -25,227 +25,27 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ vars.CREATE_TEMPLATES != 'false' }}
     steps:
-      - name: Create Issue Templates Directory
-        run: |
-          mkdir -p .github/ISSUE_TEMPLATE
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
           
-      - name: Create feature_request.md template
-        run: |
-          cat > .github/ISSUE_TEMPLATE/feature_request.md << 'EOF'
-          ---
-          name: ✨ Feature Request
-          about: Suggest a new feature for this project
-          title: "[FEATURE] "
-          labels: ["✨ Feature"]
-          assignees: ""
-          ---
-
-          ## 🎯 Feature Description
-          **What feature would you like to see implemented?**
-
-          A clear and concise description of what the feature should do.
-
-          ## 🔍 Problem Statement
-          **What problem does this feature solve?**
-
-          A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-          ## 💡 Proposed Solution
-          **How would you like this feature to work?**
-
-          A clear and concise description of what you want to happen.
-
-          ## 🎨 Alternative Solutions
-          **Have you considered any alternative solutions?**
-
-          A clear and concise description of any alternative solutions or features you've considered.
-
-          ## 📋 Additional Context
-          **Add any other context or screenshots about the feature request here.**
-
-          ## 🏷️ Labels (Optional)
-          **Select the appropriate labels for this feature:**
-
-          - [ ] **Story Points: 1** (1-2 hours)
-          - [ ] **Story Points: 2-3** (2-4 hours)
-          - [ ] **Story Points: 5** (5-8 hours)
-          - [ ] **Story Points: 8** (10-16 hours)
-          - [ ] **Story Points: 13** (16+ hours)
-          - [ ] **Story Points: 20+** (40+ hours)
-
-          - [ ] **Difficulty: Simple**
-          - [ ] **Difficulty: Easy**
-          - [ ] **Difficulty: Moderate**
-          - [ ] **Difficulty: Hard**
-          - [ ] **Difficulty: Very Hard**
-          - [ ] **Difficulty: Epic**
-
-          - [ ] **Priority: Critical**
-          - [ ] **Priority: High**
-          - [ ] **Priority: Medium**
-          - [ ] **Priority: Low**
-
-          - [ ] **🎨 Client Side**
-          - [ ] **🖥️ Backend**
-          - [ ] **☁️ Cloud Infrastructure**
-          - [ ] **⚙️ DevOps**
-          - [ ] **👩‍💻 Component/UI**
-          - [ ] **🧠 Logic/Functions**
-          EOF
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Generate Issue Templates
+        run: npm run generate:templates
           
-      - name: Create general_bug_report.md template
-        run: |
-          cat > .github/ISSUE_TEMPLATE/general_bug_report.md << 'EOF'
-          ---
-          name: 🪲 Bug Report
-          about: Create a report to help us improve
-          title: "[BUG] "
-          labels: ["🪲 Bug"]
-          assignees: ""
-          ---
-
-          ## 🐛 Bug Description
-          **A clear and concise description of what the bug is.**
-
-          ## 🔄 Steps to Reproduce
-          **Steps to reproduce the behavior:**
-          1. Go to '...'
-          2. Click on '....'
-          3. Scroll down to '....'
-          4. See error
-
-          ## ✅ Expected Behavior
-          **A clear and concise description of what you expected to happen.**
-
-          ## 📱 Current Behavior
-          **A clear and concise description of what actually happened.**
-
-          ## 🖼️ Screenshots
-          **If applicable, add screenshots to help explain your problem.**
-
-          ## 💻 Environment
-          - **OS:** [e.g. iOS, Android, Windows, macOS]
-          - **Browser:** [e.g. Chrome, Safari, Firefox]
-          - **Version:** [e.g. 22]
-          - **Device:** [e.g. iPhone 6, Samsung Galaxy S21]
-
-          ## 📋 Additional Context
-          **Add any other context about the problem here.**
-
-          ## 🏷️ Labels (Optional)
-          **Select the appropriate labels for this bug:**
-
-          - [ ] **Story Points: 1** (1-2 hours)
-          - [ ] **Story Points: 2-3** (2-4 hours)
-          - [ ] **Story Points: 5** (5-8 hours)
-          - [ ] **Story Points: 8** (10-16 hours)
-          - [ ] **Story Points: 13** (16+ hours)
-          - [ ] **Story Points: 20+** (40+ hours)
-
-          - [ ] **Difficulty: Simple**
-          - [ ] **Difficulty: Easy**
-          - [ ] **Difficulty: Moderate**
-          - [ ] **Difficulty: Hard**
-          - [ ] **Difficulty: Very Hard**
-          - [ ] **Difficulty: Epic**
-
-          - [ ] **Priority: Critical**
-          - [ ] **Priority: High**
-          - [ ] **Priority: Medium**
-          - [ ] **Priority: Low**
-
-          - [ ] **🎨 Client Side**
-          - [ ] **🖥️ Backend**
-          - [ ] **🍎 Platform-Specific: iOS**
-          - [ ] **🤖 Platform-Specific: Android**
-          - [ ] **🔬 Testing: Unit**
-          - [ ] **🔬 Testing: Integration**
-          - [ ] **🔬 Testing: End-to-End**
-          EOF
-
-      - name: Create performance_bug.md template
-        run: |
-          cat > .github/ISSUE_TEMPLATE/performance_bug.md << 'EOF'
-          ---
-          name: 🚀 Performance Issue
-          about: Report a performance problem
-          title: "[PERFORMANCE] "
-          labels: ["🪲 Bug"]
-          assignees: ""
-          ---
-
-          ## 🐌 Performance Issue Description
-          **A clear and concise description of the performance problem.**
-
-          ## 📊 Current Performance Metrics
-          **What are the current performance metrics?**
-          - **Load Time:** [e.g. 5 seconds]
-          - **Response Time:** [e.g. 2 seconds]
-          - **Memory Usage:** [e.g. 150MB]
-          - **CPU Usage:** [e.g. 80%]
-
-          ## 🎯 Expected Performance
-          **What should the performance metrics be?**
-          - **Load Time:** [e.g. 1 second]
-          - **Response Time:** [e.g. 200ms]
-          - **Memory Usage:** [e.g. 50MB]
-          - **CPU Usage:** [e.g. 20%]
-
-          ## 🔄 Steps to Reproduce
-          **Steps to reproduce the performance issue:**
-          1. Go to '...'
-          2. Click on '....'
-          3. Wait for '....'
-          4. Observe slow performance
-
-          ## 📱 Environment
-          - **OS:** [e.g. iOS, Android, Windows, macOS]
-          - **Browser:** [e.g. Chrome, Safari, Firefox]
-          - **Version:** [e.g. 22]
-          - **Device:** [e.g. iPhone 6, Samsung Galaxy S21]
-          - **Network:** [e.g. WiFi, 4G, 3G]
-
-          ## 📈 Performance Profiling
-          **If available, include performance profiling data:**
-          - Screenshots of performance tools (Chrome DevTools, Xcode Instruments, etc.)
-          - Stack traces or error logs
-          - Network waterfall charts
-
-          ## 🏷️ Labels (Optional)
-          **Select the appropriate labels for this performance issue:**
-
-          - [ ] **Story Points: 1** (1-2 hours)
-          - [ ] **Story Points: 2-3** (2-4 hours)
-          - [ ] **Story Points: 5** (5-8 hours)
-          - [ ] **Story Points: 8** (10-16 hours)
-          - [ ] **Story Points: 13** (16+ hours)
-          - [ ] **Story Points: 20+** (40+ hours)
-
-          - [ ] **Difficulty: Simple**
-          - [ ] **Difficulty: Easy**
-          - [ ] **Difficulty: Moderate**
-          - [ ] **Difficulty: Hard**
-          - [ ] **Difficulty: Very Hard**
-          - [ ] **Difficulty: Epic**
-
-          - [ ] **Priority: Critical**
-          - [ ] **Priority: High**
-          - [ ] **Priority: Medium**
-          - [ ] **Priority: Low**
-
-          - [ ] **🎨 Client Side**
-          - [ ] **🖥️ Backend**
-          - [ ] **☁️ Cloud Infrastructure**
-          - [ ] **🍎 Platform-Specific: iOS**
-          - [ ] **🤖 Platform-Specific: Android**
-          EOF
-
       - name: Commit Issue Templates
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action"
           git add .github/ISSUE_TEMPLATE/*.md
-          git commit -m "Add issue templates"
+          git commit -m "Generate issue templates from config"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

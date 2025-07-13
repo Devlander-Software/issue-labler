@@ -1,6 +1,6 @@
 {
   "name": "@devlander-software/issue-labler",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "TypeScript definitions for GitHub Auto-Label Issues & Templates Action",
   "main": "types/index.d.ts",
   "types": "types/index.d.ts",
@@ -31,9 +31,17 @@
   },
   "homepage": "https://github.com/Devlander-Software/issue-labler#readme",
   "devDependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^6.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "conventional-changelog-cli": "^4.1.0"
+    "conventional-changelog-cli": "^4.1.0",
+    "jest": "^29.0.0",
+    "js-yaml": "^4.1.0",
+    "nock": "^13.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
   },
   "peerDependencies": {
     "@actions/core": "^1.10.0",
@@ -50,11 +58,26 @@
     "release": "./scripts/release.sh",
     "release:patch": "./scripts/release.sh patch",
     "release:minor": "./scripts/release.sh minor",
-    "release:major": "./scripts/release.sh major"
+    "release:major": "./scripts/release.sh major",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:bash": "npm run install-bats && ./node_modules/.bats/bats-core/bin/bats tests/bash/",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:bash",
+    "install-bats": "./scripts/install-bats.sh",
+    "generate:templates": "node scripts/generate-templates.js",
+    "generate:analysis": "node scripts/generate-templates.js --analysis",
+    "generate:all": "npm run generate:templates && npm run generate:analysis",
+    "analyze": "node scripts/analyze-issues.js",
+    "analyze:full": "npm run generate:analysis && npm run analyze",
+    "create:labels": "npm run build && node scripts/create-labels.js",
+    "auto:label": "npm run build && node scripts/auto-label.js"
   },
   "conventionalChangelog": {
     "preset": "angular",
     "releaseCount": 0,
     "outputUnreleased": true
   }
-} 
+}

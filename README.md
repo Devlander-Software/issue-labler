@@ -35,7 +35,7 @@
 
 ## Installation Instructions
 
-To use this action in your repository, you don’t need to manually copy any YAML files. Follow these simple steps to integrate this action into your project:
+To use this action in your repository, you don't need to manually copy any YAML files. Follow these simple steps to integrate this action into your project:
 
 ### Step 1: Create a Workflow File
 
@@ -53,7 +53,7 @@ Inside this directory, create a new workflow file. For example, you could name i
 
 ### Step 2: Add the Workflow
 
-In your newly created workflow file, reference the action you published in GitHub Marketplace. Here’s an example of what your workflow file should look like:
+In your newly created workflow file, reference the action you published in GitHub Marketplace. Here's an example of what your workflow file should look like:
 
 ```yaml
 name: Setup Issue Templates and Labels
@@ -74,7 +74,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-Replace `Devlander-Software/issue-labler@v1` with the actual path and version of the action once it’s published.
+Replace `Devlander-Software/issue-labler@v1` with the actual path and version of the action once it's published.
 
 ### Step 3: Commit and Push the Workflow
 
@@ -101,7 +101,7 @@ Whenever an issue is created or edited in your repository, the action will run a
 
 ## Benefits of Using This GitHub Action
 
-1. **Consistency Across Teams**: Whether you’re working on a single project or across multiple repositories in an organization, having consistent labels and issue templates makes it easier to manage issues.
+1. **Consistency Across Teams**: Whether you're working on a single project or across multiple repositories in an organization, having consistent labels and issue templates makes it easier to manage issues.
    
 2. **Better Organization**: The predefined labels help categorize and prioritize issues in a clear, structured way, so team members and product managers can easily understand the state of the project.
 
@@ -109,5 +109,46 @@ Whenever an issue is created or edited in your repository, the action will run a
 
 4. **Visual Clarity with Emojis**: The emoji-enhanced labels make the issue list visually appealing and easier to scan. Non-technical stakeholders will appreciate the intuitive visual cues that emojis provide.
 
-5. **Simplified Setup**: This action automatically sets up everything you need to manage issues—issue templates and labels—so you don’t have to manually create them for every new project.
+5. **Simplified Setup**: This action automatically sets up everything you need to manage issues—issue templates and labels—so you don't have to manually create them for every new project.
+
+6. **📊 Data-Driven Analysis**: **NEW!** Advanced data analysis and organization capabilities with structured labels, team insights, and export-ready data for external tools.
+
+---
+
+## 🆕 Data Analysis & Organization
+
+The Issue Labler now includes **advanced data analysis capabilities** that transform your issue management into a data-driven system:
+
+### 🎯 Key Analysis Features
+- **📊 Structured Labels**: Each label includes metadata (team, skills, complexity, hours)
+- **👥 Team Insights**: Automatic team capacity and workload analysis
+- **📈 Sprint Planning**: Story points with hour estimates for capacity planning
+- **🔍 Smart Filtering**: Pre-built GitHub search filters for common use cases
+- **📤 Export Ready**: JSON and CSV exports for external tools (Jira, Power BI, etc.)
+
+### 🚀 Quick Analysis Commands
+```bash
+# Generate templates and analysis data
+npm run generate:all
+
+# Get insights and recommendations
+npm run analyze
+
+# Export data for external tools
+npm run generate:analysis
+```
+
+### 📋 Sample GitHub Filters
+```bash
+# Quick wins (high impact, low effort)
+label:"⏳ Story Points: 1" label:"🚨 Priority: High"
+
+# Frontend team tasks
+label:"🎨 Client Side" OR label:"👩‍💻 Component/UI"
+
+# Technical debt
+label:"📉 Technical Debt"
+```
+
+📖 **For detailed analysis guidance, see [DATA_ANALYSIS.md](./DATA_ANALYSIS.md)**
 
