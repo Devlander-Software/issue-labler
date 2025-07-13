@@ -45,18 +45,14 @@ curl -sSL https://raw.githubusercontent.com/Devlander-Software/issue-labler/prod
 ### Method 2: Manual Installation
 
 ```bash
-# 1. Clone your repository (if not already done)
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-
-# 2. Create workflows directory
+# 1. Create workflows directory
 mkdir -p .github/workflows
 
-# 3. Download the workflow file
+# 2. Download the workflow file
 curl -o .github/workflows/auto-label-issues.yml \
   https://raw.githubusercontent.com/Devlander-Software/issue-labler/production/.github/workflows/auto-label-issues.yml
 
-# 4. Commit and push
+# 3. Commit and push
 git add .github/workflows/auto-label-issues.yml
 git commit -m "Add auto-label issues workflow"
 git push
@@ -105,6 +101,10 @@ Body:
 ```
 
 The action will automatically apply labels based on your selections!
+
+📖 **[Complete Usage Guide](USAGE_GUIDE.md)** - Everything you need to know about installation, configuration, and advanced usage
+
+🚀 **[Quick Reference](QUICK_REFERENCE.md)** - Fast reference card for common usage patterns
 
 ---
 
