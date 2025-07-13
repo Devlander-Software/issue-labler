@@ -26,6 +26,7 @@
 - **🎯 Smart Auto-Labeling**: Automatically detects and applies labels based on issue content and keywords
 - **📝 Professional Templates**: Comprehensive, structured issue templates with guided sections
 - **🏷️ 40+ Predefined Labels**: Categorized labels for story points, difficulty, priority, and development areas
+- **🔗 Stable IDs**: Labels use persistent identifiers that survive display name changes
 - **🔧 No External Dependencies**: Self-contained GitHub Action using GitHub CLI
 - **📊 Detailed Logging**: Comprehensive error handling and progress reporting
 - **⚙️ Configurable**: Easy to customize via repository variables

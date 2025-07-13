@@ -59,18 +59,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         
-      - name: Create GitHub labels
+      - name: Create GitHub labels with stable IDs
         run: |
           set -e  # Exit on any error
           
-          echo "🚀 Starting label creation process..."
+          echo "🚀 Starting label creation with stable IDs..."
           
           # Check if config file exists, otherwise use defaults
           if [ -f "config.yml" ]; then
-            echo "📋 Using configuration from config.yml"
-            # Parse config file and create labels
-            # This would require a more sophisticated parser
-            source_labels="config"
+            echo "📋 Using configuration from config.yml with stable IDs"
+            # Use the new stable ID script
+            ./scripts/create-labels-with-ids.sh
           else
             echo "📋 Using default label configuration"
             source_labels="default"
