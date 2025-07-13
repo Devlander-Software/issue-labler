@@ -187,7 +187,7 @@ while IFS='|' read -r id name color description; do
     check_rate_limit
     
     # Create the label with retry logic
-    if retry_with_backoff "create_label '$id' '$name' '$color' '$description'"; then
+    if retry_with_backoff "create_label \"$id\" \"$name\" \"$color\" \"$description\""; then
         ((created_count++))
     else
         ((error_count++))
