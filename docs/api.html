@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - DevLander Auto Label Issues GitHub Action</title>
+    <meta name="description" content="Complete API reference for the DevLander Auto Label Issues GitHub Action. Advanced configuration, environment variables, custom detection rules, and technical implementation details.">
+    <meta name="keywords" content="github action api, auto label configuration, environment variables, custom detection rules, github workflow api, advanced configuration">
+    <link rel="canonical" href="https://devlander-software.github.io/issue-labler/api.html">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 15px 40px;
+        }
+        
+        .nav a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #1a1a2e;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #16213e;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+        }
+        
+        .section h4 {
+            color: #495057;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+        }
+        
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .api-table th {
+            background: #1a1a2e;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .api-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .api-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .required {
+            background: #dc3545;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .optional {
+            background: #ffc107;
+            color: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .deprecated {
+            background: #6c757d;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .example {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .example h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .toc h3 {
+            margin-bottom: 15px;
+            color: #1a1a2e;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .toc li {
+            padding: 5px 0;
+        }
+        
+        .toc a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .method-signature {
+            background: #1a1a2e;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            margin: 15px 0;
+        }
+        
+        .parameter {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+        }
+        
+        .return-type {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .error-type {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 API Reference</h1>
+            <p>Complete technical documentation and advanced configuration options</p>
+        </div>
+        
+        <div class="nav">
+            <a href="index.html">← Back to Home</a>
+            <a href="installation.html">Installation</a>
+            <a href="usage.html">Usage Guide</a>
+            <a href="templates.html">Issue Templates</a>
+        </div>
+        
+        <div class="content">
+            <div class="toc">
+                <h3>📋 Table of Contents</h3>
+                <ul>
+                    <li><a href="#environment-variables">Environment Variables</a></li>
+                    <li><a href="#configuration-file">Configuration File (config.yml)</a></li>
+                    <li><a href="#workflow-triggers">Workflow Triggers</a></li>
+                    <li><a href="#label-detection">Label Detection Rules</a></li>
+                    <li><a href="#custom-detection">Custom Detection Rules</a></li>
+                    <li><a href="#template-configuration">Template Configuration</a></li>
+                    <li><a href="#api-endpoints">GitHub API Endpoints</a></li>
+                    <li><a href="#error-handling">Error Handling</a></li>
+                    <li><a href="#rate-limiting">Rate Limiting</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            
+            <div class="section" id="environment-variables">
+                <h2>Environment Variables</h2>
+                <p>Control the behavior of the action using these environment variables. Set them in your repository's Settings > Secrets and variables > Actions > Variables.</p>
+                
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>CREATE_TEMPLATES</code></td>
+                            <td><span class="optional">Optional</span></td>
+                            <td><code>true</code></td>
+                            <td>Enable/disable issue template generation</td>
+                        </tr>
+                        <tr>
+                            <td><code>CREATE_LABELS</code></td>
+                            <td><span class="optional">Optional</span></td>
+                            <td><code>true</code></td>
+                            <td>Enable/disable GitHub label creation</td>
+                        </tr>
+                        <tr>
+                            <td><code>AUTO_LABEL_ISSUES</code></td>
+                            <td><span class="optional">Optional</span></td>
+                            <td><code>true</code></td>
+                            <td>Enable/disable automatic issue labeling</td>
+                        </tr>
+                        <tr>
+                            <td><code>RATE_LIMIT_DELAY</code></td>
+                            <td><span class="optional">Optional</span></td>
+                            <td><code>0.5</code></td>
+                            <td>Delay between GitHub API calls (seconds)</td>
+                        </tr>
+                        <tr>
+                            <td><code>MAX_RETRIES</code></td>
+                            <td><span class="optional">Optional</span></td>
+                            <td><code>3</code></td>
+                            <td>Maximum retry attempts for failed operations</td>
+                        </tr>
+                        <tr>
+                            <td><code>DEBUG_MODE</code></td>
+                            <td><span class="optional">Optional</span></td>
+                            <td><code>false</code></td>
+                            <td>Enable debug logging for troubleshooting</td>
+                        </tr>
+                        <tr>
+                            <td><code>LABEL_PREFIX</code></td>
+                            <td><span class="optional">Optional</span></td>
+                            <td><code>""</code></td>
+                            <td>Prefix for all generated labels</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="example">
+                    <h4>Example Environment Configuration</h4>
+                    <div class="code-block">
+# .github/workflows/auto-label-issues.yml
+env:
+  CREATE_TEMPLATES: true
+  CREATE_LABELS: true
+  AUTO_LABEL_ISSUES: true
+  RATE_LIMIT_DELAY: 1.0
+  MAX_RETRIES: 5
+  DEBUG_MODE: false
+  LABEL_PREFIX: "PROJ-"
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section" id="configuration-file">
+                <h2>Configuration File (config.yml)</h2>
+                <p>The main configuration file that defines all labels, detection rules, and template settings.</p>
+                
+                <h3>Basic Structure</h3>
+                <div class="code-block">
+# config.yml
+labels:
+  story_points:
+    "⏳ Story Points: 1":
+      color: "6f42c1"
+      description: "Estimated effort: 1-2 hours"
+      story_points: 1
+      keywords: ["1 hour", "quick", "simple"]
+    
+  difficulty:
+    "🌱 Difficulty: Simple":
+      color: "0e8a16"
+      description: "Basic tasks with minimal complexity"
+      difficulty: "simple"
+      keywords: ["simple", "basic", "trivial"]
+    
+  priority:
+    "🚨 Priority: Critical":
+      color: "e11d21"
+      description: "Urgent tasks that must be handled immediately"
+      priority: "critical"
+      keywords: ["urgent", "critical", "emergency"]
+
+templates:
+  feature_request:
+    enabled: true
+    sections:
+      - name: "Feature Description"
+        required: true
+        type: "text"
+      - name: "Story Points"
+        required: true
+        type: "radio"
+        options: ["1", "2-3", "5", "8", "13", "20+"]
+
+detection_rules:
+  custom_keywords:
+    "🔒 Security":
+      keywords: ["security", "vulnerability", "auth"]
+      color: "d73a4a"
+      description: "Security-related changes"
+  
+  conditional_labels:
+    "🚨 Priority: Critical":
+      conditions:
+        - has_label: "🔒 Security"
+        - keyword: "urgent"
+      color: "e11d21"
+                    </div>
+                
+                <h3>Label Configuration</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>color</code></td>
+                            <td>string</td>
+                            <td><span class="required">Required</span></td>
+                            <td>6-digit hex color code (e.g., "6f42c1")</td>
+                        </tr>
+                        <tr>
+                            <td><code>description</code></td>
+                            <td>string</td>
+                            <td><span class="required">Required</span></td>
+                            <td>Label description (max 100 characters)</td>
+                        </tr>
+                        <tr>
+                            <td><code>keywords</code></td>
+                            <td>array</td>
+                            <td><span class="optional">Optional</span></td>
+                            <td>Keywords that trigger this label</td>
+                        </tr>
+                        <tr>
+                            <td><code>story_points</code></td>
+                            <td>number</td>
+                            <td><span class="optional">Optional</span></td>
+                            <td>Numeric story point value</td>
+                        </tr>
+                        <tr>
+                            <td><code>difficulty</code></td>
+                            <td>string</td>
+                            <td><span class="optional">Optional</span></td>
+                            <td>Difficulty level identifier</td>
+                        </tr>
+                        <tr>
+                            <td><code>priority</code></td>
+                            <td>string</td>
+                            <td><span class="optional">Optional</span></td>
+                            <td>Priority level identifier</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section" id="workflow-triggers">
+                <h2>Workflow Triggers</h2>
+                <p>Configure when the action should run using GitHub workflow triggers.</p>
+                
+                <div class="method-signature">
+                    <span class="parameter">on:</span>
+                    <br>
+                    &nbsp;&nbsp;<span class="parameter">issues:</span> [opened, edited, reopened, closed]
+                    <br>
+                    &nbsp;&nbsp;<span class="parameter">pull_request:</span> [opened, edited, synchronize, reopened, closed]
+                    <br>
+                    &nbsp;&nbsp;<span class="parameter">repository_dispatch:</span> [create_labels, cleanup, update]
+                </div>
+                
+                <h3>Trigger Types</h3>
+                
+                <h4>Issues</h4>
+                <ul>
+                    <li><strong>opened</strong> - When a new issue is created</li>
+                    <li><strong>edited</strong> - When an issue is modified</li>
+                    <li><strong>reopened</strong> - When a closed issue is reopened</li>
+                    <li><strong>closed</strong> - When an issue is closed</li>
+                </ul>
+                
+                <h4>Pull Requests</h4>
+                <ul>
+                    <li><strong>opened</strong> - When a new PR is created</li>
+                    <li><strong>edited</strong> - When a PR is modified</li>
+                    <li><strong>synchronize</strong> - When new commits are pushed</li>
+                    <li><strong>reopened</strong> - When a closed PR is reopened</li>
+                    <li><strong>closed</strong> - When a PR is closed</li>
+                </ul>
+                
+                <h4>Repository Dispatch</h4>
+                <ul>
+                    <li><strong>create_labels</strong> - Manually trigger label creation</li>
+                    <li><strong>cleanup</strong> - Clean up orphaned labels</li>
+                    <li><strong>update</strong> - Update existing labels</li>
+                </ul>
+                
+                <div class="example">
+                    <h4>Manual Trigger Example</h4>
+                    <div class="code-block">
+# Trigger label creation manually
+gh api repos/:owner/:repo/dispatches \
+  -f event_type=create_labels \
+  -f client_payload='{"action": "create_labels"}'
+
+# Trigger cleanup
+gh api repos/:owner/:repo/dispatches \
+  -f event_type=cleanup \
+  -f client_payload='{"action": "cleanup"}'
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section" id="label-detection">
+                <h2>Label Detection Rules</h2>
+                <p>The action uses multiple detection methods to automatically apply labels.</p>
+                
+                <h3>Detection Methods</h3>
+                
+                <h4>1. Checkbox Detection</h4>
+                <p>Detects checked checkboxes in issue templates:</p>
+                <div class="code-block">
+# Detects: - [x] **Story Points: 5**
+if [[ "$issue_body" =~ "- \[x\] \*\*Story Points: 5\*\*" ]]; then
+    labels_to_add+=("⏳ Story Points: 5")
+fi
+                </div>
+                
+                <h4>2. Keyword Detection</h4>
+                <p>Detects keywords in issue title and body:</p>
+                <div class="code-block">
+# Detects: "Story Points: 5" or "story points: 5"
+if [[ "$combined_text" =~ [Ss]tory\s*[Pp]oints?\s*:\s*5 ]]; then
+    labels_to_add+=("⏳ Story Points: 5")
+fi
+                </div>
+                
+                <h4>3. File-based Detection</h4>
+                <p>Detects labels based on changed files in pull requests:</p>
+                <div class="code-block">
+# Detects JavaScript/TypeScript files
+if echo "$changed_files" | grep -q "\.js$\|\.jsx$\|\.ts$\|\.tsx$"; then
+    labels_to_add+=("JavaScript")
+fi
+
+# Detects iOS-specific files
+if echo "$changed_files" | grep -q "ios\|iPhone\|iPad\|\.ipa$"; then
+    labels_to_add+=("🍎 Platform-Specific: iOS")
+fi
+                </div>
+                
+                <h4>4. Pattern Matching</h4>
+                <p>Uses regex patterns for complex detection:</p>
+                <div class="code-block">
+# Detects priority patterns
+if [[ "$combined_text" =~ [Pp]riority\s*:\s*[Cc]ritical ]]; then
+    labels_to_add+=("🚨 Priority: Critical")
+fi
+
+# Detects difficulty patterns
+if [[ "$combined_text" =~ [Dd]ifficulty\s*:\s*[Hh]ard ]]; then
+    labels_to_add+=("🔥 Difficulty: Hard")
+fi
+                </div>
+            </div>
+            
+            <div class="section" id="custom-detection">
+                <h2>Custom Detection Rules</h2>
+                <p>Add your own detection rules for custom labels and workflows.</p>
+                
+                <h3>Custom Keywords</h3>
+                <div class="code-block">
+# config.yml
+detection_rules:
+  custom_keywords:
+    "🔒 Security":
+      keywords: ["security", "vulnerability", "authentication", "authorization"]
+      color: "d73a4a"
+      description: "Security-related changes"
+    
+    "🚀 Performance":
+      keywords: ["performance", "optimization", "speed", "latency", "slow"]
+      color: "ff7800"
+      description: "Performance improvements"
+    
+    "🎨 UI/UX":
+      keywords: ["ui", "ux", "design", "interface", "user experience"]
+      color: "ff6b6b"
+      description: "User interface and experience changes"
+                </div>
+                
+                <h3>Conditional Labels</h3>
+                <div class="code-block">
+# config.yml
+detection_rules:
+  conditional_labels:
+    "🚨 Priority: Critical":
+      conditions:
+        - has_label: "🔒 Security"
+        - keyword: "urgent"
+        - keyword: "emergency"
+      color: "e11d21"
+      description: "Critical security or emergency issues"
+    
+    "🔥 Difficulty: Hard":
+      conditions:
+        - has_label: "🚀 Performance"
+        - story_points: ">= 8"
+      color: "d73a4a"
+      description: "Complex performance optimization"
+                </div>
+                
+                <h3>Custom File Patterns</h3>
+                <div class="code-block">
+# config.yml
+detection_rules:
+  file_patterns:
+    "🔧 Configuration":
+      patterns: ["*.config.*", "*.env*", "config/*"]
+      color: "6f42c1"
+      description: "Configuration file changes"
+    
+    "📊 Analytics":
+      patterns: ["analytics/*", "tracking/*", "metrics/*"]
+      color: "28a745"
+      description: "Analytics and tracking changes"
+                </div>
+            </div>
+            
+            <div class="section" id="template-configuration">
+                <h2>Template Configuration</h2>
+                <p>Customize issue templates to match your team's workflow.</p>
+                
+                <h3>Template Structure</h3>
+                <div class="code-block">
+# config.yml
+templates:
+  feature_request:
+    enabled: true
+    title: "Feature Request"
+    description: "Suggest a new feature for this project"
+    sections:
+      - name: "Feature Description"
+        required: true
+        type: "text"
+        placeholder: "Describe the feature you'd like to see"
+      
+      - name: "User Story"
+        required: false
+        type: "text"
+        placeholder: "As a [user type], I want [goal] so that [benefit]"
+      
+      - name: "Acceptance Criteria"
+        required: true
+        type: "checklist"
+        items:
+          - "Criterion 1"
+          - "Criterion 2"
+          - "Criterion 3"
+      
+      - name: "Story Points"
+        required: true
+        type: "radio"
+        options:
+          - "1"
+          - "2-3"
+          - "5"
+          - "8"
+          - "13"
+          - "20+"
+      
+      - name: "Difficulty"
+        required: true
+        type: "radio"
+        options:
+          - "Simple"
+          - "Easy"
+          - "Moderate"
+          - "Hard"
+          - "Very Hard"
+          - "Epic"
+                </div>
+                
+                <h3>Section Types</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Properties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>text</code></td>
+                            <td>Single-line or multi-line text input</td>
+                            <td>placeholder, required, multiline</td>
+                        </tr>
+                        <tr>
+                            <td><code>checklist</code></td>
+                            <td>List of checkboxes</td>
+                            <td>items, required</td>
+                        </tr>
+                        <tr>
+                            <td><code>radio</code></td>
+                            <td>Single selection from options</td>
+                            <td>options, required</td>
+                        </tr>
+                        <tr>
+                            <td><code>select</code></td>
+                            <td>Dropdown selection</td>
+                            <td>options, required, multiple</td>
+                        </tr>
+                        <tr>
+                            <td><code>file</code></td>
+                            <td>File upload</td>
+                            <td>required, accept, max_size</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section" id="api-endpoints">
+                <h2>GitHub API Endpoints</h2>
+                <p>The action uses these GitHub API endpoints for various operations.</p>
+                
+                <h3>Label Management</h3>
+                <div class="method-signature">
+                    <span class="parameter">GET</span> /repos/:owner/:repo/labels
+                    <span class="return-type">→ List all labels</span>
+                </div>
+                
+                <div class="method-signature">
+                    <span class="parameter">POST</span> /repos/:owner/:repo/labels
+                    <span class="return-type">→ Create a new label</span>
+                </div>
+                
+                <div class="method-signature">
+                    <span class="parameter">PATCH</span> /repos/:owner/:repo/labels/:name
+                    <span class="return-type">→ Update an existing label</span>
+                </div>
+                
+                <div class="method-signature">
+                    <span class="parameter">DELETE</span> /repos/:owner/:repo/labels/:name
+                    <span class="return-type">→ Delete a label</span>
+                </div>
+                
+                <h3>Issue Management</h3>
+                <div class="method-signature">
+                    <span class="parameter">GET</span> /repos/:owner/:repo/issues/:issue_number
+                    <span class="return-type">→ Get issue details</span>
+                </div>
+                
+                <div class="method-signature">
+                    <span class="parameter">PATCH</span> /repos/:owner/:repo/issues/:issue_number
+                    <span class="return-type">→ Update issue (add labels)</span>
+                </div>
+                
+                <h3>Pull Request Management</h3>
+                <div class="method-signature">
+                    <span class="parameter">GET</span> /repos/:owner/:repo/pulls/:pull_number
+                    <span class="return-type">→ Get PR details</span>
+                </div>
+                
+                <div class="method-signature">
+                    <span class="parameter">PATCH</span> /repos/:owner/:repo/pulls/:pull_number
+                    <span class="return-type">→ Update PR (add labels)</span>
+                </div>
+                
+                <h3>Rate Limiting</h3>
+                <div class="method-signature">
+                    <span class="parameter">GET</span> /rate_limit
+                    <span class="return-type">→ Check API rate limits</span>
+                </div>
+            </div>
+            
+            <div class="section" id="error-handling">
+                <h2>Error Handling</h2>
+                <p>The action includes comprehensive error handling for various failure scenarios.</p>
+                
+                <h3>Common Error Types</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Error Type</th>
+                            <th>HTTP Code</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="error-type">Rate Limit Exceeded</span></td>
+                            <td>403</td>
+                            <td>GitHub API rate limit reached</td>
+                            <td>Wait and retry with exponential backoff</td>
+                        </tr>
+                        <tr>
+                            <td><span class="error-type">Label Already Exists</span></td>
+                            <td>422</td>
+                            <td>Label with same name already exists</td>
+                            <td>Skip creation, continue with next label</td>
+                        </tr>
+                        <tr>
+                            <td><span class="error-type">Permission Denied</span></td>
+                            <td>403</td>
+                            <td>Insufficient permissions</td>
+                            <td>Log error, skip operation</td>
+                        </tr>
+                        <tr>
+                            <td><span class="error-type">Invalid Color</span></td>
+                            <td>422</td>
+                            <td>Invalid hex color format</td>
+                            <td>Use default color, log warning</td>
+                        </tr>
+                        <tr>
+                            <td><span class="error-type">Network Error</span></td>
+                            <td>Various</td>
+                            <td>Network connectivity issues</td>
+                            <td>Retry with exponential backoff</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Retry Logic</h3>
+                <div class="code-block">
+# Retry function with exponential backoff
+retry_with_backoff() {
+    local max_attempts=3
+    local attempt=1
+    local delay=1
+    local command="$@"
+    
+    while [ $attempt -le $max_attempts ]; do
+        if eval "$command"; then
+            return 0
+        else
+            echo "❌ Attempt $attempt failed. Retrying in $delay seconds..."
+            sleep $delay
+            attempt=$((attempt + 1))
+            delay=$((delay * 2))
+        fi
+    done
+    
+    echo "❌ All attempts failed for command: $command"
+    return 1
+}
+                </div>
+            </div>
+            
+            <div class="section" id="rate-limiting">
+                <h2>Rate Limiting</h2>
+                <p>GitHub API has rate limits that the action respects and handles gracefully.</p>
+                
+                <h3>Rate Limit Check</h3>
+                <div class="code-block">
+# Check rate limit before operations
+check_rate_limit() {
+    local remaining
+    remaining=$(gh api rate_limit --jq '.resources.core.remaining' 2>/dev/null || echo "5000")
+    if [ "$remaining" -lt 50 ]; then
+        echo "⚠️ Rate limit low ($remaining remaining). Waiting 60 seconds..."
+        sleep 60
+    fi
+}
+                </div>
+                
+                <h3>Rate Limit Configuration</h3>
+                <div class="info">
+                    <strong>Default Limits:</strong>
+                    <ul>
+                        <li>Authenticated requests: 5,000 per hour</li>
+                        <li>Unauthenticated requests: 60 per hour</li>
+                        <li>Search API: 30 requests per minute</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <strong>⚠️ Rate Limit Tips:</strong>
+                    <ul>
+                        <li>Use <code>RATE_LIMIT_DELAY</code> to add delays between requests</li>
+                        <li>Enable <code>DEBUG_MODE</code> to monitor rate limit usage</li>
+                        <li>Use repository dispatch for bulk operations</li>
+                        <li>Consider running during off-peak hours</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section" id="troubleshooting">
+                <h2>Troubleshooting</h2>
+                <p>Common issues and their solutions.</p>
+                
+                <h3>Debug Mode</h3>
+                <p>Enable debug logging to troubleshoot issues:</p>
+                <div class="code-block">
+# Set in repository variables
+DEBUG_MODE=true
+
+# Or in workflow
+env:
+  DEBUG_MODE: true
+                </div>
+                
+                <h3>Common Issues</h3>
+                
+                <div class="warning">
+                    <strong>Labels not created:</strong>
+                    <ul>
+                        <li>Check repository permissions (need admin access)</li>
+                        <li>Verify GitHub token has correct scopes</li>
+                        <li>Check workflow logs for error messages</li>
+                        <li>Ensure config.yml is valid YAML</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <strong>Rate limit errors:</strong>
+                    <ul>
+                        <li>Increase <code>RATE_LIMIT_DELAY</code> to 1.0 or higher</li>
+                        <li>Reduce <code>MAX_RETRIES</code> to avoid excessive retries</li>
+                        <li>Run during off-peak hours</li>
+                        <li>Use repository dispatch for bulk operations</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <strong>Templates not generated:</strong>
+                    <ul>
+                        <li>Check Node.js dependencies are installed</li>
+                        <li>Verify <code>generate:templates</code> script exists</li>
+                        <li>Check for YAML syntax errors in config</li>
+                        <li>Review workflow logs for template generation errors</li>
+                    </ul>
+                </div>
+                
+                <h3>Getting Help</h3>
+                <p>If you're still experiencing issues:</p>
+                <ul>
+                    <li>Check the <a href="https://github.com/Devlander-Software/issue-labler/issues">GitHub Issues</a> page</li>
+                    <li>Enable debug mode and share logs</li>
+                    <li>Join our <a href="https://github.com/Devlander-Software/issue-labler/discussions">Discussions</a> for community support</li>
+                    <li>Review the <a href="usage.html">Usage Guide</a> for best practices</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>Next Steps</h2>
+                <p>Now that you understand the API:</p>
+                <ul>
+                    <li><a href="installation.html">Install the action</a> with your preferred configuration</li>
+                    <li><a href="usage.html">Learn how to use the features</a> effectively</li>
+                    <li><a href="templates.html">Explore the available templates</a></li>
+                    <li>Customize the configuration for your specific needs</li>
+                    <li>Share your custom configurations with the community</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

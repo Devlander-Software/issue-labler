@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - DevLander Auto Label Issues GitHub Action</title>
+    <meta name="description" content="Step-by-step installation guide for the DevLander Auto Label Issues GitHub Action. Learn how to set up automatic issue labeling, story point detection, and professional templates.">
+    <meta name="keywords" content="github action installation, auto label setup, story point detection setup, github workflow installation">
+    <link rel="canonical" href="https://devlander-software.github.io/issue-labler/installation.html">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 15px 40px;
+        }
+        
+        .nav a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #1a1a2e;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #16213e;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+        }
+        
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .step-number {
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .prerequisites {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .prerequisites h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .prerequisites ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .prerequisites li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .prerequisites li:before {
+            content: "✓";
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Installation Guide</h1>
+            <p>Complete setup instructions for DevLander Auto Label Issues GitHub Action</p>
+        </div>
+        
+        <div class="nav">
+            <a href="index.html">← Back to Home</a>
+            <a href="usage.html">Usage Guide</a>
+            <a href="templates.html">Issue Templates</a>
+            <a href="api.html">API Reference</a>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>Quick Start</h2>
+                <p>Get up and running with automatic issue labeling in under 5 minutes.</p>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Add the workflow file</strong> to your repository's <code>.github/workflows/</code> directory
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Configure your labels</strong> in the <code>config.yml</code> file
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Create an issue</strong> and watch the magic happen!
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Prerequisites</h2>
+                <div class="prerequisites">
+                    <h3>Before you begin, ensure you have:</h3>
+                    <ul>
+                        <li>A GitHub repository with issues enabled</li>
+                        <li>Repository admin permissions (for label creation)</li>
+                        <li>GitHub Actions enabled in your repository</li>
+                        <li>Basic understanding of YAML configuration</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Detailed Installation Steps</h2>
+                
+                <h3>Step 1: Add the Workflow File</h3>
+                <p>Create a new file at <code>.github/workflows/auto-label-issues.yml</code> in your repository:</p>
+                
+                <div class="code-block">
+# Copy this content to .github/workflows/auto-label-issues.yml
+name: Setup Issue Templates and Labels
+
+on:
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited, synchronize]
+  repository_dispatch:
+    types: [create_labels, cleanup, update]
+
+env:
+  CREATE_TEMPLATES: ${{ vars.CREATE_TEMPLATES || 'true' }}
+  CREATE_LABELS: ${{ vars.CREATE_LABELS || 'true' }}
+  AUTO_LABEL_ISSUES: ${{ vars.AUTO_LABEL_ISSUES || 'true' }}
+
+jobs:
+  create_issue_templates:
+    runs-on: ubuntu-latest
+    if: ${{ vars.CREATE_TEMPLATES != 'false' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Generate Issue Templates
+        run: npm run generate:templates
+                </div>
+                
+                <div class="warning">
+                    <strong>⚠️ Important:</strong> Make sure to commit and push this file to your repository's main branch.
+                </div>
+                
+                <h3>Step 2: Configure Your Labels</h3>
+                <p>Create a <code>config.yml</code> file in your repository root to customize your labels:</p>
+                
+                <div class="code-block">
+# config.yml - Customize your labels here
+labels:
+  story_points:
+    "⏳ Story Points: 1":
+      color: "6f42c1"
+      description: "Estimated effort: 1-2 hours"
+      story_points: 1
+    "⏳ Story Points: 2-3":
+      color: "ffdf5d"
+      description: "Estimated effort: 2-4 hours"
+      story_points: 2.5
+    "⏳ Story Points: 5":
+      color: "ff7800"
+      description: "Estimated effort: 5-8 hours"
+      story_points: 5
+    "⏳ Story Points: 8":
+      color: "d73a4a"
+      description: "Estimated effort: 10-16 hours"
+      story_points: 8
+    "⏳ Story Points: 13":
+      color: "a29bfe"
+      description: "Estimated effort: 16+ hours"
+      story_points: 13
+    "⏳ Story Points: 20+":
+      color: "000000"
+      description: "Estimated effort: 40+ hours"
+      story_points: 20
+
+  difficulty:
+    "🌱 Difficulty: Simple":
+      color: "0e8a16"
+      description: "Basic tasks with minimal complexity"
+      difficulty: "simple"
+    "👍 Difficulty: Easy":
+      color: "f9d0c4"
+      description: "Low-complexity tasks, typically straightforward"
+      difficulty: "easy"
+    "🛠️ Difficulty: Moderate":
+      color: "ffdf5d"
+      description: "Tasks of medium complexity affecting multiple components"
+      difficulty: "moderate"
+    "🔥 Difficulty: Hard":
+      color: "d73a4a"
+      description: "High-complexity tasks involving significant changes"
+      difficulty: "hard"
+    "🧠 Difficulty: Very Hard":
+      color: "5319e7"
+      description: "Advanced tasks requiring deep expertise or extensive work"
+      difficulty: "very_hard"
+    "⚫ Difficulty: Epic":
+      color: "000000"
+      description: "Large, multi-phase tasks or projects requiring significant effort"
+      difficulty: "epic"
+
+  priority:
+    "🚨 Priority: Critical":
+      color: "e11d21"
+      description: "Urgent tasks that must be handled immediately"
+      priority: "critical"
+    "🚨 Priority: High":
+      color: "fbca04"
+      description: "Requires timely attention"
+      priority: "high"
+    "🚨 Priority: Medium":
+      color: "fef2c0"
+      description: "Important tasks, but not urgent"
+      priority: "medium"
+    "🚨 Priority: Low":
+      color: "c2e0c6"
+      description: "Tasks with minimal impact"
+      priority: "low"
+                </div>
+                
+                <h3>Step 3: Trigger the Initial Setup</h3>
+                <p>To create all labels and templates, trigger the workflow manually:</p>
+                
+                <div class="code-block">
+# Using GitHub CLI
+gh api repos/:owner/:repo/dispatches \
+  -f event_type=create_labels \
+  -f client_payload='{"action": "create_labels"}'
+
+# Or manually via GitHub web interface:
+# 1. Go to your repository
+# 2. Click "Actions" tab
+# 3. Select "Setup Issue Templates and Labels"
+# 4. Click "Run workflow"
+                </div>
+                
+                <div class="success">
+                    <strong>✅ Success!</strong> Your labels and templates should now be created automatically.
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Configuration Options</h2>
+                
+                <h3>Environment Variables</h3>
+                <p>You can control the behavior using repository variables:</p>
+                
+                <div class="code-block">
+# Set these in your repository Settings > Secrets and variables > Actions > Variables
+
+CREATE_TEMPLATES=true    # Generate issue templates (default: true)
+CREATE_LABELS=true       # Create GitHub labels (default: true)
+AUTO_LABEL_ISSUES=true   # Auto-label new issues (default: true)
+RATE_LIMIT_DELAY=0.5     # Delay between API calls (default: 0.5s)
+MAX_RETRIES=3           # Max retries for failed operations (default: 3)
+                </div>
+                
+                <h3>Customizing Labels</h3>
+                <p>You can add custom labels by extending the config.yml:</p>
+                
+                <div class="code-block">
+# Add custom labels
+labels:
+  custom:
+    "🎨 Design":
+      color: "ff6b6b"
+      description: "Design-related tasks"
+    "🔧 Bug Fix":
+      color: "d73a4a"
+      description: "Bug fixes and patches"
+    "📚 Documentation":
+      color: "0075ca"
+      description: "Documentation updates"
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Troubleshooting</h2>
+                
+                <h3>Common Issues</h3>
+                
+                <div class="warning">
+                    <strong>Labels not created?</strong><br>
+                    Check that you have admin permissions on the repository and that the workflow has the necessary permissions.
+                </div>
+                
+                <div class="warning">
+                    <strong>Rate limit errors?</strong><br>
+                    Increase the RATE_LIMIT_DELAY variable to add more delay between API calls.
+                </div>
+                
+                <div class="warning">
+                    <strong>Templates not generated?</strong><br>
+                    Ensure Node.js dependencies are installed and the generate:templates script is working.
+                </div>
+                
+                <h3>Getting Help</h3>
+                <p>If you're still having issues:</p>
+                <ul>
+                    <li>Check the <a href="https://github.com/Devlander-Software/issue-labler/issues">GitHub Issues</a> page</li>
+                    <li>Review the <a href="api.html">API Reference</a> for advanced configuration</li>
+                    <li>Join our <a href="https://github.com/Devlander-Software/issue-labler/discussions">Discussions</a> for community support</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>Next Steps</h2>
+                <p>Now that you have the action installed:</p>
+                <ul>
+                    <li><a href="usage.html">Learn how to use the action</a></li>
+                    <li><a href="templates.html">Explore issue templates</a></li>
+                    <li><a href="api.html">Advanced configuration options</a></li>
+                    <li>Create your first issue to test the automatic labeling</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

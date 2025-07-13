@@ -2,13 +2,19 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://github.com/your-org/issue-labler/blob/main/sitemap.xml
+Sitemap: https://devlander-software.github.io/issue-labler/sitemap.xml
 
 # Important files to index
 Allow: /README.md
 Allow: /.github/workflows/
 Allow: /config.yml
 Allow: /action.yml
+Allow: /docs/
+Allow: /installation.html
+Allow: /usage.html
+Allow: /templates.html
+Allow: /api.html
+Allow: /examples.html
 
 # Crawl delay (optional)
 Crawl-delay: 1 

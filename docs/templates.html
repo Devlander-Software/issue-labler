@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Templates - DevLander Auto Label Issues GitHub Action</title>
+    <meta name="description" content="Explore professional issue templates for GitHub with automatic labeling. Feature requests, bug reports, documentation requests, and more with story point detection.">
+    <meta name="keywords" content="github issue templates, feature request template, bug report template, story point templates, github automation templates">
+    <link rel="canonical" href="https://devlander-software.github.io/issue-labler/templates.html">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 15px 40px;
+        }
+        
+        .nav a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #1a1a2e;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #16213e;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+        }
+        
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .template-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .template-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .template-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .feature-icon { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .bug-icon { background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white; }
+        .performance-icon { background: linear-gradient(135deg, #feca57, #ff9ff3); color: white; }
+        .docs-icon { background: linear-gradient(135deg, #48dbfb, #0abde3); color: white; }
+        .debt-icon { background: linear-gradient(135deg, #ff9ff3, #f368e0); color: white; }
+        .mobile-icon { background: linear-gradient(135deg, #1dd1a1, #10ac84); color: white; }
+        .maintenance-icon { background: linear-gradient(135deg, #ff9ff3, #f368e0); color: white; }
+        
+        .template-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        
+        .template-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .template-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        
+        .template-features li {
+            padding: 5px 0;
+            font-size: 14px;
+        }
+        
+        .template-features li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .template-preview {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+        }
+        
+        .tip {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .customization-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        .customization-section h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .customization-section .code-block {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .label-example {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 2px;
+        }
+        
+        .story-points-1 { background: #6f42c1; color: white; }
+        .story-points-2 { background: #ffdf5d; color: #333; }
+        .story-points-5 { background: #ff7800; color: white; }
+        .story-points-8 { background: #d73a4a; color: white; }
+        .story-points-13 { background: #a29bfe; color: white; }
+        .story-points-20 { background: #000000; color: white; }
+        
+        .difficulty-simple { background: #0e8a16; color: white; }
+        .difficulty-easy { background: #f9d0c4; color: #333; }
+        .difficulty-moderate { background: #ffdf5d; color: #333; }
+        .difficulty-hard { background: #d73a4a; color: white; }
+        .difficulty-very-hard { background: #5319e7; color: white; }
+        .difficulty-epic { background: #000000; color: white; }
+        
+        .priority-critical { background: #e11d21; color: white; }
+        .priority-high { background: #fbca04; color: #333; }
+        .priority-medium { background: #fef2c0; color: #333; }
+        .priority-low { background: #c2e0c6; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Issue Templates</h1>
+            <p>Professional templates with automatic labeling and story point detection</p>
+        </div>
+        
+        <div class="nav">
+            <a href="index.html">← Back to Home</a>
+            <a href="installation.html">Installation</a>
+            <a href="usage.html">Usage Guide</a>
+            <a href="api.html">API Reference</a>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>Available Templates</h2>
+                <p>Our comprehensive set of issue templates provides structured workflows for different types of tasks. Each template includes automatic labeling based on your selections.</p>
+                
+                <div class="template-grid">
+                    <div class="template-card">
+                        <div class="template-header">
+                            <div class="template-icon feature-icon">✨</div>
+                            <div class="template-title">Feature Request</div>
+                        </div>
+                        <div class="template-description">
+                            For new features, enhancements, and improvements to existing functionality.
+                        </div>
+                        <ul class="template-features">
+                            <li>Story point estimation</li>
+                            <li>Difficulty assessment</li>
+                            <li>Priority setting</li>
+                            <li>Development area selection</li>
+                            <li>Platform-specific options</li>
+                        </ul>
+                        <div class="template-preview">
+## Feature Description
+[Describe the feature you'd like to see]
+
+## User Story
+As a [user type], I want [goal] so that [benefit]
+
+## Acceptance Criteria
+- [ ] Criterion 1
+- [ ] Criterion 2
+- [ ] Criterion 3
+
+## Story Points
+- [ ] **Story Points: 1**
+- [ ] **Story Points: 2-3**
+- [ ] **Story Points: 5**
+- [ ] **Story Points: 8**
+- [ ] **Story Points: 13**
+- [ ] **Story Points: 20+**
+                        </div>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-header">
+                            <div class="template-icon bug-icon">🪲</div>
+                            <div class="template-title">Bug Report</div>
+                        </div>
+                        <div class="template-description">
+                            For reporting bugs, issues, and unexpected behavior in the application.
+                        </div>
+                        <ul class="template-features">
+                            <li>Bug severity classification</li>
+                            <li>Reproduction steps</li>
+                            <li>Environment details</li>
+                            <li>Expected vs actual behavior</li>
+                            <li>Priority assessment</li>
+                        </ul>
+                        <div class="template-preview">
+## Bug Description
+[Describe the bug clearly]
+
+## Steps to Reproduce
+1. Go to '...'
+2. Click on '...'
+3. Scroll down to '...'
+4. See error
+
+## Expected Behavior
+[What should happen]
+
+## Actual Behavior
+[What actually happens]
+
+## Environment
+- OS: [e.g. iOS 14.0]
+- Browser: [e.g. Safari 14]
+- Version: [e.g. 1.0.0]
+
+## Priority
+- [ ] **Priority: Critical**
+- [ ] **Priority: High**
+- [ ] **Priority: Medium**
+- [ ] **Priority: Low**
+                        </div>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-header">
+                            <div class="template-icon performance-icon">🚀</div>
+                            <div class="template-title">Performance Issue</div>
+                        </div>
+                        <div class="template-description">
+                            For reporting performance problems, slow loading, and optimization needs.
+                        </div>
+                        <ul class="template-features">
+                            <li>Performance metrics</li>
+                            <li>Impact assessment</li>
+                            <li>Baseline measurements</li>
+                            <li>Optimization suggestions</li>
+                            <li>Priority based on impact</li>
+                        </ul>
+                        <div class="template-preview">
+## Performance Issue
+[Describe the performance problem]
+
+## Current Performance
+- Load time: [e.g. 5 seconds]
+- Memory usage: [e.g. 200MB]
+- CPU usage: [e.g. 80%]
+
+## Expected Performance
+- Load time: [e.g. 2 seconds]
+- Memory usage: [e.g. 100MB]
+- CPU usage: [e.g. 40%]
+
+## Impact Assessment
+- [ ] **Priority: Critical** - Blocks core functionality
+- [ ] **Priority: High** - Significant user impact
+- [ ] **Priority: Medium** - Moderate impact
+- [ ] **Priority: Low** - Minor inconvenience
+                        </div>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-header">
+                            <div class="template-icon docs-icon">📚</div>
+                            <div class="template-title">Documentation Request</div>
+                        </div>
+                        <div class="template-description">
+                            For requesting new documentation, updates, or improvements to existing docs.
+                        </div>
+                        <ul class="template-features">
+                            <li>Documentation type selection</li>
+                            <li>Target audience specification</li>
+                            <li>Content requirements</li>
+                            <li>Update vs new content</li>
+                            <li>Priority based on user needs</li>
+                        </ul>
+                        <div class="template-preview">
+## Documentation Need
+[Describe what documentation is needed]
+
+## Type of Documentation
+- [ ] **📝 Documentation: New** - New documentation
+- [ ] **📚 Documentation: Updates** - Update existing docs
+
+## Target Audience
+- [ ] Developers
+- [ ] End users
+- [ ] System administrators
+- [ ] Other: [specify]
+
+## Content Requirements
+[Describe what should be included]
+
+## Priority
+- [ ] **Priority: Critical** - Blocking development
+- [ ] **Priority: High** - Needed for release
+- [ ] **Priority: Medium** - Important for users
+- [ ] **Priority: Low** - Nice to have
+                        </div>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-header">
+                            <div class="template-icon debt-icon">📉</div>
+                            <div class="template-title">Technical Debt</div>
+                        </div>
+                        <div class="template-description">
+                            For identifying and tracking technical debt, refactoring needs, and code improvements.
+                        </div>
+                        <ul class="template-features">
+                            <li>Debt type classification</li>
+                            <li>Impact assessment</li>
+                            <li>Refactoring scope</li>
+                            <li>Risk evaluation</li>
+                            <li>Priority based on technical impact</li>
+                        </ul>
+                        <div class="template-preview">
+## Technical Debt Description
+[Describe the technical debt issue]
+
+## Type of Technical Debt
+- [ ] Code quality issues
+- [ ] Architecture problems
+- [ ] Dependency updates
+- [ ] Performance debt
+- [ ] Security debt
+- [ ] Other: [specify]
+
+## Current Impact
+[Describe how this affects the system]
+
+## Proposed Solution
+[Describe the refactoring approach]
+
+## Risk Assessment
+- [ ] **Priority: Critical** - Security/Stability risk
+- [ ] **Priority: High** - Significant technical impact
+- [ ] **Priority: Medium** - Moderate impact
+- [ ] **Priority: Low** - Minor improvement
+                        </div>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-header">
+                            <div class="template-icon mobile-icon">📱</div>
+                            <div class="template-title">Mobile Platform Issue</div>
+                        </div>
+                        <div class="template-description">
+                            For platform-specific issues on iOS and Android, including device compatibility and app store requirements.
+                        </div>
+                        <ul class="template-features">
+                            <li>Platform-specific detection</li>
+                            <li>Device compatibility</li>
+                            <li>OS version targeting</li>
+                            <li>App store requirements</li>
+                            <li>Platform-specific testing</li>
+                        </ul>
+                        <div class="template-preview">
+## Mobile Issue Description
+[Describe the mobile-specific issue]
+
+## Platform
+- [ ] **🍎 Platform-Specific: iOS** - iPhone/iPad
+- [ ] **🤖 Platform-Specific: Android** - Android devices
+
+## Device Information
+- Device: [e.g. iPhone 12, Samsung Galaxy S21]
+- OS Version: [e.g. iOS 15.0, Android 12]
+- App Version: [e.g. 1.2.3]
+
+## Issue Details
+[Describe the platform-specific behavior]
+
+## App Store Impact
+- [ ] **🏬 Deployment: App Store Release** - iOS App Store
+- [ ] **📱 Deployment: Google Play Release** - Google Play Store
+                        </div>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-header">
+                            <div class="template-icon maintenance-icon">🧹</div>
+                            <div class="template-title">Maintenance Task</div>
+                        </div>
+                        <div class="template-description">
+                            For routine maintenance, dependency updates, and housekeeping tasks.
+                        </div>
+                        <ul class="template-features">
+                            <li>Maintenance type classification</li>
+                            <li>Dependency management</li>
+                            <li>Routine tasks</li>
+                            <li>Automation opportunities</li>
+                            <li>Priority based on security/updates</li>
+                        </ul>
+                        <div class="template-preview">
+## Maintenance Task
+[Describe the maintenance work needed]
+
+## Type of Maintenance
+- [ ] **🔄 Maintenance: Dependency Update** - Package/library updates
+- [ ] **🧹 Maintenance: Chore** - Routine tasks
+
+## Dependencies to Update
+[List specific packages if applicable]
+
+## Security Impact
+- [ ] **Priority: Critical** - Security vulnerability
+- [ ] **Priority: High** - Important update
+- [ ] **Priority: Medium** - Recommended update
+- [ ] **Priority: Low** - Optional update
+
+## Automation Potential
+[Describe if this can be automated]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Automatic Labeling</h2>
+                <p>Each template automatically applies labels based on your selections. Here's how the labeling works:</p>
+                
+                <div class="tip">
+                    <strong>💡 How it works:</strong> When you check boxes in the templates, the action automatically detects these selections and applies the corresponding labels to your issue.
+                </div>
+                
+                <h3>Story Point Labels</h3>
+                <p>Estimate the effort required for the task:</p>
+                <div class="code-block">
+<span class="label-example story-points-1">⏳ Story Points: 1</span> - 1-2 hours
+<span class="label-example story-points-2">⏳ Story Points: 2-3</span> - 2-4 hours
+<span class="label-example story-points-5">⏳ Story Points: 5</span> - 5-8 hours
+<span class="label-example story-points-8">⏳ Story Points: 8</span> - 10-16 hours
+<span class="label-example story-points-13">⏳ Story Points: 13</span> - 16+ hours
+<span class="label-example story-points-20">⏳ Story Points: 20+</span> - 40+ hours
+                </div>
+                
+                <h3>Difficulty Labels</h3>
+                <p>Indicate the complexity of the task:</p>
+                <div class="code-block">
+<span class="label-example difficulty-simple">🌱 Difficulty: Simple</span> - Basic tasks
+<span class="label-example difficulty-easy">👍 Difficulty: Easy</span> - Low complexity
+<span class="label-example difficulty-moderate">🛠️ Difficulty: Moderate</span> - Medium complexity
+<span class="label-example difficulty-hard">🔥 Difficulty: Hard</span> - High complexity
+<span class="label-example difficulty-very-hard">🧠 Difficulty: Very Hard</span> - Advanced tasks
+<span class="label-example difficulty-epic">⚫ Difficulty: Epic</span> - Multi-phase projects
+                </div>
+                
+                <h3>Priority Labels</h3>
+                <p>Set the urgency of the task:</p>
+                <div class="code-block">
+<span class="label-example priority-critical">🚨 Priority: Critical</span> - Must handle immediately
+<span class="label-example priority-high">🚨 Priority: High</span> - Requires timely attention
+<span class="label-example priority-medium">🚨 Priority: Medium</span> - Important but not urgent
+<span class="label-example priority-low">🚨 Priority: Low</span> - Minimal impact
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="customization-section">
+                    <h3>Customizing Templates</h3>
+                    <p>You can customize the templates to match your team's workflow and requirements:</p>
+                    
+                    <div class="code-block">
+# config.yml - Customize template sections
+templates:
+  feature_request:
+    sections:
+      - name: "Feature Description"
+        required: true
+        type: "text"
+      - name: "User Story"
+        required: false
+        type: "text"
+      - name: "Acceptance Criteria"
+        required: true
+        type: "checklist"
+      - name: "Story Points"
+        required: true
+        type: "radio"
+        options:
+          - "1"
+          - "2-3"
+          - "5"
+          - "8"
+          - "13"
+          - "20+"
+                    </div>
+                    
+                    <p>You can also add custom sections, modify the checkbox options, and change the template structure to match your specific needs.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Template Best Practices</h2>
+                
+                <h3>For Template Usage</h3>
+                <ul>
+                    <li><strong>Choose the right template:</strong> Use the most appropriate template for your issue type</li>
+                    <li><strong>Fill out all required fields:</strong> Complete all mandatory sections for better labeling</li>
+                    <li><strong>Be specific:</strong> Provide detailed information to help with estimation and prioritization</li>
+                    <li><strong>Use checkboxes consistently:</strong> Only check the most appropriate options</li>
+                    <li><strong>Update existing issues:</strong> Edit issues to add missing information using templates</li>
+                </ul>
+                
+                <h3>For Template Customization</h3>
+                <ul>
+                    <li><strong>Keep it simple:</strong> Don't add too many fields that might discourage usage</li>
+                    <li><strong>Make it relevant:</strong> Customize templates for your specific project needs</li>
+                    <li><strong>Test with your team:</strong> Get feedback on template usability</li>
+                    <li><strong>Iterate:</strong> Continuously improve templates based on usage patterns</li>
+                </ul>
+                
+                <h3>For Team Adoption</h3>
+                <ul>
+                    <li><strong>Train your team:</strong> Show everyone how to use the templates effectively</li>
+                    <li><strong>Lead by example:</strong> Use templates consistently in your own issues</li>
+                    <li><strong>Provide feedback:</strong> Encourage team members to suggest improvements</li>
+                    <li><strong>Monitor usage:</strong> Track how well templates are being adopted</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>Next Steps</h2>
+                <p>Now that you understand the available templates:</p>
+                <ul>
+                    <li><a href="installation.html">Install the action</a> to get these templates in your repository</li>
+                    <li><a href="usage.html">Learn how to use the templates</a> effectively</li>
+                    <li><a href="api.html">Customize templates</a> for your specific needs</li>
+                    <li>Create your first issue using one of these templates</li>
+                    <li>Share feedback on template improvements</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
