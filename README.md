@@ -10,7 +10,7 @@
 
 ## 🎯 Overview
 
-**The Ultimate GitHub Issue Management Solution** - Automatically create professional issue templates, detect story points, and apply intelligent labels based on content and file changes. Perfect for **mobile development teams**, **agile projects**, and **organizations** that need consistent issue management across multiple repositories.
+**The Ultimate GitHub Issue Management Solution** - A GitHub Action that automatically creates professional issue templates, detects story points, and applies intelligent labels based on content and file changes. Perfect for **mobile development teams**, **agile projects**, and **organizations** that need consistent issue management across multiple repositories.
 
 ### 🚀 Key Features
 - **🎯 Smart Story Point Detection**: Automatically detects and labels story points (1, 2-3, 5, 8, 13, 20+)
@@ -18,7 +18,7 @@
 - **📱 Mobile Development Focus**: iOS/Android specific labels and templates
 - **🏷️ 50+ Professional Labels**: Comprehensive label set for all development areas
 - **📝 Professional Templates**: Structured templates for features, bugs, and performance issues
-- **🔧 No External Dependencies**: Self-contained and reliable
+- **🔧 No External Dependencies**: Self-contained GitHub Action
 - **⚙️ Organization Ready**: Perfect for enterprise and multi-repo setups
 
 ## ✨ Key Features
@@ -26,9 +26,9 @@
 - **🎯 Smart Auto-Labeling**: Automatically detects and applies labels based on issue content and keywords
 - **📝 Professional Templates**: Comprehensive, structured issue templates with guided sections
 - **🏷️ 40+ Predefined Labels**: Categorized labels for story points, difficulty, priority, and development areas
-- **🔧 No External Dependencies**: Self-contained implementation using GitHub CLI
+- **🔧 No External Dependencies**: Self-contained GitHub Action using GitHub CLI
 - **📊 Detailed Logging**: Comprehensive error handling and progress reporting
-- **⚙️ Configurable**: Easy to customize via configuration file
+- **⚙️ Configurable**: Easy to customize via repository variables
 - **🔄 Intelligent Detection**: Analyzes both issue title and body for better accuracy
 
 ---
@@ -41,6 +41,8 @@
 # Run this in your repository root
 curl -sSL https://raw.githubusercontent.com/Devlander-Software/issue-labler/production/install.sh | bash
 ```
+
+This installs a GitHub Actions workflow that runs automatically when issues or pull requests are created.
 
 ### Method 2: Manual Installation
 
@@ -100,7 +102,7 @@ Body:
 - [x] **Priority: Medium**
 ```
 
-The action will automatically apply labels based on your selections!
+The GitHub Action will automatically run and apply labels based on your selections!
 
 📖 **[Complete Usage Guide](USAGE_GUIDE.md)** - Everything you need to know about installation, configuration, and advanced usage
 

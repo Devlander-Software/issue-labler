@@ -26,13 +26,15 @@
    ```
 
 2. **Create a test issue** with story points and difficulty
-3. **Watch automatic labeling** happen instantly!
+3. **Watch the GitHub Action run** and apply labels automatically!
 
 ### For Existing Repositories
 
-1. **Install the workflow** (see installation methods below)
+1. **Install the GitHub Actions workflow** (see installation methods below)
 2. **Configure your preferences** in repository variables
 3. **Test with existing issues** or create new ones
+
+**Important:** This is a GitHub Action that only runs in the GitHub Actions environment when issues or pull requests are created/edited.
 
 ---
 
@@ -46,10 +48,10 @@ curl -sSL https://raw.githubusercontent.com/Devlander-Software/issue-labler/prod
 ```
 
 **What this does:**
-- Downloads the workflow file
-- Creates necessary directories
-- Commits and pushes changes
-- Ready to use immediately
+- Downloads the GitHub Actions workflow file
+- Creates necessary `.github/workflows/` directory
+- Commits and pushes the workflow to your repository
+- The action will run automatically when issues/PRs are created
 
 ### Method 2: Manual Download
 
@@ -69,7 +71,7 @@ git push
 
 ### Method 3: GitHub Marketplace (Future)
 
-Once published, use as a reusable action:
+Once published to GitHub Marketplace, use as a reusable action:
 
 ```yaml
 name: Auto Label Issues
@@ -86,6 +88,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+**Note:** This is a GitHub Action that runs in the GitHub Actions environment. It cannot be run locally or as a standalone script.
 
 ---
 

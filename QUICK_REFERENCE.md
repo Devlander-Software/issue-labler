@@ -9,6 +9,8 @@
 curl -sSL https://raw.githubusercontent.com/Devlander-Software/issue-labler/production/install.sh | bash
 ```
 
+**Note:** This installs a GitHub Actions workflow that runs automatically when issues/PRs are created.
+
 ## 🎯 Basic Usage
 
 ### Create Issue with Auto-Labeling
