@@ -35,16 +35,99 @@
 
 ## 🚀 Quick Installation
 
-### Method 1: One-Line Install (Recommended)
+### Method 1: GitHub Actions (Recommended)
+
+Create a new workflow file in your repository:
+
+```yaml
+# .github/workflows/auto-label-issues.yml
+name: Setup Issue Templates and Labels
+
+on:
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited, synchronize]
+  repository_dispatch:
+    types: [create_labels, cleanup, update]
+
+env:
+  CREATE_TEMPLATES: ${{ vars.CREATE_TEMPLATES || 'true' }}
+  CREATE_LABELS: ${{ vars.CREATE_LABELS || 'true' }}
+  AUTO_LABEL_ISSUES: ${{ vars.AUTO_LABEL_ISSUES || 'true' }}
+  RATE_LIMIT_DELAY: ${{ vars.RATE_LIMIT_DELAY || '0.5' }}
+  MAX_RETRIES: ${{ vars.MAX_RETRIES || '3' }}
+
+jobs:
+  create_issue_templates:
+    runs-on: ubuntu-latest
+    if: ${{ vars.CREATE_TEMPLATES != 'false' }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run generate:templates
+      - run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Action"
+          git add .github/ISSUE_TEMPLATE/*.md
+          git commit -m "Generate issue templates from config"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  create_labels:
+    runs-on: ubuntu-latest
+    needs: create_issue_templates
+    if: ${{ vars.CREATE_LABELS != 'false' }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          # Download and run the complete workflow
+          curl -sSL https://raw.githubusercontent.com/Devlander-Software/issue-labler/production/.github/workflows/auto-label-issues.yml | bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  label-by-files:
+    runs-on: ubuntu-latest
+    needs: create_labels
+    if: ${{ vars.AUTO_LABEL_ISSUES != 'false' && github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: |
+          # Download and run the complete workflow
+          curl -sSL https://raw.githubusercontent.com/Devlander-Software/issue-labler/production/.github/workflows/auto-label-issues.yml | bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  label-issue:
+    runs-on: ubuntu-latest
+    needs: create_labels
+    if: ${{ vars.AUTO_LABEL_ISSUES != 'false' && github.event_name == 'issues' }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          # Download and run the complete workflow
+          curl -sSL https://raw.githubusercontent.com/Devlander-Software/issue-labler/production/.github/workflows/auto-label-issues.yml | bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### Method 2: One-Line Install Script
 
 ```bash
 # Run this in your repository root
 curl -sSL https://raw.githubusercontent.com/Devlander-Software/issue-labler/production/install.sh | bash
 ```
 
-This installs a GitHub Actions workflow that runs automatically when issues or pull requests are created.
+This downloads the complete workflow file and sets it up automatically.
 
-### Method 2: Manual Installation
+### Method 3: Manual Download
 
 ```bash
 # 1. Create workflows directory
@@ -60,26 +143,22 @@ git commit -m "Add auto-label issues workflow"
 git push
 ```
 
-### Method 3: GitHub Marketplace (Coming Soon)
+### Method 4: GitHub Marketplace (Future)
 
 Once published to GitHub Marketplace, you can use it as a reusable action:
 
 ```yaml
-# .github/workflows/auto-label-issues.yml
 name: Auto Label Issues
-
 on:
-  issues:
-    types: [opened, edited]
-  pull_request:
-    types: [opened, edited, synchronize]
+  issues: [opened, edited]
+  pull_request: [opened, edited, synchronize]
 
 jobs:
   auto-label:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Auto-Label Issues Action
-        uses: Devlander-Software/issue-labler@v1
+      - uses: actions/checkout@v3
+      - uses: Devlander-Software/issue-labler@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
