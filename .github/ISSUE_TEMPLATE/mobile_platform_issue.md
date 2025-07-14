@@ -107,7 +107,7 @@ assignees: ""
 - [ ] **🎨 Client Side** (Tasks related to frontend development, such as UI/UX or component design.)
 - [ ] **🖥️ Backend** (Tasks related to backend development, such as APIs, databases, or server logic.)
 - [ ] **☁️ Cloud Infrastructure** (Tasks involving AWS services such as EC2, S3, RDS, Lambda, and other cloud-based infrastructure.)
-- [ ] **⚙️ DevOps** (Tasks associated with development operations, including automation, CI/CD, and infrastructure management.)
+- [ ] **⚙️ DevOps** (Tasks for automation, CI/CD, and infrastructure management.)
 - [ ] **👩‍💻 Component/UI** (Tasks for developing or designing individual UI components, focusing on reusable elements.)
 - [ ] **🧠 Logic/Functions** (Tasks for implementing behind-the-scenes business logic and functions, not related to visuals.)
 
@@ -122,9 +122,9 @@ assignees: ""
 ## 🚀 Deployment & Validation
 **Select deployment and validation needs:**
 
+- [ ] **🚀 Deployment: TestFlight Release** (Tasks related to preparing and rolling updates to TestFlight for beta testing.)
 - [ ] **🏬 Deployment: App Store Release** (Tasks related to preparing and submitting updates to the App Store.)
 - [ ] **📱 Deployment: Google Play Release** (Tasks related to submitting updates to Google Play for Android users.)
-- [ ] **🚀 Deployment: TestFlight Release** (Tasks related to preparing and rolling updates to TestFlight for beta testing.)
 - [ ] **🧪 Validation: TestFlight** (Tasks related to validating features and collecting feedback from TestFlight users.)
 - [ ] **📱 Validation: Platform-Specific** (Tasks for platform-specific validation, such as for iOS or Android environments.)
 

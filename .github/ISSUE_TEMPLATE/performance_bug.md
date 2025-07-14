@@ -77,7 +77,7 @@ assignees: ""
 - [ ] **🎨 Client Side** (Tasks related to frontend development, such as UI/UX or component design.)
 - [ ] **🖥️ Backend** (Tasks related to backend development, such as APIs, databases, or server logic.)
 - [ ] **☁️ Cloud Infrastructure** (Tasks involving AWS services such as EC2, S3, RDS, Lambda, and other cloud-based infrastructure.)
-- [ ] **⚙️ DevOps** (Tasks associated with development operations, including automation, CI/CD, and infrastructure management.)
+- [ ] **⚙️ DevOps** (Tasks for automation, CI/CD, and infrastructure management.)
 - [ ] **👩‍💻 Component/UI** (Tasks for developing or designing individual UI components, focusing on reusable elements.)
 - [ ] **🧠 Logic/Functions** (Tasks for implementing behind-the-scenes business logic and functions, not related to visuals.)
 
@@ -86,5 +86,4 @@ assignees: ""
 
 - [ ] **🍎 Platform-Specific: iOS** (Tasks specific to iOS development, including iPhone/iPad features and compatibility.)
 - [ ] **🤖 Platform-Specific: Android** (Tasks related to Android-specific development and compatibility.)
-- [ ] **📱 App Store / Google Play Store** (Things related to App Store and Google Play Store.)
 
