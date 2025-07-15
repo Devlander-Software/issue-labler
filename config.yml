@@ -1,6 +1,96 @@
 # Issue Labler Configuration
 # This file allows you to customize the labels and templates created by the action
 
+# GitHub Issue Type Field Configuration
+github_issue_types:
+  - name: "Bug"
+    description: "Something is not working correctly"
+    color: "d73a4a"
+    icon: "🪲"
+    default_priority: "high"
+    
+  - name: "Feature"
+    description: "New functionality or enhancement"
+    color: "663399"
+    icon: "✨"
+    default_priority: "medium"
+    
+  - name: "Task"
+    description: "General work item or maintenance"
+    color: "0366d6"
+    icon: "📋"
+    default_priority: "low"
+    
+  - name: "Performance"
+    description: "Performance optimization or speed improvements"
+    color: "ffd33d"
+    icon: "🚀"
+    default_priority: "high"
+    
+  - name: "Technical Debt"
+    description: "Code improvements and refactoring"
+    color: "f9d0c4"
+    icon: "📉"
+    default_priority: "low"
+
+# Label Application Rules by Issue Type
+label_rules:
+  bug:
+    required_labels: ["🚨 Priority: High"]
+    available_labels:
+      - all_priorities
+      - all_story_points
+      - all_difficulties
+      - all_development_areas
+      - all_platforms
+      - all_testing
+      - all_languages
+      - qa_automation
+    
+  feature:
+    required_labels: ["🚨 Priority: Medium"]
+    available_labels:
+      - medium_high_low_priorities
+      - all_story_points
+      - all_difficulties
+      - all_development_areas
+      - all_platforms
+      - all_testing
+      - all_languages
+      - documentation_new
+    
+  task:
+    required_labels: ["🚨 Priority: Low"]
+    available_labels:
+      - low_medium_priorities
+      - small_story_points
+      - simple_moderate_difficulties
+      - all_development_areas
+      - all_languages
+      - documentation_updates
+      - maintenance_labels
+    
+  performance:
+    required_labels: ["🚨 Priority: High"]
+    available_labels:
+      - high_medium_priorities
+      - large_story_points
+      - hard_very_hard_epic_difficulties
+      - frontend_backend_infrastructure
+      - all_languages
+      - unit_integration_testing
+      - qa_automation
+    
+  technical_debt:
+    required_labels: ["🚨 Priority: Low"]
+    available_labels:
+      - low_medium_priorities
+      - medium_story_points
+      - moderate_very_hard_difficulties
+      - all_development_areas
+      - all_languages
+      - unit_integration_testing
+
 # Label Categories - Organized for easy filtering and analysis
 labels:
   # Release Phases
@@ -203,16 +293,16 @@ labels:
       value: "ui_components"
       team: "frontend"
       skills: ["react", "vue", "angular", "design-systems", "accessibility"]
-    - id: "dev-business-logic"
+    - id: "dev-logic"
       name: "🧠 Logic/Functions"
       color: "6e5494"
       description: "Tasks for implementing behind-the-scenes business logic and functions, not related to visuals."
       category: "development_area"
-      value: "business_logic"
+      value: "logic"
       team: "backend"
-      skills: ["algorithms", "data-structures", "business-logic", "api-design"]
+      skills: ["algorithms", "business-logic", "api-design", "data-processing"]
 
-  # Platform Specific - For mobile and platform-specific development
+  # Platform-Specific Labels - For mobile development focus
   platforms:
     - id: "platform-ios"
       name: "🍎 Platform-Specific: iOS"
@@ -221,7 +311,7 @@ labels:
       category: "platform"
       value: "ios"
       team: "mobile"
-      skills: ["swift", "objective-c", "ios", "xcode", "app-store"]
+      skills: ["swift", "objective-c", "xcode", "ios-sdk", "app-store"]
     - id: "platform-android"
       name: "🤖 Platform-Specific: Android"
       color: "4c1a95"
@@ -229,9 +319,9 @@ labels:
       category: "platform"
       value: "android"
       team: "mobile"
-      skills: ["kotlin", "java", "android", "android-studio", "google-play"]
+      skills: ["kotlin", "java", "android-sdk", "google-play", "material-design"]
 
-  # Testing & Quality Assurance
+  # Testing Types - For quality assurance and validation
   testing:
     - id: "testing-unit"
       name: "🔬 Testing: Unit"
@@ -240,7 +330,7 @@ labels:
       category: "testing"
       value: "unit"
       team: "qa"
-      skills: ["jest", "mocha", "pytest", "unit-testing"]
+      skills: ["jest", "mocha", "pytest", "junit", "unit-testing"]
     - id: "testing-integration"
       name: "🧩 Testing: Integration"
       color: "f9d0c4"
@@ -248,7 +338,7 @@ labels:
       category: "testing"
       value: "integration"
       team: "qa"
-      skills: ["integration-testing", "api-testing", "end-to-end"]
+      skills: ["integration-testing", "api-testing", "database-testing"]
     - id: "testing-e2e"
       name: "🌐 Testing: End-to-End"
       color: "a2eeef"
@@ -262,49 +352,49 @@ labels:
       color: "2db1eb"
       description: "Tasks involving writing, updating, or automating tests to ensure code quality."
       category: "testing"
-      value: "qa"
+      value: "qa_automation"
       team: "qa"
-      skills: ["test-automation", "quality-assurance", "manual-testing"]
+      skills: ["test-automation", "ci-cd", "quality-assurance"]
 
-  # Documentation
+  # Documentation Labels
   documentation:
-    - id: "docs-updates"
+    - id: "doc-updates"
       name: "📚 Documentation: Updates"
       color: "6c757d"
       description: "Tasks involving updates or improvements to existing documentation."
       category: "documentation"
       value: "updates"
       team: "documentation"
-      skills: ["technical-writing", "markdown", "documentation"]
-    - id: "docs-new"
+      skills: ["technical-writing", "markdown", "api-docs"]
+    - id: "doc-new"
       name: "📝 Documentation: New"
       color: "0052cc"
       description: "Tasks focused on creating entirely new documentation."
       category: "documentation"
       value: "new"
       team: "documentation"
-      skills: ["technical-writing", "markdown", "documentation"]
+      skills: ["technical-writing", "user-guides", "tutorials"]
 
-  # Maintenance & Operations
+  # Maintenance Labels
   maintenance:
-    - id: "maintenance-dependencies"
+    - id: "maintenance-deps"
       name: "🔄 Maintenance: Dependency Update"
       color: "0366d6"
       description: "Tasks related to updating project dependencies like libraries or frameworks."
       category: "maintenance"
-      value: "dependencies"
+      value: "dependency_update"
       team: "devops"
-      skills: ["dependency-management", "security-updates", "version-control"]
+      skills: ["dependency-management", "security-updates", "compatibility"]
     - id: "maintenance-chore"
       name: "🧹 Maintenance: Chore"
       color: "e4e669"
       description: "Routine maintenance tasks for upkeep without adding features."
       category: "maintenance"
       value: "chore"
-      team: "devops"
-      skills: ["maintenance", "housekeeping", "cleanup"]
+      team: "general"
+      skills: ["code-cleanup", "refactoring", "housekeeping"]
 
-  # Deployment & Release
+  # Deployment Labels
   deployment:
     - id: "deploy-testflight"
       name: "🚀 Deployment: TestFlight Release"
@@ -313,25 +403,25 @@ labels:
       category: "deployment"
       value: "testflight"
       team: "mobile"
-      skills: ["ios", "testflight", "beta-testing", "app-store-connect"]
-    - id: "deploy-app-store"
+      skills: ["ios-deployment", "testflight", "beta-testing"]
+    - id: "deploy-appstore"
       name: "🏬 Deployment: App Store Release"
       color: "ffdf5d"
       description: "Tasks related to preparing and submitting updates to the App Store."
       category: "deployment"
       value: "app_store"
       team: "mobile"
-      skills: ["ios", "app-store", "release-management", "app-store-connect"]
-    - id: "deploy-google-play"
+      skills: ["app-store", "ios-deployment", "app-review"]
+    - id: "deploy-googleplay"
       name: "📱 Deployment: Google Play Release"
       color: "a4f9e0"
       description: "Tasks related to submitting updates to Google Play for Android users."
       category: "deployment"
       value: "google_play"
       team: "mobile"
-      skills: ["android", "google-play", "release-management", "play-console"]
+      skills: ["google-play", "android-deployment", "app-review"]
 
-  # Validation & Testing
+  # Validation Labels
   validation:
     - id: "validation-testflight"
       name: "🧪 Validation: TestFlight"
@@ -346,40 +436,9 @@ labels:
       color: "e7e7e7"
       description: "Tasks for platform-specific validation, such as for iOS or Android environments."
       category: "validation"
-      value: "platform"
+      value: "platform_specific"
       team: "qa"
       skills: ["platform-testing", "device-testing", "compatibility"]
-
-  # Issue Types
-  issue_types:
-    - id: "issue-bug"
-      name: "🪲 Bug"
-      color: "d73a4a"
-      description: "Something is not working correctly."
-      category: "issue_type"
-      value: "bug"
-      priority_default: "high"
-    - id: "issue-feature"
-      name: "✨ Feature"
-      color: "663399"
-      description: "Tasks focused on developing new features or adding functionality."
-      category: "issue_type"
-      value: "feature"
-      priority_default: "medium"
-    - id: "issue-performance"
-      name: "🚀 Performance"
-      color: "ffd33d"
-      description: "Tasks related to performance optimization and speed improvements."
-      category: "issue_type"
-      value: "performance"
-      priority_default: "medium"
-    - id: "issue-tech-debt"
-      name: "📉 Technical Debt"
-      color: "f9d0c4"
-      description: "Tasks related to addressing shortcuts or temporary fixes that need improvement."
-      category: "issue_type"
-      value: "technical_debt"
-      priority_default: "low"
 
   # Programming Languages
   languages:
@@ -462,32 +521,32 @@ templates:
       ## 📊 Effort Estimation
       **Select the estimated effort for this task:**
 
-      - [ ] **Story Points: 1** (1-2 hours)
-      - [ ] **Story Points: 2-3** (2-4 hours)
-      - [ ] **Story Points: 5** (5-8 hours)
-      - [ ] **Story Points: 8** (10-16 hours)
-      - [ ] **Story Points: 13** (16+ hours)
-      - [ ] **Story Points: 20+** (40+ hours)
+      - [ ] **⏳ Story Points: 1** (1-2 hours)
+      - [ ] **⏳ Story Points: 2-3** (2-4 hours)
+      - [ ] **⏳ Story Points: 5** (5-8 hours)
+      - [ ] **⏳ Story Points: 8** (10-16 hours)
+      - [ ] **⏳ Story Points: 13** (16+ hours)
+      - [ ] **⏳ Story Points: 20+** (40+ hours)
 
     difficulty_section: |
       ## 🎯 Complexity Assessment
       **Select the complexity level:**
 
-      - [ ] **Difficulty: Simple** (Basic tasks with minimal complexity)
-      - [ ] **Difficulty: Easy** (Low-complexity tasks, typically straightforward)
-      - [ ] **Difficulty: Moderate** (Tasks of medium complexity affecting multiple components)
-      - [ ] **Difficulty: Hard** (High-complexity tasks involving significant changes)
-      - [ ] **Difficulty: Very Hard** (Advanced tasks requiring deep expertise or extensive work)
-      - [ ] **Difficulty: Epic** (Large, multi-phase tasks or projects requiring significant effort)
+      - [ ] **🌱 Difficulty: Simple** (Basic tasks with minimal complexity)
+      - [ ] **👍 Difficulty: Easy** (Low-complexity tasks, typically straightforward)
+      - [ ] **🛠️ Difficulty: Moderate** (Tasks of medium complexity affecting multiple components)
+      - [ ] **🔥 Difficulty: Hard** (High-complexity tasks involving significant changes)
+      - [ ] **🧠 Difficulty: Very Hard** (Advanced tasks requiring deep expertise or extensive work)
+      - [ ] **⚫ Difficulty: Epic** (Large, multi-phase tasks or projects requiring significant effort)
 
     priority_section: |
       ## 🚨 Priority Level
       **Select the priority level:**
 
-      - [ ] **Priority: Critical** (Urgent tasks that must be handled immediately)
-      - [ ] **Priority: High** (Requires timely attention, may cause larger issues if not addressed soon)
-      - [ ] **Priority: Medium** (Important tasks, but not urgent)
-      - [ ] **Priority: Low** (Tasks with minimal impact, can be handled when there's free time)
+      - [ ] **🚨 Priority: Critical** (Urgent tasks that must be handled immediately)
+      - [ ] **🚨 Priority: High** (Requires timely attention, may cause larger issues if not addressed soon)
+      - [ ] **🚨 Priority: Medium** (Important tasks, but not urgent)
+      - [ ] **🚨 Priority: Low** (Tasks with minimal impact, can be handled when there's free time)
 
     development_areas_section: |
       ## 🛠️ Development Areas
@@ -525,9 +584,9 @@ templates:
       - [ ] **🧪 Validation: TestFlight** (iOS beta validation)
       - [ ] **📱 Validation: Platform-Specific** (Platform-specific testing)
 
-  # Template-specific sections
+  # Template-specific sections by issue type
   template_sections:
-    feature_request:
+    bug:
       - story_points_section
       - difficulty_section
       - priority_section
@@ -535,7 +594,7 @@ templates:
       - testing_section
       - platform_section
 
-    bug_report:
+    feature:
       - story_points_section
       - difficulty_section
       - priority_section
@@ -543,115 +602,81 @@ templates:
       - testing_section
       - platform_section
 
-    performance_bug:
+    task:
       - story_points_section
       - difficulty_section
       - priority_section
       - development_areas_section
-      - platform_section
+      - testing_section
 
-    documentation_request:
+    performance:
       - story_points_section
       - difficulty_section
       - priority_section
       - development_areas_section
+      - testing_section
 
     technical_debt:
       - story_points_section
       - difficulty_section
       - priority_section
       - development_areas_section
-
-    mobile_platform_issue:
-      - story_points_section
-      - difficulty_section
-      - priority_section
-      - development_areas_section
-      - testing_section
-      - deployment_section
-
-    maintenance_task:
-      - story_points_section
-      - difficulty_section
-      - priority_section
-      - development_areas_section
       - testing_section
 
-# Analysis and Reporting Configuration
-analysis:
-  # Metrics to track for reporting
-  metrics:
-    - story_points_by_team
-    - difficulty_distribution
-    - priority_distribution
-    - platform_distribution
-    - language_distribution
-    - velocity_by_category
-    - time_to_resolution
-    - label_accuracy
-
-  # Filters for data analysis
-  filters:
-    date_range: "last_30_days"
-    teams: ["frontend", "backend", "mobile", "devops", "qa"]
-    categories: ["story_points", "difficulty", "priority", "development_area"]
-    platforms: ["ios", "android", "web"]
-
-  # Export formats for data analysis
-  export_formats:
-    - csv
-    - json
-    - excel
-    - powerbi
-
-# Workflow Configuration
-workflow:
-  # Auto-labeling rules
-  auto_label_rules:
-    - name: "Story Points Detection"
-      pattern: "Story Points: (\\d+[+]?)"
-      labels: ["story_points"]
-      confidence: 0.9
-
-    - name: "Difficulty Detection"
-      pattern: "Difficulty: (Simple|Easy|Moderate|Hard|Very Hard|Epic)"
-      labels: ["difficulty"]
-      confidence: 0.9
-
-    - name: "Priority Detection"
-      pattern: "Priority: (Critical|High|Medium|Low)"
-      labels: ["priority"]
-      confidence: 0.9
-
+# Auto-labeling Configuration
+auto_labeling:
+  # Keyword-based detection rules
+  detection_rules:
     - name: "Bug Detection"
-      keywords: ["bug", "error", "crash", "broken", "fix", "issue"]
-      labels: ["🪲 Bug"]
-      confidence: 0.7
-
+      keywords: ["bug", "error", "crash", "broken", "fix", "issue", "problem", "fails", "doesn't work"]
+      issue_type: "Bug"
+      priority: "high"
+      
     - name: "Feature Detection"
-      keywords: ["feature", "enhancement", "improvement", "new", "add", "implement"]
-      labels: ["✨ Feature"]
-      confidence: 0.7
+      keywords: ["feature", "enhancement", "improvement", "new", "add", "implement", "request"]
+      issue_type: "Feature"
+      priority: "medium"
+      
+    - name: "Performance Detection"
+      keywords: ["slow", "performance", "speed", "optimization", "fast", "lag", "delay"]
+      issue_type: "Performance"
+      priority: "high"
+      
+    - name: "Technical Debt Detection"
+      keywords: ["refactor", "technical debt", "cleanup", "improve", "better", "optimize"]
+      issue_type: "Technical Debt"
+      priority: "low"
+      
+    - name: "Task Detection"
+      keywords: ["task", "maintenance", "update", "chore", "routine", "housekeeping"]
+      issue_type: "Task"
+      priority: "low"
 
   # File-based labeling rules
   file_based_rules:
-    - pattern: "*.ts,*.tsx,*.js,*.jsx"
+    - pattern: "frontend/**/*"
+      labels: ["🎨 Client Side", "👩‍💻 Component/UI"]
+    - pattern: "backend/**/*"
+      labels: ["🖥️ Backend", "🧠 Logic/Functions"]
+    - pattern: "**/*.js"
       labels: ["JavaScript"]
-    - pattern: "*.py"
+    - pattern: "**/*.ts"
+      labels: ["JavaScript"]
+    - pattern: "**/*.py"
       labels: ["Python"]
-    - pattern: "*.java"
+    - pattern: "**/*.swift"
+      labels: ["Swift", "🍎 Platform-Specific: iOS"]
+    - pattern: "**/*.kt"
+      labels: ["Kotlin", "🤖 Platform-Specific: Android"]
+    - pattern: "**/*.java"
       labels: ["Java"]
-    - pattern: "*.swift"
-      labels: ["Swift"]
-    - pattern: "*.kt,*.kts"
-      labels: ["Kotlin"]
-    - pattern: "*.go"
+    - pattern: "**/*.go"
       labels: ["Go"]
-    - pattern: "*.rs"
+    - pattern: "**/*.rs"
       labels: ["Rust"]
-    - pattern: "*.php"
+    - pattern: "**/*.php"
       labels: ["PHP"]
-    - pattern: "*.rb"
+    - pattern: "**/*.rb"
       labels: ["Ruby"]
-    - pattern: "*.cs"
-      labels: ["C#"] 
+    - pattern: "**/*.cs"
+      labels: ["C Sharp"] 
