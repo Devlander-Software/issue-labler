@@ -6,6 +6,7 @@
     <title>DevLander Auto Label Issues - GitHub Action</title>
     <meta name="description" content="The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates">
     <meta name="keywords" content="github action, issue labeling, story points, automation, templates, mobile development">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -20,6 +21,72 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             line-height: 1.6;
+            padding-top: 60px; /* Space for fixed header */
+        }
+        
+        /* Fixed Header */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .social-link {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .social-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .discord-link {
+            background: #5865F2;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        
+        .discord-link:hover {
+            background: #4752C4;
+            color: white;
         }
         
         .container {
@@ -62,7 +129,7 @@
             opacity: 0.3;
         }
         
-        .header-content {
+        .header-content-main {
             position: relative;
             z-index: 10;
             text-align: center;
@@ -186,7 +253,7 @@
             background: #f8f9fa;
             border-bottom: 1px solid #e9ecef;
             position: sticky;
-            top: 0;
+            top: 60px; /* Account for fixed header */
             z-index: 100;
         }
         
@@ -200,6 +267,7 @@
         .nav-links {
             display: flex;
             gap: 30px;
+            list-style: none;
         }
         
         .nav-links a {
@@ -210,7 +278,7 @@
         }
         
         .nav-links a:hover {
-            color: #667eea;
+            color: #007bff;
         }
         
         /* Main Content */
@@ -357,29 +425,70 @@
         .footer {
             background: #1a1a2e;
             color: white;
-            padding: 40px;
-            text-align: center;
+            padding: 40px 0 20px 0;
+            margin-top: 60px;
         }
         
-        .footer-links {
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-section {
             display: flex;
-            justify-content: center;
-            gap: 30px;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
         
-        .footer-links a {
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-social a {
             color: #a0a0a0;
             text-decoration: none;
+            font-size: 16px;
             transition: color 0.3s ease;
         }
         
-        .footer-links a:hover {
+        .footer-social a:hover {
             color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            color: #a0a0a0;
+            font-size: 14px;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .social-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .footer-section {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
             .main-title {
                 font-size: 32px;
             }
@@ -406,6 +515,21 @@
 </head>
 <body>
     <div class="container">
+        <!-- Fixed Header -->
+        <header class="fixed-header">
+            <div class="header-content">
+                <a href="#" class="logo">DevLander</a>
+                <div class="social-links">
+                    <a href="https://github.com/Devlander-Software/issue-labler" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://discord.gg/devlander" target="_blank" class="discord-link">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                </div>
+            </div>
+        </header>
+
         <!-- Header -->
         <header class="header">
             <div class="background-pattern"></div>
@@ -423,7 +547,7 @@
                 <span>GitHub Action</span>
             </div>
             
-            <div class="header-content">
+            <div class="header-content-main">
                 <div class="logo-area">
                     <div class="logo-icon">🏷️</div>
                     <h1 class="main-title">DevLander<br>Auto Label Issues</h1>
@@ -720,15 +844,18 @@ This affects the user authentication flow and needs immediate attention.</pre>
 
         <!-- Footer -->
         <footer class="footer">
-            <div class="footer-links">
-                <a href="https://github.com/Devlander-Software/issue-labler">GitHub Repository</a>
-                <a href="https://github.com/Devlander-Software/issue-labler/issues">Issues</a>
-                <a href="https://github.com/Devlander-Software/issue-labler/blob/main/README.md">Documentation</a>
-                <a href="https://github.com/Devlander-Software/issue-labler/blob/main/DATA_ANALYSIS.md">Data Analysis</a>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">DevLander</div>
+                    <div class="footer-social">
+                        <a href="https://github.com/Devlander-Software/issue-labler" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/devlander" target="_blank"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    Made with ❤️ by <a href="https://github.com/Devlander-Software" style="color: #667eea;">DevLander Software</a>
+                </div>
             </div>
-            <p style="color: #a0a0a0; margin-top: 20px;">
-                Made with ❤️ by <a href="https://github.com/Devlander-Software" style="color: #667eea;">DevLander Software</a>
-            </p>
         </footer>
     </div>
 </body>
