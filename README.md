@@ -1,5 +1,5 @@
 
-# 🏷️ GitHub Auto-Label Issues & Templates Action
+# GitHub Auto-Label Issues & Templates Action
 
 > **The most comprehensive GitHub Action for automatic issue labeling, story point detection, and professional issue templates**
 
@@ -7,34 +7,47 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/Devlander-Software/issue-labler?style=social)](https://github.com/Devlander-Software/issue-labler)
 [![Downloads](https://img.shields.io/github/downloads/Devlander-Software/issue-labler/total)](https://github.com/Devlander-Software/issue-labler/releases)
+[![Sponsor](https://img.shields.io/badge/Sponsor-Devlander--Software-red?logo=github)](https://github.com/sponsors/Devlander-Software)
 
-## 🎯 Overview
+## Support This Project
+
+If this GitHub Action helps your team, please consider supporting its development:
+
+**[Sponsor on GitHub](https://github.com/sponsors/Devlander-Software)** - Monthly recurring support
+
+Your sponsorship helps us:
+- Maintain and improve the action
+- Add new features and integrations
+- Provide better documentation and support
+- Keep the project free for everyone
+
+## Overview
 
 **The Ultimate GitHub Issue Management Solution** - A GitHub Action that automatically creates professional issue templates, detects story points, and applies intelligent labels based on content and file changes. Perfect for **mobile development teams**, **agile projects**, and **organizations** that need consistent issue management across multiple repositories.
 
-### 🚀 Key Features
-- **🎯 Smart Story Point Detection**: Automatically detects and labels story points (1, 2-3, 5, 8, 13, 20+)
-- **📁 File-Based Labeling**: Labels PRs based on changed files (JavaScript, Python, iOS, Android, etc.)
-- **📱 Mobile Development Focus**: iOS/Android specific labels and templates
-- **🏷️ 50+ Professional Labels**: Comprehensive label set for all development areas
-- **📝 Professional Templates**: Structured templates for features, bugs, and performance issues
-- **🔧 No External Dependencies**: Self-contained GitHub Action
-- **⚙️ Organization Ready**: Perfect for enterprise and multi-repo setups
+### Key Features
+- **Smart Story Point Detection**: Automatically detects and labels story points (1, 2-3, 5, 8, 13, 20+)
+- **File-Based Labeling**: Labels PRs based on changed files (JavaScript, Python, iOS, Android, etc.)
+- **Mobile Development Focus**: iOS/Android specific labels and templates
+- **50+ Professional Labels**: Comprehensive label set for all development areas
+- **Professional Templates**: Structured templates for features, bugs, and performance issues
+- **No External Dependencies**: Self-contained GitHub Action
+- **Organization Ready**: Perfect for enterprise and multi-repo setups
 
-## ✨ Key Features
+## Features
 
-- **🎯 Smart Auto-Labeling**: Automatically detects and applies labels based on issue content and keywords
-- **📝 Professional Templates**: Comprehensive, structured issue templates with guided sections
-- **🏷️ 40+ Predefined Labels**: Categorized labels for story points, difficulty, priority, and development areas
-- **🔗 Stable IDs**: Labels use persistent identifiers that survive display name changes
-- **🔧 No External Dependencies**: Self-contained GitHub Action using GitHub CLI
-- **📊 Detailed Logging**: Comprehensive error handling and progress reporting
-- **⚙️ Configurable**: Easy to customize via repository variables
-- **🔄 Intelligent Detection**: Analyzes both issue title and body for better accuracy
+- **Smart Auto-Labeling**: Automatically detects and applies labels based on issue content and keywords
+- **Professional Templates**: Comprehensive, structured issue templates with guided sections
+- **40+ Predefined Labels**: Categorized labels for story points, difficulty, priority, and development areas
+- **Stable IDs**: Labels use persistent identifiers that survive display name changes
+- **No External Dependencies**: Self-contained GitHub Action using GitHub CLI
+- **Detailed Logging**: Comprehensive error handling and progress reporting
+- **Configurable**: Easy to customize via repository variables
+- **Intelligent Detection**: Analyzes both issue title and body for better accuracy
 
 ---
 
-## 🚀 Quick Installation
+## Quick Installation
 
 ### Method 1: GitHub Actions (Recommended)
 
@@ -164,7 +177,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## 🧪 Test Your Installation
+## Test Your Installation
 
 After installation, test it by creating an issue with:
 
@@ -184,9 +197,9 @@ Body:
 
 The GitHub Action will automatically run and apply labels based on your selections!
 
-📖 **[Complete Usage Guide](USAGE_GUIDE.md)** - Everything you need to know about installation, configuration, and advanced usage
+**[Complete Usage Guide](USAGE_GUIDE.md)** - Everything you need to know about installation, configuration, and advanced usage
 
-🚀 **[Quick Reference](QUICK_REFERENCE.md)** - Fast reference card for common usage patterns
+**[Quick Reference](QUICK_REFERENCE.md)** - Fast reference card for common usage patterns
 
 ---
 
